@@ -1,0 +1,36 @@
+{
+    "name": "XADL",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "serve": "vue-cli-service serve",
+        "build": "vue-cli-service build"
+    },
+    "dependencies": {
+        "axios": "^0.21.4",
+        "crypto-js": "^4.1.1",
+        "core-js": "^3.16.2",
+        "echarts": "^4.8.0",
+        "element": "^0.1.4",
+        "element-ui": "^2.15.8",
+        "js-md5": "^0.7.3",
+        "js-sha256": "^0.9.0",
+        "lib-flexible-visualize": "^1.0.0",
+        "mockjs": "^1.1.0",
+        "vue": "^2.6.10",
+        "vue-awesome-swiper": "^3.1.3",
+        "vue-router": "^3.5.2"
+    },
+    "devDependencies": {
+        "@vue/cli-plugin-babel": "^4.5.13",
+        "@vue/cli-service": "^3.8.0",
+        "px2rem-loader": "^0.1.9",
+        "swiper": "^6.8.1",
+        "vue-template-compiler": "^2.6.10"
+    },
+    "browserslist": [
+        "> 1%",
+        "last 2 versions",
+        "not dead"
+    ]
+}

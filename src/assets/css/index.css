@@ -1,0 +1,105 @@
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-touch-callout: none;
+    /*系统默认菜单被禁用*/
+    -webkit-user-select: none;
+    /*webkit浏览器*/
+    -khtml-user-select: none;
+    /*早期浏览器*/
+    -moz-user-select: none;
+    /*火狐*/
+    -ms-user-select: none;
+    /*IE10*/
+    user-select: none;
+}
+
+input {
+    -webkit-user-select: auto;
+    /*webkit浏览器*/
+}
+
+textarea {
+    -webkit-user-select: auto;
+    /*webkit浏览器*/
+}
+
+html,
+body {
+    height: 100%;
+}
+
+ul,
+li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.floatfix {
+    *zoom: 1;
+}
+
+.floatfix:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+@font-face {
+    font-family: zcoolqingkehuangyouti;
+    src: url('../font/GouYou.TTF');
+}
+
+@font-face {
+    font-family: YouSheBiaoTiHei;
+    src: url('../font/YouShe.ttf');
+}
+
+@font-face {
+    font-family: PangMenZhengDao;
+    src: url('../font/pmzd.TTF');
+}
+
+@font-face {
+    font-family: SourceHanSansCN-Regular;
+    src: url('../font/siyuanC.OTF');
+}
+
+@font-face {
+    font-family: Source Han Sans CN;
+    src: url('../font/siyuanC.OTF');
+}
+
+@font-face {
+    font-family: SourceHanSansCN-Medium;
+    src: url('../font/siyuanZ.OTF');
+}
+
+@font-face {
+    font-family: Manteka;
+    src: url('../font/MANTEKA.OTF');
+}
+
+@font-face {
+    font-family: SourceHanSansSC-Medium;
+    src: url('../font/SourceHanSansCN-Medium-2.otf');
+}
+
+@font-face {
+    font-family: Source Han Sans CN;
+    src: url('../font/Source Han Sans CN.otf');
+}
+
+@font-face {
+    font-family: Source Han Sans SC;
+    src: url('../font/Source Han Sans SC.otf');
+}
