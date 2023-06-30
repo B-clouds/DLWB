@@ -90,13 +90,17 @@ const DZ = () =>
     import('../view/wangjia/components/ssfx/components/dz/index.vue')
 const XL = () =>
     import('../view/wangjia/components/ssfx/components/xl/index.vue')
+const BYQ = () => import('../view/wangjia/components/ssfx/components/byq/index.vue')
 const SSFXITEM = () =>
     import('../view/wangjia/components/sheshifenxi/index.vue')
 
 
+// 综合评估
+const ZHPG = () => import('../view/wangjia/components/zonghepinggu/index.vue')
 // 网格分析
 const WGFX = () =>
     import('../view/wangjia/components/wanggefenxi/index.vue')
+
 // ----------------------------------------------------------------------------------------
 // 虚拟规划
 const XN = () =>
@@ -279,6 +283,11 @@ const routes = [{
         path: "xianlu",
         name: "xl",
         component: XL
+    },
+    {
+        path: "byq",
+        name: 'byq',
+        component: BYQ
     }, {
         path: "ssfxItem",
         name: "ssfxItem",
@@ -287,6 +296,10 @@ const routes = [{
         path: 'wangge',
         name: 'wanggefenxi',
         component: WGFX
+    }, {
+        path: "zhpg",
+        name: "zonghepinggu",
+        component: ZHPG
     }]
 },
 {

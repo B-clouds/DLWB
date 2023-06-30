@@ -170,7 +170,7 @@ export default {
       value2: ["电网分析"],
       options2: [
         {
-          value: "wanggeweihu",
+          value: "wanggefenxi",
           label: "网格维护",
         },
         {
@@ -200,7 +200,7 @@ export default {
           label: "网架分析",
         },
         {
-          value: "wanggefenxi",
+          value: "zonghepinggu",
           label: "综合评估",
         },
         {
@@ -570,7 +570,7 @@ export default {
         // 设置设施分析页面-是否夜间模式
         this.$bus.$emit("setYeJian", 0);
         let e = {
-          one: "网架分析",
+          one: "电网分析",
           two: "",
           three: "设施分析",
           right1: ">",
@@ -582,9 +582,9 @@ export default {
           path: "/wj/wangge",
         });
         let e = {
-          one: "网架分析",
+          one: "电网分析",
           two: "",
-          three: "网格分析",
+          three: "网格维护",
           right1: ">",
           right2: "",
         };

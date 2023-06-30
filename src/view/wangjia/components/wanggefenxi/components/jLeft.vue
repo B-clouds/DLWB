@@ -8,11 +8,11 @@
     ]"
   >
     <!-- title -->
-    <!-- <div class="w_title">
+    <!-- <div class="w_title"> 
       <span>模型资产导航树</span>
     </div> -->
     <div class="j_titles">
-      <span>模型资产导航树</span>
+      <span>网格架构树</span>
     </div>
     <div class="t_input">
       <div
