@@ -95,7 +95,6 @@ export default {
   methods: {
     getOid(e) {
       this.oids = e;
-      console.log("------------------", e, "---------------");
     },
     getIds(e) {
       this.ids = e;

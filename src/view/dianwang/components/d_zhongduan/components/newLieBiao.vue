@@ -790,7 +790,6 @@ export default {
                     },
                 ],
             };
-            console.log(data, "1----------------------------------1");
             if (e.fbzt != "未创建") {
                 let that = this;
                 setTimeout(() => {

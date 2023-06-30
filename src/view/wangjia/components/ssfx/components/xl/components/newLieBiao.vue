@@ -700,7 +700,6 @@ export default {
     },
     BackGetSelectKv(e) {
       let data = JSON.parse(e).value;
-      console.log(data, "---获取到的电压等级");
       this.xlKV = data;
       for (let i = 0; i < this.xlKV.length; i++) {
         if (this.xlKV[i] == "交流500kV") {

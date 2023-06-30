@@ -616,7 +616,6 @@ export default {
       this.$bus.$emit("getSSKJ", e);
     },
     ZFJGonNodePositionUpdate(e) {
-      console.log(e, "----------");
       this.$bus.$emit("getZFJGS", e);
     },
 
@@ -849,9 +848,7 @@ export default {
     getGLJDID(e) {
       let obj = JSON.parse(e);
       let that = this;
-      console.log(
-        "--------------------------------------,被调用---------------------------------"
-      );
+
       setTimeout(() => {
         that.$bus.$emit("kzxzMX", obj);
       }, 50);

@@ -163,14 +163,12 @@ export default {
     });
     that.$bus.$on("rightCx", (e) => {
       that.dataList = e;
-      console.log("0--------------0", that.dataList);
     });
     that.$bus.$on("clearList", (e) => {
       that.dataList = [];
     });
     that.$bus.$on("leftOid", (e) => {
       that.leftOid = e;
-      console.log(e, "-----------", "斤斤计较");
     });
   },
   methods: {
@@ -540,7 +538,7 @@ export default {
     },
     // 排序方法
     compare(key) {
-      return function(value1, value2) {
+      return function (value1, value2) {
         var val1 = value1[key];
         var val2 = value2[key];
         return val1 - val2;

@@ -488,7 +488,6 @@ export default {
 
     // 复选框被选中时
     selectTree(node, list) {
-      console.log(node);
       const node2 = this.$refs.treeForm_mx.getNode(node.oid);
       this.setNode(node2);
       if (list.checkedKeys.length == 2) {
@@ -541,12 +540,10 @@ export default {
       };
       ue.interface.broadcast("PSAPI", JSON.stringify(data));
       window.ue.interface.backVertices = this.backVertices;
-      console.log(data, "-----------------------------");
     },
     backVertices(e) {
       let data = JSON.parse(e).value;
       this.$bus.$emit("rightCx", data);
-      console.log(data, "-------------111-------");
     },
 
     setParentNode(node) {
