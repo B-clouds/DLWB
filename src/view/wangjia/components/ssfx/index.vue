@@ -899,7 +899,7 @@ export default {
         this.$bus.$emit("setCrumbs", e);
       } else if (this.ssIndex == 3) {
         this.$router.push({
-          path: "/wj/xianlu",
+          path: "/wj/ssgt",
         });
         let e = {
           one: "电网分析",
@@ -911,7 +911,7 @@ export default {
         this.$bus.$emit("setCrumbs", e);
       } else if (this.ssIndex == 4) {
         this.$router.push({
-          path: "/wj/xianlu",
+          path: "/wj/ww",
         });
         let e = {
           one: "电网分析",

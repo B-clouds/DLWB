@@ -90,7 +90,10 @@ const DZ = () =>
     import('../view/wangjia/components/ssfx/components/dz/index.vue')
 const XL = () =>
     import('../view/wangjia/components/ssfx/components/xl/index.vue')
+
 const BYQ = () => import('../view/wangjia/components/ssfx/components/byq/index.vue')
+const WW = () => import('../view/wangjia/components/ssfx/components/ww/index.vue')
+const SSGT = () => import('../view/wangjia/components/ssfx/components/gt/index.vue')
 const SSFXITEM = () =>
     import('../view/wangjia/components/sheshifenxi/index.vue')
 
@@ -288,6 +291,16 @@ const routes = [{
         path: "byq",
         name: 'byq',
         component: BYQ
+    },
+    {
+        path: "ssgt",
+        name: "ss_gt",
+        component: SSGT
+    },
+    {
+        path: "ww",
+        name: 'ww',
+        component: WW
     }, {
         path: "ssfxItem",
         name: "ssfxItem",
