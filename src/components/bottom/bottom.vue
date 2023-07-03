@@ -571,8 +571,8 @@ export default {
         this.$bus.$emit("setYeJian", 0);
         let e = {
           one: "电网分析",
-          two: "",
-          three: "设施分析",
+          two: "设施分析",
+          three: "设备分析",
           right1: ">",
           right2: "",
         };
@@ -585,6 +585,30 @@ export default {
           one: "电网分析",
           two: "",
           three: "网格维护",
+          right1: ">",
+          right2: "",
+        };
+        this.$bus.$emit("setCrumbs", e);
+      } else if (data == "yonghufenxi") {
+        this.$router.push({
+          path: "/wj/yhfx",
+        });
+        let e = {
+          one: "电网分析",
+          two: "设施分析",
+          three: "用户分析",
+          right1: ">",
+          right2: "",
+        };
+        this.$bus.$emit("setCrumbs", e);
+      } else if (data == "tingdianfenxi") {
+        this.$router.push({
+          path: "/wj/tdfx",
+        });
+        let e = {
+          one: "电网分析",
+          two: "设施分析",
+          three: "停电分析",
           right1: ">",
           right2: "",
         };

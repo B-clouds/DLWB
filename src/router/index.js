@@ -94,8 +94,8 @@ const XL = () =>
 const BYQ = () => import('../view/wangjia/components/ssfx/components/byq/index.vue')
 const WW = () => import('../view/wangjia/components/ssfx/components/ww/index.vue')
 const SSGT = () => import('../view/wangjia/components/ssfx/components/gt/index.vue')
-const SSFXITEM = () =>
-    import('../view/wangjia/components/sheshifenxi/index.vue')
+// const SSFXITEM = () =>
+//     import('../view/wangjia/components/sheshifenxi/index.vue')
 
 
 // 综合评估
@@ -103,7 +103,10 @@ const ZHPG = () => import('../view/wangjia/components/zonghepinggu/index.vue')
 // 网格分析
 const WGFX = () =>
     import('../view/wangjia/components/wanggefenxi/index.vue')
-
+//  用户分析
+const YHFX = () => import('../view/wangjia/components/yonghufenxi/index.vue')
+// 停电分析 
+const TDFX = () => import('../view/wangjia/components/yonghufenxi/index.vue')
 // ----------------------------------------------------------------------------------------
 // 虚拟规划
 const XN = () =>
@@ -302,13 +305,18 @@ const routes = [{
         name: 'ww',
         component: WW
     }, {
-        path: "ssfxItem",
-        name: "ssfxItem",
-        component: SSFXITEM
-    }, {
         path: 'wangge',
         name: 'wanggefenxi',
         component: WGFX
+    },
+    {
+        path: "yhfx",
+        name: "yonghufenxi",
+        component: YHFX
+    }, {
+        path: 'tdfx',
+        name: "tingdianfenxi",
+        component: TDFX
     }, {
         path: "zhpg",
         name: "zonghepinggu",

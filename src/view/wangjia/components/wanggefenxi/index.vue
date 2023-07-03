@@ -12,7 +12,7 @@
     </transition>
     <!-- 子级导航 -->
     <transition name="transitionBottom">
-      <div v-show="show && showRights" class="navs">
+      <div v-show="show" class="navs">
         <div
           class="blocks"
           @click="navClick(index)"
@@ -29,11 +29,11 @@
       @showRight="showRight"
       @getOid="getOid"
       @getIds="getIds"
-      v-if="show"
+      v-if="show && detiles1"
     />
     <jRight v-if="showRights && detiles1" />
     <!-- 3D图层 -->
-    <div class="jr_threeD" v-show="show && showRights">
+    <div class="jr_threeD" v-show="show && showRights && detiles1">
       <div
         class="jr_blocks"
         @click="jrCilck(0)"
@@ -56,13 +56,11 @@
 <script>
 import jLeft from "./components/jLeft.vue";
 import jRight from "./components/jRight.vue";
-import gRight from "./components/gRight.vue";
 export default {
   name: "wanggefenxi",
   components: {
     jLeft,
     jRight,
-    gRight,
   },
   data() {
     return {
@@ -73,16 +71,7 @@ export default {
       detiles1: true,
       detiles2: false,
       detiles3: false,
-      detiles4: false,
-      detiles5: false,
-      navList: [
-        "基本管理",
-        "规模分析",
-        "断面分析",
-        "用电分析",
-        "运行分析",
-        "目标管理",
-      ],
+      navList: ["基本管理", "规模分析", "公里单元"],
       navIndex: 0,
       showRights: false,
       showRights2: false,
@@ -112,32 +101,14 @@ export default {
         this.detiles1 = true;
         this.detiles2 = false;
         this.detiles3 = false;
-        this.detiles4 = false;
-        this.detiles5 = false;
       } else if (e == 1) {
         this.detiles2 = true;
         this.detiles1 = false;
         this.detiles3 = false;
-        this.detiles4 = false;
-        this.detiles5 = false;
       } else if (e == 2) {
         this.detiles3 = true;
         this.detiles1 = false;
         this.detiles2 = false;
-        this.detiles4 = false;
-        this.detiles5 = false;
-      } else if (e == 3) {
-        this.detiles4 = true;
-        this.detiles1 = false;
-        this.detiles2 = false;
-        this.detiles3 = false;
-        this.detiles5 = false;
-      } else if (e == 4) {
-        this.detiles5 = true;
-        this.detiles1 = false;
-        this.detiles2 = false;
-        this.detiles3 = false;
-        this.detiles4 = false;
       }
     },
     showRight(e) {
@@ -234,10 +205,10 @@ export default {
 
 <style scoped>
 .navs {
-  width: 934px;
+  width: 400px;
   height: 40px;
   position: fixed;
-  left: 503px;
+  left: 760px;
   bottom: 21px;
   display: flex;
   justify-content: space-between;
