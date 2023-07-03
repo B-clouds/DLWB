@@ -1,9 +1,9 @@
 <template>
   <div class="mxRight">
-    <!-- 绘制点列表-->
+    <!-- 区域基本信息-->
     <div class="blocksss">
       <div class="j_titles">
-        <span class="span1">绘制点列表</span>
+        <span class="span1">区域基本信息</span>
       </div>
 
       <div class="t_input">
@@ -14,13 +14,13 @@
         >
           <img v-show="currentIndex != 0" src="./img/i2.png" />
         </div> -->
-        <div
+        <!-- <div
           class="t_block"
           @click="g_updateClick"
           :class="currentIndex == 1 ? 't_block_update' : ''"
         >
           <img v-show="currentIndex != 1" src="./img/i3.png" />
-        </div>
+        </div> -->
 
         <div
           class="t_block"
@@ -46,7 +46,7 @@
         <el-table-column align="center" type="selection" width="36">
         </el-table-column>
         <el-table-column
-          align="center"
+          align="left"
           :label="item.propName"
           :property="item.prop"
           v-for="item in tableColumnLists"
@@ -77,19 +77,6 @@
             </div>
           </div>
         </div>
-        <div class="tk_blocks">
-          <span>备注</span>
-          <div class="rights">
-            <div class="r2">
-              <input
-                placeholder="最大输入不超过10个字"
-                maxlength="10"
-                v-model="mxmc"
-              />
-            </div>
-          </div>
-        </div>
-
         <div class="z_btn">
           <div class="z_blocks" @click="addUpdataClick">
             <span>确认</span>
@@ -132,10 +119,7 @@ export default {
       storageNum: "", //存储最后一位模型编号
       isAdd_Update: 0, //是新增还是编辑  0：新增 1：编辑
       dataList: [],
-      tableColumnLists: [
-        { prop: "index", propName: "绘制点编号" },
-        { prop: "Desc", propName: "备注" },
-      ],
+      tableColumnLists: [{ prop: "index", propName: "绘制点编号" }],
       currentIndex: -1,
       gjtkShow: false, //是否显示关键信息新增/编辑弹框
       gj_title: "",
@@ -690,7 +674,7 @@ export default {
   margin-left: 5%;
 }
 .e_tables2 {
-  height: 72% !important;
+  height: 90% !important;
 }
 .e_tables::-webkit-scrollbar {
   display: none;
@@ -725,7 +709,7 @@ export default {
 <style scoped>
 .blocksss {
   width: 100%;
-  height: 322px;
+  height: 943px;
   background: url("img/bg4.png") no-repeat !important;
   background-size: 100% 100% !important;
   margin-bottom: 15px;

@@ -106,7 +106,7 @@ const WGFX = () =>
 //  用户分析
 const YHFX = () => import('../view/wangjia/components/yonghufenxi/index.vue')
 // 停电分析 
-const TDFX = () => import('../view/wangjia/components/yonghufenxi/index.vue')
+const TDFX = () => import('../view/wangjia/components/tingdianfenx/index.vue')
 // ----------------------------------------------------------------------------------------
 // 虚拟规划
 const XN = () =>

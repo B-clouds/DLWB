@@ -1,5 +1,5 @@
 <template>
-  <div id="zjy_l_three" style="width: 406px; height: 410px"></div>
+  <div id="zjy_l_three" style="width: 379px; height: 589px"></div>
 </template>
 
 <script>
@@ -45,7 +45,8 @@ export default {
           itemHeight: this.WidthAdaptive(4),
           itemGap: this.WidthAdaptive(34),
           padding: this.WidthAdaptive(2),
-          top: this.WidthAdaptive(28),
+          top: this.WidthAdaptive(18),
+          right: this.WidthAdaptive(18),
           textStyle: {
             color: "rgba(201, 229, 255, 1)",
             fontSize: this.WidthAdaptive(12),
@@ -53,9 +54,9 @@ export default {
         },
         grid: {
           left: "18%",
-          right: "18%",
-          top: "14%",
-          bottom: "12%",
+          right: "10%",
+          top: "10%",
+          bottom: "10%",
         },
         xAxis: {
           type: "value",
@@ -66,8 +67,11 @@ export default {
             //坐标轴轴线相关设置。数学上的x轴
             show: true,
             lineStyle: {
-              color: "#8C9493",
+              color: "rgba(176, 215, 255, 0.2)",
             },
+          },
+          axisTick: {
+            show: false,
           },
           axisLabel: {
             show: true,
@@ -119,13 +123,29 @@ export default {
           {
             name: "电压等级110",
             type: "bar",
-            stack: "total",
-            showBackground: true, //柱状背景
+            showBackground: false, //柱状背景
             barWidth: this.WidthAdaptive(7),
             itemStyle: {
               normal: {
+                color: new this.$echarts.graphic.LinearGradient(
+                  1,
+                  0,
+                  0,
+                  0,
+                  [
+                    {
+                      offset: 0,
+                      color: "rgba(0, 213, 255, 1)", // 0% 处的颜色
+                    },
+                    {
+                      offset: 1,
+                      color: "rgba(0, 213, 255, .2)", // 100% 处的颜色
+                    },
+                  ],
+                  false
+                ),
                 //这里设置柱形图圆角 [左上角，右上角，右下角，左下角]
-                barBorderRadius: [2, 2, 2, 2],
+                barBorderRadius: [0, 15, 15, 0],
               },
             },
             label: {
@@ -140,13 +160,29 @@ export default {
           {
             name: "10千伏",
             type: "bar",
-            stack: "total",
-            showBackground: true, //柱状背景
+            showBackground: false, //柱状背景
             barWidth: this.WidthAdaptive(7),
             itemStyle: {
               normal: {
+                color: new this.$echarts.graphic.LinearGradient(
+                  1,
+                  0,
+                  0,
+                  0,
+                  [
+                    {
+                      offset: 0,
+                      color: "rgba(25, 120, 229, 1)", // 0% 处的颜色
+                    },
+                    {
+                      offset: 1,
+                      color: "rgba(25, 120, 229, .2)", // 100% 处的颜色
+                    },
+                  ],
+                  false
+                ),
                 //这里设置柱形图圆角 [左上角，右上角，右下角，左下角]
-                barBorderRadius: [2, 2, 2, 2],
+                barBorderRadius: [0, 15, 15, 0],
               },
             },
             label: {
@@ -157,6 +193,7 @@ export default {
             },
             data: [32, 80, 30, 33, 89, 33, 32, 20],
             color: "#0EE1E8",
+            barGap: "100%",
           },
         ],
       };

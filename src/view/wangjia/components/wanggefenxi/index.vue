@@ -31,7 +31,11 @@
       @getIds="getIds"
       v-if="show && detiles1"
     />
-    <jRight v-if="showRights && detiles1" />
+    <jRight v-if="showRights && detiles1 && jr_index !== 0" />
+    <jRight2 v-if="showRights && detiles1 && jr_index == 0" />
+    <!-- 规模分析 -->
+    <gLeft v-if="show && detiles2" />
+
     <!-- 3D图层 -->
     <div class="jr_threeD" v-show="show && showRights && detiles1">
       <div
@@ -54,13 +58,19 @@
 </template>
 
 <script>
+// 基本信息
 import jLeft from "./components/jLeft.vue";
 import jRight from "./components/jRight.vue";
+import jRight2 from "./components/jRight2.vue";
+// 规模分析
+import gLeft from "./components/gLeft.vue";
 export default {
   name: "wanggefenxi",
   components: {
     jLeft,
     jRight,
+    jRight2,
+    gLeft,
   },
   data() {
     return {

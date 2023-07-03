@@ -66,6 +66,9 @@
       <div class="j_titles">
         <span class="span1">设施现状</span>
       </div>
+      <div class="jr_b_echarts">
+        <jr_bottom />
+      </div>
     </div>
   </div>
 </template>
@@ -301,5 +304,9 @@ export default {
   right: 8.5px;
   background: url("img/c1.png") no-repeat !important;
   background-size: 100% 100% !important;
+}
+.jr_b_echarts {
+  width: 100%;
+  height: 589px;
 }
 </style>
