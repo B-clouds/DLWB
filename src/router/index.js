@@ -94,8 +94,8 @@ const XL = () =>
 const BYQ = () => import('../view/wangjia/components/ssfx/components/byq/index.vue')
 const WW = () => import('../view/wangjia/components/ssfx/components/ww/index.vue')
 const SSGT = () => import('../view/wangjia/components/ssfx/components/gt/index.vue')
-// const SSFXITEM = () =>
-//     import('../view/wangjia/components/sheshifenxi/index.vue')
+const SSFXITEM = () =>
+    import('../view/wangjia/components/sheshifenxi/index.vue')
 
 
 // 综合评估
@@ -304,6 +304,10 @@ const routes = [{
         path: "ww",
         name: 'ww',
         component: WW
+    }, {
+        path: "ssfxItem",
+        name: "ssfxItem",
+        component: SSFXITEM
     }, {
         path: 'wangge',
         name: 'wanggefenxi',

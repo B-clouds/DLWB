@@ -35,6 +35,7 @@
     <jRight2 v-if="showRights && detiles1 && jr_index == 0" />
     <!-- 规模分析 -->
     <gLeft v-if="show && detiles2" />
+    <gRight v-if="show && detiles2" />
 
     <!-- 3D图层 -->
     <div class="jr_threeD" v-show="show && showRights && detiles1">
@@ -64,6 +65,8 @@ import jRight from "./components/jRight.vue";
 import jRight2 from "./components/jRight2.vue";
 // 规模分析
 import gLeft from "./components/gLeft.vue";
+import gRight from "./components/gRight.vue";
+
 export default {
   name: "wanggefenxi",
   components: {
@@ -71,6 +74,7 @@ export default {
     jRight,
     jRight2,
     gLeft,
+    gRight,
   },
   data() {
     return {

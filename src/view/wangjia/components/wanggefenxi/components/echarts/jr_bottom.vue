@@ -41,8 +41,8 @@ export default {
         },
         legend: {
           icon: "circle",
-          itemWidth: this.WidthAdaptive(14),
-          itemHeight: this.WidthAdaptive(4),
+          itemWidth: this.WidthAdaptive(6),
+          itemHeight: this.WidthAdaptive(6),
           itemGap: this.WidthAdaptive(34),
           padding: this.WidthAdaptive(2),
           top: this.WidthAdaptive(18),

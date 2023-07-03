@@ -25,14 +25,57 @@
           <span class="span1">电压等级</span>
         </div>
       </div>
-      <div class="j_t_table"></div>
+      <div class="j_t_table">
+        <div
+          class="j_t_tr"
+          :class="index % 2 == 0 ? 'j_t_bg' : ''"
+          v-for="(item, index) in 6"
+          :key="index"
+        >
+          <div class="blocks">
+            <span class="span2">xxxx</span>
+          </div>
+          <div class="blocks">
+            <span class="span2">xxxx</span>
+          </div>
+          <div class="blocks">
+            <span class="span2">xxxx</span>
+          </div>
+          <div class="blocks">
+            <span class="span2">xxxx</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="jr_block jr_block2">
+      <div class="j_titles">
+        <span class="span1">线路类型统计</span>
+      </div>
+      <div class="jr_two">
+        <gl_two />
+      </div>
+    </div>
+
+    <div class="jr_block jr_block3">
+      <div class="j_titles">
+        <span class="span1">光伏新增趋势</span>
+      </div>
+      <div class="jr_three">
+        <gl_three />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import gl_two from "./echarts/gl_two.vue";
+import gl_three from "./echarts/gl_three.vue";
 export default {
   name: "gLeft",
+  components: {
+    gl_two,
+    gl_three,
+  },
 };
 </script>
 
@@ -88,6 +131,12 @@ export default {
   background: url("img/bg4.png") no-repeat !important;
   background-size: 100% 100% !important;
   margin-bottom: 15px;
+}
+.jr_block2 {
+  height: 303px !important;
+}
+.jr_block3 {
+  height: 259px !important;
 }
 
 .j_titles {
@@ -153,6 +202,21 @@ export default {
 .j_t_table {
   width: 100%;
   height: 216px;
-  background-color: #fff;
+  overflow-y: scroll;
+}
+.j_t_table::-webkit-scrollbar {
+  display: none;
+}
+.j_t_bg {
+  background: url("img/gblock.png") no-repeat !important;
+  background-size: 100% 100% !important;
+}
+.jr_two {
+  width: 100%;
+  height: 262px;
+}
+.jr_three {
+  width: 100%;
+  height: 218px;
 }
 </style>
