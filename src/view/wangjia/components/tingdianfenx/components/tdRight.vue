@@ -12,8 +12,8 @@
         <span class="tdNumData">15</span>
         <span class="tdNumUnit">次</span>
       </div>
-      <div class="tdTjEcharts">
-        <tdtjEcharts />
+      <div class="tdEcharts">
+        <td_oneEcharts />
       </div>
     </div>
     <!-- 停电原因占比-->
@@ -21,17 +21,22 @@
       <div class="j_titles">
         <span class="span1">停电原因占比</span>
       </div>
+      <div class="tdEcharts tdEchartsTwo">
+        <td_twoEcharts />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import tdtjEcharts from "./echarts/tdtjEcharts.vue";
+import td_oneEcharts from "./echarts/td_one.vue"; //停电频次统计
+import td_twoEcharts from "./echarts/td_two.vue"; //停电原因占比
 export default {
   components: {
-    tdtjEcharts,
+    td_oneEcharts,
+    td_twoEcharts,
   },
-  name: "jRight",
+  name: "tdRight",
   data() {
     return {};
   },
@@ -142,11 +147,15 @@ export default {
   letter-spacing: 0px;
   color: #bebebe;
 }
-.tdTjEcharts {
+.tdEcharts {
   position: absolute;
   top: 87px;
   left: 0;
   width: 379px;
   height: 250px;
+}
+.tdEchartsTwo {
+  top: 390px;
+  height: 183px;
 }
 </style>

@@ -12,57 +12,10 @@
       <span>模型资产导航树</span>
     </div> -->
     <div class="j_titles">
-      <span>模型资产导航树</span>
+      <span>区域选择</span>
     </div>
-    <div class="t_input">
-      <div
-        class="t_block"
-        @click="chaxunClick"
-        :class="currentIndex == 0 ? 't_block_cha' : ''"
-      >
-        <img v-show="currentIndex != 0" src="./img/i1.png" />
-        <input ref="inputsss" v-show="currentIndex == 0" v-model="filterText" />
-        <img v-show="currentIndex == 0" src="./img/c1.png" />
-      </div>
-      <div
-        class="t_block"
-        @click="addClick"
-        :class="currentIndex == 1 ? 't_block_add' : ''"
-      >
-        <img v-show="currentIndex != 1" src="./img/i2.png" />
-      </div>
-      <div
-        class="t_block"
-        @click="updateClick"
-        :class="currentIndex == 2 ? 't_block_update' : ''"
-      >
-        <img v-show="currentIndex != 2" src="./img/i3.png" />
-      </div>
-      <div
-        class="t_block"
-        @click="downClick"
-        :class="currentIndex == 3 ? 't_block_down' : ''"
-      >
-        <img v-show="currentIndex != 3" src="./img/i4.png" />
-      </div>
-      <div
-        class="t_block"
-        @click="upsClick"
-        :class="currentIndex == 4 ? 't_block_ups' : ''"
-      >
-        <img v-show="currentIndex != 4" src="./img/i5.png" />
-      </div>
-
-      <div
-        class="t_block"
-        @click="deleteClick"
-        :class="currentIndex == 5 ? 't_block_decete' : ''"
-      >
-        <img v-show="currentIndex != 5" src="./img/i6.png" />
-      </div>
-      <div class="chaxun" v-show="false">
-        <div class="icons"></div>
-      </div>
+    <div class="j_ss">
+      <input class="ddd" placeholder="搜索" />
     </div>
     <div class="block">
       <div class="blockItem">
@@ -87,122 +40,13 @@
         ></el-tree>
       </div>
     </div>
-    <!-- 编辑弹框 -->
-    <div class="zhezhao" v-show="showMB">
-      <div class="z_tankuang">
-        <!-- 关闭按钮 -->
-        <div class="z_cha" @click="closeTK"></div>
-        <!-- title -->
-        <div class="z_title">
-          <span>模型资产导航树编辑</span>
-        </div>
-        <div class="z_input">
-          <div class="lefts">
-            <span>模型名称</span>
-          </div>
-          <div class="rights">
-            <input
-              placeholder="最大输入不超过10个字"
-              maxlength="10"
-              v-model="updaValue"
-            />
-          </div>
-        </div>
-        <div class="z_btn">
-          <div class="z_blocks" @click="updateClicks">
-            <span>确认</span>
-          </div>
-          <div class="z_blocks" @click="closeTK">
-            <span>取消</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- 新增弹框 -->
-    <div class="zhezhao" v-show="showMB2">
-      <div class="z_tankuang z_tankuang2">
-        <!-- 关闭按钮 -->
-        <div class="z_cha" @click="closeTK2"></div>
-        <!-- title -->
-        <div class="z_title">
-          <span>模型资产新增导航树</span>
-        </div>
-        <div class="z_blockss">
-          <span>是否在当前节点之下增加一个分类?</span>
-        </div>
-        <div class="z_input">
-          <div class="lefts">
-            <span>模型名称</span>
-          </div>
-          <div class="rights">
-            <input
-              v-model="addValue"
-              placeholder="最大输入不超过10个字"
-              maxlength="10"
-            />
-          </div>
-        </div>
-        <div class="z_btn">
-          <div class="z_blocks" @click="addClicks">
-            <span>确认</span>
-          </div>
-          <div class="z_blocks" @click="unAddClicks">
-            <span>取消</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- 删除弹框 -->
-    <div class="zhezhao" v-show="showMB3">
-      <div class="z_delete">
-        <div class="z_d_block">
-          <img src="./img/jj.png" />
-          <span>是否将当前选中信息进行删除？</span>
-        </div>
-        <div class="z_btn">
-          <div class="z_blocks" @click="deleteClicks">
-            <span>确认</span>
-          </div>
-          <div class="z_blocks" @click="unDeleteClicks">
-            <span>取消</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- 模型已调用，不可删除弹框 -->
-    <div class="zhezhao" v-show="showMB4">
-      <div class="z_delete">
-        <div class="z_d_block">
-          <img class="imgs" src="./img/jj2.png" />
-          <span>该模型已在电网三维网架中调用，无法删除！</span>
-        </div>
-        <div class="z_btn2">
-          <div class="z_blocks" @click="deleteClicks2">
-            <span>确认</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- 模型有子节点，不可删除弹框 -->
-    <div class="zhezhao" v-show="showMB5">
-      <div class="z_delete">
-        <div class="z_d_block">
-          <img class="imgs" src="./img/jj2.png" />
-          <span>该节点下有其他模型信息，请将下级节点删除后在进行该操作！</span>
-        </div>
-        <div class="z_btn2">
-          <div class="z_blocks" @click="deleteClicks3">
-            <span>确认</span>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div class="qr" @click="okClick"></div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "mxLeft",
+  name: "yhLeft",
   data() {
     return {
       // 是否显示编辑弹框
@@ -248,6 +92,7 @@ export default {
       tree_key: 0,
 
       defaultExpand: [],
+      show: true,
     };
   },
   watch: {
@@ -310,180 +155,6 @@ export default {
     shiquIndex() {
       this.currentIndex = -1;
       this.filterText = "";
-    },
-    // 关闭编辑弹框
-    closeTK() {
-      this.showMB = false;
-    },
-    // 关闭新增弹框
-    closeTK2() {
-      this.showMB2 = false;
-    },
-    addClick() {
-      if (this.currentIndex != 1) {
-        this.currentIndex = 1;
-      } else {
-        if (this.selectData.id != undefined) {
-          // 弹出弹框
-          this.showMB2 = true;
-        } else {
-          this.$notify({
-            title: "新增节点",
-            message: "请选中一条树节点",
-            offset: 60,
-            type: "error",
-          });
-        }
-      }
-    },
-    addClicks() {
-      if (this.addValue.length < 1) {
-        this.$notify({
-          title: "模型名称",
-          message: "请输入模型名称",
-          offset: 60,
-          type: "error",
-        });
-      } else {
-        let data = this.selectData;
-        let id = this.newID;
-        let value = this.addValue;
-        const newChild = {
-          id: id++,
-          label: value,
-          children: [],
-        };
-        if (!data.children) {
-          // this.$set(this.datas, "children", []);
-        }
-        data.children.push(newChild);
-        this.newID = id;
-        this.showMB2 = false;
-        this.addValue = "";
-        this.baocun();
-      }
-    },
-    unAddClicks() {
-      this.showMB2 = false;
-    },
-    updateClick() {
-      if (this.currentIndex != 2) {
-        this.currentIndex = 2;
-      } else {
-        let data = this.selectData;
-        this.updaValue = data.label;
-        this.showMB = true;
-      }
-    },
-    updateClicks() {
-      let data = this.selectData;
-      let node = this.selectNode;
-      const parent = node.parent;
-      const children = parent.data.children || parent.data;
-      const index = children.findIndex((d) => d.id === data.id);
-      let value = this.updaValue;
-      children[index].label = value;
-      this.showMB = false;
-      this.baocun();
-    },
-    downClick() {
-      if (this.currentIndex != 3) {
-        this.currentIndex = 3;
-      } else {
-        let data = this.selectData;
-        let node = this.selectNode;
-        const parent = node.parent;
-        const children = parent.data.children || parent.data;
-        const index = children.findIndex((d) => d.id === data.id);
-        if (index < children.length - 1) {
-          const tempChildrenNodex1 = children[index + 1];
-          const tempChildrenNodex2 = children[index];
-
-          this.$set(children, index + 1, tempChildrenNodex2);
-          this.$set(children, index, tempChildrenNodex1);
-          this.$set(this.datas);
-          this.defaultExpand[0] = data.id;
-          this.tree_key++;
-          this.baocun();
-        } else {
-          this.$notify({
-            title: "下移节点",
-            message: "已处于最底部",
-            offset: 60,
-            type: "error",
-          });
-        }
-      }
-    },
-    upsClick() {
-      if (this.currentIndex != 4) {
-        this.currentIndex = 4;
-      } else {
-        let data = this.selectData;
-        let node = this.selectNode;
-        const parent = node.parent;
-        const children = parent.data.children || parent.data;
-        const index = children.findIndex((d) => d.id === data.id);
-        if (index > 0) {
-          const tempChildrenNodex1 = children[index - 1];
-          const tempChildrenNodex2 = children[index];
-          this.$set(children, index - 1, tempChildrenNodex2);
-          this.$set(children, index, tempChildrenNodex1);
-          this.defaultExpand[0] = data.id;
-          this.tree_key++;
-          this.baocun();
-        } else {
-          this.$notify({
-            title: "上移节点",
-            message: "已处于最顶部",
-            offset: 60,
-            type: "error",
-          });
-        }
-      }
-    },
-    deleteClick() {
-      if (this.currentIndex != 5) {
-        this.currentIndex = 5;
-      } else {
-        if (this.selectData.id != undefined) {
-          if (this.selectData.towerType != undefined || null || "") {
-            this.showMB4 = true;
-          } else if (this.selectData.children.length > 0) {
-            this.showMB5 = true;
-          } else {
-            this.showMB3 = true;
-          }
-        } else {
-          this.$notify({
-            title: "删除节点",
-            message: "请选中一条树节点",
-            offset: 60,
-            type: "error",
-          });
-        }
-      }
-    },
-    deleteClicks() {
-      let data = this.selectData;
-      let node = this.selectNode;
-      const parent = node.parent;
-      const children = parent.data.children || parent.data;
-      const index = children.findIndex((d) => d.id === data.id);
-      children.splice(index, 1);
-      this.showMB3 = false;
-      this.selectData = {};
-      this.selectNode = {};
-      this.baocun();
-    },
-    unDeleteClicks() {
-      this.showMB3 = false;
-    },
-    deleteClicks2() {
-      this.showMB4 = false;
-    },
-    deleteClicks3() {
-      this.showMB5 = false;
     },
 
     // 复选框被选中时
@@ -655,10 +326,18 @@ export default {
       window.ue.interface.BackModifyTableData = this.BackModifyTableData;
     },
     BackModifyTableData() {},
+    // 确认
+    okClick() {
+      this.$bus.$emit("initSubpage", true);
+    }
   },
 };
 </script>
 <style scoped>
+.ddd::placeholder {
+  color: #cacaca;
+  text-align: center;
+}
 .blockItem >>> .el-tree {
   background-color: transparent;
   color: #fff;
@@ -787,17 +466,12 @@ export default {
 <style scoped>
 .block {
   width: 100%;
-  height: 903px;
+  height: 818px;
   display: flex;
-
   position: relative;
-  margin-top: 40px;
 }
 
 .j_titles {
-  position: absolute;
-  left: 0;
-  top: 0;
   width: 100%;
   height: 40px;
   background: url("img/jtitle.png") no-repeat !important;
@@ -812,6 +486,15 @@ export default {
   color: #ffffff;
   margin-left: 18px;
 }
+
+.j_ss {
+  width: 366px;
+  height: 32px;
+  margin: 11px 7px 11px 5px;
+  background: url("img/bg.png") no-repeat !important;
+  background-size: 100% 100% !important;
+}
+
 .t_input {
   position: absolute;
   left: 8px;
@@ -821,69 +504,7 @@ export default {
   display: flex;
   z-index: 999;
 }
-.t_input > .t_block {
-  width: 32px;
-  height: 32px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 13px;
-  background: url("img/tbgss.png") no-repeat;
-  background-size: 100% 100%;
-  cursor: pointer;
-}
-.t_block_cha {
-  width: 126px !important;
-  position: relative;
-  background: url("img/tbg2.png") no-repeat !important;
-  background-size: 100% 100% !important;
-}
-.t_block_cha > img {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-}
-.t_block_add {
-  width: 84px !important;
-  height: 32px !important;
-  background: url("img/t_add.png") no-repeat !important;
-  background-size: 100% 100% !important;
-}
-.t_block_update {
-  width: 84px !important;
-  height: 32px !important;
-  background: url("img/t_block_update.png") no-repeat !important;
-  background-size: 100% 100% !important;
-}
-.t_block_down {
-  width: 84px !important;
-  height: 32px !important;
-  background: url("img/t_block_down.png") no-repeat !important;
-  background-size: 100% 100% !important;
-}
-.t_block_ups {
-  width: 84px !important;
-  height: 32px !important;
-  background: url("img/t_block_ups.png") no-repeat !important;
-  background-size: 100% 100% !important;
-}
-.t_block_decete {
-  width: 84px !important;
-  height: 32px !important;
-  background: url("img/t_block_decete.png") no-repeat !important;
-  background-size: 100% 100% !important;
-}
-.t_input > .t_block > img {
-  width: 16px;
-  height: 16px;
-}
-.t_input > .chaxun {
-  width: 126px;
-  height: 100%;
-  background: url("img/chaxun.png") no-repeat !important;
-  background-size: 100% 100% !important;
-  position: relative;
-}
+
 .chaxun > .icons {
   width: 15px;
   height: 15px;
@@ -896,13 +517,11 @@ export default {
 
 .blockItem {
   width: 360px;
-  height: 840px;
+  height: 755px;
   border-radius: 2px;
-  position: absolute;
   overflow-y: scroll;
   overflow-x: hidden;
-  left: 8px;
-  top: 55px;
+  margin-left: 8px;
 }
 .blockItem::-webkit-scrollbar {
   display: none;
@@ -1034,57 +653,14 @@ export default {
   background: url("img/inputs.png") no-repeat !important;
   background-size: 100% 100% !important;
 }
-.z_btn {
-  width: 174px;
-  height: 33px;
+.qr {
   position: absolute;
-  right: 17px;
-  bottom: 17px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.z_btn > .z_blocks {
-  width: 81px;
-  height: 33px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  bottom: 24px;
+  right: 21px;
+  width: 105px;
+  height: 30px;
+  background: url(img/ok.png)no-repeat;
+  background-size: 100% 100%;
   cursor: pointer;
-  background: url("img/tbn.png") no-repeat !important;
-  background-size: 100% 100% !important;
-}
-.z_btn > .z_blocks > span {
-  font-family: SourceHanSansSC-Regular;
-  font-size: 16px;
-  font-weight: normal;
-  color: #e2e2e2;
-}
-
-.z_btn2 {
-  width: 174px;
-  height: 33px;
-  position: absolute;
-  right: 17px;
-  bottom: 17px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-.z_btn2 > .z_blocks {
-  width: 81px;
-  height: 33px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  background: url("img/tbn.png") no-repeat !important;
-  background-size: 100% 100% !important;
-}
-.z_btn2 > .z_blocks > span {
-  font-family: SourceHanSansSC-Regular;
-  font-size: 16px;
-  font-weight: normal;
-  color: #e2e2e2;
 }
 </style>
