@@ -684,10 +684,105 @@ export default {
       };
       ue.interface.broadcast("PSAPI", JSON.stringify(data2));
       if (data == "fuheyuce") {
+        this.$router.push({
+          path: "/xn/fhyc",
+        });
+        let e = {
+          one: "虚拟规划",
+          two: "",
+          three: "负荷预测",
+          right1: ">",
+          right2: "",
+        };
+        this.$bus.$emit("setCrumbs", e);
+      } else if (data == "rongliangpeiping") {
+        this.$router.push({
+          path: "/xn/rlpp",
+        });
+        let e = {
+          one: "虚拟规划",
+          two: "",
+          three: "容量配平",
+          right1: ">",
+          right2: "",
+        };
+        this.$bus.$emit("setCrumbs", e);
+      } else if (data == "xuanzhidingrong") {
+        this.$router.push({
+          path: "/xn/xzdr",
+        });
+        let e = {
+          one: "虚拟规划",
+          two: "",
+          three: "选址定容",
+          right1: ">",
+          right2: "",
+        };
+        this.$bus.$emit("setCrumbs", e);
+      } else if (data == "zhinengxuanxian") {
+        this.$router.push({
+          path: "/xn/znxx",
+        });
+        let e = {
+          one: "虚拟规划",
+          two: "",
+          three: "智能选线",
+          right1: ">",
+          right2: "",
+        };
+        this.$bus.$emit("setCrumbs", e);
+      } else if (data == "chaoliujisuan") {
+        this.$router.push({
+          path: "/xn/cljs",
+        });
+        let e = {
+          one: "虚拟规划",
+          two: "",
+          three: "潮流计算",
+          right1: ">",
+          right2: "",
+        };
+        this.$bus.$emit("setCrumbs", e);
+      } else if (data == "duanlujisuan") {
+        this.$router.push({
+          path: "/xn/dljs",
+        });
+        let e = {
+          one: "虚拟规划",
+          two: "",
+          three: "短路计算",
+          right1: ">",
+          right2: "",
+        };
+        this.$bus.$emit("setCrumbs", e);
+      } else if (data == "kekaoxingjisuan") {
+        this.$router.push({
+          path: "/xn/kkxjs",
+        });
+        let e = {
+          one: "虚拟规划",
+          two: "",
+          three: "可靠性计算",
+          right1: ">",
+          right2: "",
+        };
+        this.$bus.$emit("setCrumbs", e);
+      } else if (data == "guihuabaogao") {
+        this.$router.push({
+          path: "/xn/ghbg",
+        });
+        let e = {
+          one: "虚拟规划",
+          two: "",
+          three: "规划报告",
+          right1: ">",
+          right2: "",
+        };
+        this.$bus.$emit("setCrumbs", e);
       }
-      this.$router.push({
-        path: "/xuni_mr",
-      });
+      // this.$router.push({
+      //   path: "/xuni_mr",
+      // });
     },
     handleChange4(value) {
       let [...arr] = value;

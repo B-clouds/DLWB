@@ -122,6 +122,21 @@ const XN = () =>
 const MR2 = () => import('../view/mrenYe2/index.vue')
 // 负荷预测
 const XFZFX = () => import('../view/xuni/components/fuheyuce/index.vue')
+// 容量配平
+const RLPP = () => import('../view/xuni/components/rongliangpeiping/index.vue')
+// 选址定容
+const XZDR = () => import('../view/xuni/components/xuanzhidingrong/index.vue')
+// 智能选线
+const ZNXX = () => import('../view/xuni/components/zhinengxuanxian/index.vue')
+// 电气报告-潮流计算
+const CLJS = () => import('../view/xuni/components/chaoliujisuan/index.vue')
+// 电气报告-短路计算
+const DLJS = () => import('../view/xuni/components/duanlujisuan/index.vue')
+// 电气报告-可靠性计算
+const KKXJS = () => import('../view/xuni/components/kekaoxingjisuan/index.vue')
+// 规划报告
+const GHBG = () => import('../view/xuni/components/guihuabaogao/index.vue')
+
 // 模型管理
 const MX = () =>
     import('../view/moxing/moxing.vue')
@@ -350,12 +365,40 @@ const routes = [{
     path: "/xn",
     name: "xuni",
     component: XN,
-    children: [{
-        path: 'fhfx',
-        name: "fuhefenxi",
-        component: XFZFX,
-
-    },
+    children: [
+        {
+            path: 'fhfx',
+            name: "fuhefenxi",
+            component: XFZFX,
+        }, {
+            path: "rlpp",
+            name: "rongliangpeiping",
+            component: RLPP
+        }, {
+            path: "xzdr",
+            name: "xuanzhidingrong",
+            component: XZDR
+        }, {
+            path: "znxx",
+            name: "zhinengxuanxian",
+            component: ZNXX
+        }, {
+            path: "cljs",
+            name: "chaoliujisuan",
+            component: CLJS
+        }, {
+            path: "dljs",
+            name: "duanlujisuan",
+            component: DLJS
+        }, {
+            path: "kkxjs",
+            name: "kekaoxingjisuan",
+            component: KKXJS
+        }, {
+            path: "ghbg",
+            name: "guihuabaogao",
+            component: GHBG
+        }
     ]
 },
 {
