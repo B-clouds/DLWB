@@ -107,6 +107,8 @@ const WGFX = () =>
 const YHFX = () => import('../view/wangjia/components/yonghufenxi/index.vue')
 // 停电分析 
 const TDFX = () => import('../view/wangjia/components/tingdianfenx/index.vue')
+// 全景监测
+const QJJC = () => import('../view/wangjia/components/quanjingjiance/index.vue')
 // ----------------------------------------------------------------------------------------
 // 虚拟规划
 const XN = () =>
@@ -321,6 +323,10 @@ const routes = [{
         path: 'tdfx',
         name: "tingdianfenxi",
         component: TDFX
+    }, {
+        path: "qjjc",
+        name: "quanjingjiance",
+        component: QJJC
     }, {
         path: "zhpg",
         name: "zonghepinggu",

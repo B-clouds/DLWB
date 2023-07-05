@@ -37,6 +37,8 @@
     <gLeft v-if="show && detiles2" />
     <gRight v-if="show && detiles2" />
 
+    <!-- 公里单元 -->
+    <dLeft v-if="show && detiles3" />
     <!-- 3D图层 -->
     <div class="jr_threeD" v-show="show && showRights && detiles1">
       <div
@@ -66,6 +68,8 @@ import jRight2 from "./components/jRight2.vue";
 // 规模分析
 import gLeft from "./components/gLeft.vue";
 import gRight from "./components/gRight.vue";
+// 公里单元
+import dLeft from "./components/dLeft.vue";
 
 export default {
   name: "wanggefenxi",
@@ -75,6 +79,7 @@ export default {
     jRight2,
     gLeft,
     gRight,
+    dLeft,
   },
   data() {
     return {

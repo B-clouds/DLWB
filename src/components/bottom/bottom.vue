@@ -613,6 +613,18 @@ export default {
           right2: "",
         };
         this.$bus.$emit("setCrumbs", e);
+      } else if (data == "quanjingjiance") {
+        this.$router.push({
+          path: "/wj/qjjc",
+        });
+        let e = {
+          one: "电网分析",
+          two: "",
+          three: "全景检测",
+          right1: ">",
+          right2: "",
+        };
+        this.$bus.$emit("setCrumbs", e);
       }
       this.value2 = "网架分析";
       let v = { ChooseType: "ShowCompass", value: true };
