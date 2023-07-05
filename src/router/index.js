@@ -98,8 +98,7 @@ const SSFXITEM = () =>
     import('../view/wangjia/components/sheshifenxi/index.vue')
 
 
-// 综合评估
-const ZHPG = () => import('../view/wangjia/components/zonghepinggu/index.vue')
+
 // 网格分析
 const WGFX = () =>
     import('../view/wangjia/components/wanggefenxi/index.vue')
@@ -109,6 +108,12 @@ const YHFX = () => import('../view/wangjia/components/yonghufenxi/index.vue')
 const TDFX = () => import('../view/wangjia/components/tingdianfenx/index.vue')
 // 全景监测
 const QJJC = () => import('../view/wangjia/components/quanjingjiance/index.vue')
+// 网架分析
+const WJFX = () => import('../view/wangjia/components/wangjiafenxi/index.vue')
+// 综合评估
+const ZHPG = () => import('../view/wangjia/components/zonghepinggu/index.vue')
+// 分析报告
+const FXBG = () => import('../view/wangjia/components/fenxibaogao/index.vue')
 // ----------------------------------------------------------------------------------------
 // 虚拟规划
 const XN = () =>
@@ -328,10 +333,18 @@ const routes = [{
         name: "quanjingjiance",
         component: QJJC
     }, {
+        path: "wjfx",
+        name: 'wangjiafenxi',
+        component: WJFX
+    }, {
         path: "zhpg",
         name: "zonghepinggu",
         component: ZHPG
-    }]
+    }, {
+        path: 'fxbg',
+        name: 'fenxibaogao',
+        component: FXBG
+    },]
 },
 {
     path: "/xn",

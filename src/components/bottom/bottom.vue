@@ -625,6 +625,30 @@ export default {
           right2: "",
         };
         this.$bus.$emit("setCrumbs", e);
+      } else if (data == "wangjiafenxi") {
+        this.$router.push({
+          path: "/wj/wjfx",
+        });
+        let e = {
+          one: "电网分析",
+          two: "",
+          three: "网架分析",
+          right1: ">",
+          right2: "",
+        };
+        this.$bus.$emit("setCrumbs", e);
+      } else if (data == "fenxibaogao") {
+        this.$router.push({
+          path: "/wj/fxbg",
+        });
+        let e = {
+          one: "电网分析",
+          two: "",
+          three: "分析报告",
+          right1: ">",
+          right2: "",
+        };
+        this.$bus.$emit("setCrumbs", e);
       }
       this.value2 = "网架分析";
       let v = { ChooseType: "ShowCompass", value: true };
