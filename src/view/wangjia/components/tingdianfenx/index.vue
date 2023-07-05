@@ -22,28 +22,28 @@
       </div>
     </transition>
     <!-- 基本管理 -->
-    <jLeft
+    <tdLeft
       @showRight="showRight"
       @getOid="getOid"
       @getIds="getIds"
       v-if="show && detiles1"
     />
-    <jRight v-if="show && showRights && detiles1"/>
+    <tdRight v-if="show && showRights && detiles1"/>
     <newLieBiao v-if="show && detiles2" />
   </div>
 </template>
 
 <script>
 // 基本信息
-import jLeft from "./components/jLeft.vue";
-import jRight from "./components/jRight.vue";
+import tdLeft from "./components/tdLeft.vue";
+import tdRight from "./components/tdRight.vue";
 // 数据查询
 import newLieBiao from "./components/newLieBiao.vue";
 export default {
   name: "tingdianfenx",
   components: {
-    jLeft,
-    jRight,
+    tdLeft,
+    tdRight,
     newLieBiao,
   },
   data() {

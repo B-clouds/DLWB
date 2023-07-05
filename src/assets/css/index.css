@@ -103,3 +103,8 @@ li {
     font-family: Source Han Sans SC;
     src: url('../font/Source Han Sans SC.otf');
 }
+
+@font-face {
+    font-family: 字体圈欣意冠黑体;
+    src: url('../font/7c039684ee457d3539e0fa67e967e8b0.ttf');
+}
