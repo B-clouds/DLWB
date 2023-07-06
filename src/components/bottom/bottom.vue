@@ -637,6 +637,18 @@ export default {
           right2: "",
         };
         this.$bus.$emit("setCrumbs", e);
+      } else if (data == "zonghepinggu") {
+        this.$router.push({
+          path: "/wj/zhpg",
+        });
+        let e = {
+          one: "电网分析",
+          two: "",
+          three: "综合评估",
+          right1: ">",
+          right2: "",
+        };
+        this.$bus.$emit("setCrumbs", e);
       } else if (data == "fenxibaogao") {
         this.$router.push({
           path: "/wj/fxbg",
@@ -685,7 +697,7 @@ export default {
       ue.interface.broadcast("PSAPI", JSON.stringify(data2));
       if (data == "fuheyuce") {
         this.$router.push({
-          path: "/xn/fhyc",
+          path: "/xn/fhfx",
         });
         let e = {
           one: "虚拟规划",
