@@ -1,15 +1,8 @@
 <template>
   <div class="buidan">
-    <!-- 列表页阴影 -->
-    <transition name="transitionLeft">
-      <div v-show="show" class="wl"></div>
-    </transition>
-    <transition name="transitionRight">
-      <div v-show="show" class="wr"></div>
-    </transition>
     <!-- 子级导航 -->
     <transition name="transitionBottom">
-      <div v-show="show && showRights" class="navs">
+      <div v-show="show && showNavs" class="navs">
         <div
           class="blocks"
           @click="navClick(index)"
@@ -21,16 +14,22 @@
         </div>
       </div>
     </transition>
-    <!-- 基本管理 -->
+    <!-- 初始页面 -->
     <jLeft
       @showRight="showRight"
+      @showNav="showNav"
       @getOid="getOid"
       @getIds="getIds"
-      v-if="show"
+      v-if="show && !showNavs"
     />
-    <jRight v-if="showRights && detiles1" />
+    <jRight v-if="showRights && !showNavs" />
+
+    <!-- 诊断分析 -->
+    <transition name="transitionLeft">
+      <zdfxLeft v-if="show && detiles1" />
+    </transition>
     <!-- 3D图层 -->
-    <div class="jr_threeD" v-show="show && showRights">
+    <div class="jr_threeD" v-show="show && showRights && !showNavs">
       <div
         class="jr_blocks"
         @click="jrCilck(0)"
@@ -51,11 +50,13 @@
 <script>
 import jLeft from "./components/jLeft.vue";
 import jRight from "./components/jRight.vue";
+import zdfxLeft from "./components/zdfxLeft.vue";
 export default {
   name: "zonghepinggu",
   components: {
     jLeft,
     jRight,
+    zdfxLeft,
   },
   data() {
     return {
@@ -63,18 +64,18 @@ export default {
       showSC: false, //是否移入-杆塔布点-删除按钮
       showFH: false, //是否移入-杆塔布点-返回按钮
       tgId: null,
-      detiles1: true,
+      detiles1: false,
       detiles2: false,
       detiles3: false,
       detiles4: false,
       detiles5: false,
       navList: [
-        "基本管理",
-        "规模分析",
-        "断面分析",
-        "用电分析",
-        "运行分析",
+        "诊断分析",
+        "诊断查询",
         "目标管理",
+        "截面分析",
+        "用电分析",
+        "运行管理",
       ],
       navIndex: 0,
       showRights: false,
@@ -82,6 +83,7 @@ export default {
       jr_index: -1,
       ids: [],
       oids: 0,
+      showNavs: false,
     };
   },
 
@@ -93,6 +95,10 @@ export default {
     this.show = false;
   },
   methods: {
+    showNav() {
+      this.showNavs = true;
+      this.detiles1 = true;
+    },
     getOid(e) {
       this.oids = e;
     },
