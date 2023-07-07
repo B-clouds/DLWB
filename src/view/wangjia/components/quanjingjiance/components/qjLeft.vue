@@ -479,28 +479,6 @@ export default {
       setTimeout(() => {
         that.$bus.$emit("leftOid", node.data.oid);
       }, 50);
-      let v = {
-        Type: "ShowPolygonIDS",
-        Ids: ids,
-        wgmc: node.data.label,
-        Value: showLefts,
-      };
-      let data = {
-        functionName: "GridNavigationTree",
-        backFunctionName: "backVertices",
-        functionParameters: [
-          {
-            key: "GridNavigationTree",
-            value: JSON.stringify(v),
-          },
-        ],
-      };
-      ue.interface.broadcast("PSAPI", JSON.stringify(data));
-      window.ue.interface.backVertices = this.backVertices;
-    },
-    backVertices(e) {
-      let data = JSON.parse(e).value;
-      this.$bus.$emit("rightCx", data);
     },
 
     setParentNode(node) {
@@ -530,17 +508,7 @@ export default {
       }
       if (e.towerType !== undefined) {
         let obj = e.towerType;
-        let data = {
-          functionName: "ModelManage",
-          backFunctionName: "",
-          functionParameters: [
-            {
-              key: "ModelID",
-              value: obj,
-            },
-          ],
-        };
-        ue.interface.broadcast("PSAPI", JSON.stringify(data));
+
         this.$emit("showRight", true);
         let that = this;
         setTimeout(() => {
@@ -548,17 +516,6 @@ export default {
           that.$bus.$emit("getTZlist", e);
         }, 50);
       } else {
-        let data = {
-          functionName: "ModelManage",
-          backFunctionName: "",
-          functionParameters: [
-            {
-              key: "ModelID",
-              value: "",
-            },
-          ],
-        };
-        ue.interface.broadcast("PSAPI", JSON.stringify(data));
         this.$emit("showRight", false);
       }
     },
@@ -570,47 +527,11 @@ export default {
       }
     },
     // 获取树状图
-    getThree() {
-      let data = {
-        functionName: "InitPage",
-        backFunctionName: "getThrees",
-        functionParameters: [
-          {
-            key: "PageID",
-            value: "ModelManagePage",
-          },
-        ],
-      };
-      ue.interface.broadcast("PSAPI", JSON.stringify(data));
-      window.ue.interface.getThrees = this.getThrees;
-    },
+    getThree() {},
     // 获取树结构内容
-    getThrees(e) {
-      let data = JSON.parse(e);
-      let data2 = JSON.parse(data.value);
-      this.datas = data2.obj;
-      this.newID = data2.newID;
-    },
+
     // 将本地树结构发送到ue那边去
-    baocun() {
-      let props = {
-        obj: this.datas,
-        newID: this.newID,
-      };
-      let v = { ModifyType: "Save", DataValue: JSON.stringify(props) };
-      let data = {
-        functionName: "ModifyModelManagement",
-        backFunctionName: "BackModifyTableData",
-        functionParameters: [
-          {
-            key: "ModifyModelManagement",
-            value: JSON.stringify(v),
-          },
-        ],
-      };
-      ue.interface.broadcast("PSAPI", JSON.stringify(data));
-      window.ue.interface.BackModifyTableData = this.BackModifyTableData;
-    },
+    baocun() {},
     BackModifyTableData() {},
   },
 };

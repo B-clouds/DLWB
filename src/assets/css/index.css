@@ -108,3 +108,8 @@ li {
     font-family: 字体圈欣意冠黑体;
     src: url('../font/7c039684ee457d3539e0fa67e967e8b0.ttf');
 }
+
+@font-face {
+    font-family: DIN Alternate;
+    src: url('../font//61268bf53136523c6d4ccc4ee98379f1.ttf');
+}

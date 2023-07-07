@@ -221,6 +221,8 @@
         <span>测量角度</span>
       </div>
     </div>
+    <!-- 大营所 -->
+    <div class="dys" :class="dysShow ? 'dys2' : ''" @click="dysClick"></div>
     <!-- 漫游按钮 -->
     <div class="myan" @click="myClick"></div>
     <!-- 开关柜显隐 -->
@@ -336,6 +338,7 @@ export default {
       zdIndex: 0,
       showKGG: false,
       showMY: false,
+      dysShow: false,
     };
   },
   created() {},
@@ -483,6 +486,25 @@ export default {
     //   this.showAXX = datas.AXX;
 
     // },
+    dysClick() {
+      if (this.dysShow) {
+        this.dysShow = false;
+      } else {
+        this.dysShow = true;
+      }
+
+      let v = { ChooseID: "0", ChooseType: this.dysShow };
+      let data = {
+        functionName: "TestFunc",
+        functionParameters: [
+          {
+            key: "TestFunc",
+            value: JSON.stringify(v),
+          },
+        ],
+      };
+      ue.interface.broadcast("PSAPI", JSON.stringify(data));
+    },
     myClick() {
       let v = { ChooseType: "RDMY", value: "true" };
       let data = {
@@ -1914,5 +1936,19 @@ export default {
 .myan:hover {
   background: url("img/my1.png") no-repeat !important;
   background-size: 100% 100% !important;
+}
+
+.dys {
+  width: 37px;
+  height: 37px;
+  position: absolute;
+  top: 50px;
+  right: 162px;
+  background: url("img/ys.png") no-repeat;
+  background-size: 100% 100%;
+}
+.dys2 {
+  background: url("img/ys1.png") no-repeat;
+  background-size: 100% 100%;
 }
 </style>

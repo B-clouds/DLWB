@@ -26,7 +26,10 @@
 
     <!-- 诊断分析 -->
     <transition name="transitionLeft">
-      <zdfxLeft v-if="show && detiles1" />
+      <zdfxLeft @geshihua="geshihua" v-if="show && detiles1" />
+    </transition>
+    <transition name="transitionRight">
+      <zdfxRight v-if="show && detiles1" />
     </transition>
     <!-- 3D图层 -->
     <div class="jr_threeD" v-show="show && showRights && !showNavs">
@@ -51,12 +54,14 @@
 import jLeft from "./components/jLeft.vue";
 import jRight from "./components/jRight.vue";
 import zdfxLeft from "./components/zdfxLeft.vue";
+import zdfxRight from "./components/zdfxRight.vue";
 export default {
   name: "zonghepinggu",
   components: {
     jLeft,
     jRight,
     zdfxLeft,
+    zdfxRight,
   },
   data() {
     return {
@@ -95,6 +100,10 @@ export default {
     this.show = false;
   },
   methods: {
+    geshihua() {
+      this.showNavs = false;
+      this.detiles1 = false;
+    },
     showNav() {
       this.showNavs = true;
       this.detiles1 = true;

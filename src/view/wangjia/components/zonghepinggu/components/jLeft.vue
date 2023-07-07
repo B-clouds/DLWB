@@ -12,7 +12,7 @@
       <span>模型资产导航树</span>
     </div> -->
     <div class="j_titles">
-      <span>网格架构树</span>
+      <span>区域选择</span>
     </div>
     <div class="j_ss">
       <input class="ddd" placeholder="搜索" />
@@ -140,8 +140,7 @@ export default {
         this.$axios
           .get(window.wanggeUrl, {
             params: {
-              id: "",
-              level: 0,
+              oid: 0,
             },
           })
           .then((res) => {
@@ -153,8 +152,7 @@ export default {
         this.$axios
           .get(window.wanggeUrl, {
             params: {
-              id: node.data.id,
-              level: node.level,
+              oid: node.data.id,
             },
           })
           .then((res) => {
@@ -226,24 +224,6 @@ export default {
       setTimeout(() => {
         that.$bus.$emit("leftOid", node.data.oid);
       }, 50);
-      let v = {
-        Type: "ShowPolygonIDS",
-        Ids: ids,
-        wgmc: node.data.label,
-        Value: showLefts,
-      };
-      let data = {
-        functionName: "GridNavigationTree",
-        backFunctionName: "backVertices",
-        functionParameters: [
-          {
-            key: "GridNavigationTree",
-            value: JSON.stringify(v),
-          },
-        ],
-      };
-      ue.interface.broadcast("PSAPI", JSON.stringify(data));
-      window.ue.interface.backVertices = this.backVertices;
     },
     backVertices(e) {
       let data = JSON.parse(e).value;
@@ -318,47 +298,10 @@ export default {
       }
     },
     // 获取树状图
-    getThree() {
-      let data = {
-        functionName: "InitPage",
-        backFunctionName: "getThrees",
-        functionParameters: [
-          {
-            key: "PageID",
-            value: "ModelManagePage",
-          },
-        ],
-      };
-      ue.interface.broadcast("PSAPI", JSON.stringify(data));
-      window.ue.interface.getThrees = this.getThrees;
-    },
-    // 获取树结构内容
-    getThrees(e) {
-      let data = JSON.parse(e);
-      let data2 = JSON.parse(data.value);
-      this.datas = data2.obj;
-      this.newID = data2.newID;
-    },
+    getThree() {},
+
     // 将本地树结构发送到ue那边去
-    baocun() {
-      let props = {
-        obj: this.datas,
-        newID: this.newID,
-      };
-      let v = { ModifyType: "Save", DataValue: JSON.stringify(props) };
-      let data = {
-        functionName: "ModifyModelManagement",
-        backFunctionName: "BackModifyTableData",
-        functionParameters: [
-          {
-            key: "ModifyModelManagement",
-            value: JSON.stringify(v),
-          },
-        ],
-      };
-      ue.interface.broadcast("PSAPI", JSON.stringify(data));
-      window.ue.interface.BackModifyTableData = this.BackModifyTableData;
-    },
+    baocun() {},
     BackModifyTableData() {},
   },
 };

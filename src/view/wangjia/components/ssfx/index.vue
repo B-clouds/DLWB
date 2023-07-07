@@ -972,8 +972,21 @@ export default {
 
       newData2 = [...new Set(newData)];
       this.kvList = newData2.sort();
+      console.log(data, data.length, "---------------------------");
       if (data.length == 0) {
         this.showTk2 = true;
+      } else if (data.length == 6) {
+        this.$router.push({
+          path: "/wj/xianlu",
+        });
+        let e = {
+          one: "电网分析",
+          two: "设备分析",
+          three: "线路",
+          right1: ">",
+          right2: ">",
+        };
+        this.$bus.$emit("setCrumbs", e);
       } else {
         this.showTk1 = true;
       }
