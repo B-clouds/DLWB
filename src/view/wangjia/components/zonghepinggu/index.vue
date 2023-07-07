@@ -31,6 +31,10 @@
     <transition name="transitionRight">
       <zdfxRight v-if="show && detiles1" />
     </transition>
+    <!-- 诊断查询 -->
+    <zdcx v-if="show && detiles2" />
+    <!-- 目标管理 -->
+    <mbgl v-if="show && detiles3" />
     <!-- 3D图层 -->
     <div class="jr_threeD" v-show="show && showRights && !showNavs">
       <div
@@ -55,6 +59,8 @@ import jLeft from "./components/jLeft.vue";
 import jRight from "./components/jRight.vue";
 import zdfxLeft from "./components/zdfxLeft.vue";
 import zdfxRight from "./components/zdfxRight.vue";
+import zdcx from "./components/zdcx.vue";
+import mbgl from "./components/mbgl.vue";
 export default {
   name: "zonghepinggu",
   components: {
@@ -62,6 +68,8 @@ export default {
     jRight,
     zdfxLeft,
     zdfxRight,
+    zdcx,
+    mbgl,
   },
   data() {
     return {

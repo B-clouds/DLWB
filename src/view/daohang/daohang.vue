@@ -1,5 +1,17 @@
 <template>
   <div class="daohang">
+    <!-- 三维场景 -->
+    <div
+      class="sanweichangjing"
+      @click="sIndexClick(0)"
+      :class="s_index == 0 ? 'sanweichangjing2' : ''"
+    ></div>
+    <!-- 数据场景 -->
+    <div
+      class="shujuchangjing"
+      @click="sIndexClick(1)"
+      :class="s_index == 1 ? 'shujuchangjing2' : ''"
+    ></div>
     <!-- 公共按钮 -->
     <!-- 区划 -->
     <div
@@ -7,6 +19,7 @@
       @click="quhuaClick"
       :class="currentIndex == 0 ? 'quhua2' : ''"
     ></div>
+
     <!-- 路网 -->
     <div
       class="luwang"
@@ -70,6 +83,7 @@ export default {
       isShowXA: false,
       navIndex: 0,
       isShowTK: false,
+      s_index: 0,
     };
   },
   deactivated() {
@@ -77,6 +91,9 @@ export default {
     this.isShowXA = false;
   },
   methods: {
+    sIndexClick(e) {
+      this.s_index = e;
+    },
     quhuaClick() {
       this.currentIndex = 0;
       this.isShowXA = false;
@@ -394,5 +411,36 @@ export default {
   font-size: 16px;
   font-weight: normal;
   color: #e2e2e2;
+}
+</style>
+<style scoped>
+.sanweichangjing {
+  width: 230px;
+  height: 51px;
+  position: absolute;
+  left: 21px;
+  top: 63px;
+  background: url("img/s1.png") no-repeat;
+  background-size: 100% 100%;
+  cursor: pointer;
+}
+.sanweichangjing2 {
+  background: url("img/s2.png") no-repeat !important;
+  background-size: 100% 100% !important;
+}
+
+.shujuchangjing {
+  width: 230px;
+  height: 51px;
+  position: absolute;
+  left: 21px;
+  top: 135px;
+  background: url("img/sj1.png") no-repeat;
+  background-size: 100% 100%;
+  cursor: pointer;
+}
+.shujuchangjing2 {
+  background: url("img/sj2.png") no-repeat !important;
+  background-size: 100% 100% !important;
 }
 </style>
