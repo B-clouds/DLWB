@@ -110,8 +110,7 @@ export default {
         this.$axios
           .get(window.wanggeUrl, {
             params: {
-              id: "",
-              level: 0,
+              oid: 0,
             },
           })
           .then((res) => {
@@ -123,8 +122,7 @@ export default {
         this.$axios
           .get(window.wanggeUrl, {
             params: {
-              id: node.data.id,
-              level: node.level,
+              oid: node.data.id,
             },
           })
           .then((res) => {
