@@ -1,187 +1,32 @@
 <template>
   <div class="newLieBiao">
-    <!-- 左侧阴影 -->
-    <div class="zuo"></div>
-    <div class="s_show1" v-show="!showZDtb"></div>
-    <div class="s_show2" v-show="!showZDtb"></div>
-    <!-- 左侧模块按钮 -->
-    <div class="leftBtn" v-show="showZDtb && !showTJ">
-      <!-- 功能按钮 -->
-      <div class="btnBlock">
-        <div
-          class="btnItem"
-          @click="inquire"
-          :class="btnIndex == 0 ? 'btnItem2' : ''"
-        >
-          <span>查询</span>
-        </div>
-      </div>
-      <!-- 箭头 -->
-      <div @click="jtClick" class="jianTou"></div>
-    </div>
-
-    <!-- 左侧模块按钮展开 -->
-    <transition name="transitionLeft">
-      <div class="leftBtn leftBtn2" v-show="showZDtb && showTJ">
-        <div class="btnBlock">
-          <div
-            class="btnItem"
-            @click="inquire"
-            :class="btnIndex == 0 ? 'btnItem2' : ''"
-          >
-            <span>查询</span>
-          </div>
-        </div>
-        <!-- 箭头 -->
-        <div @click="jtClick" class="jianTou jianTou2"></div>
-      </div>
-    </transition>
-    <transition name="transitionLeft">
-      <div class="tiaoJian" v-show="showZDtb && showTJ">
-        <div class="tjTT">
-          <span>条件选择</span>
-        </div>
-        <div class="tj_bck">
-          <!-- 线路名称 -->
-          <div class="tjBlock">
-            <div class="tops">告警名称</div>
-            <div class="bottoms">
-              <div class="inputs">
-                <div class="inputs">
-                  <input placeholder="" v-model="xl_name" />
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- 起点名称 -->
-          <div class="tjBlock">
-            <div class="tops">起点名称</div>
-            <div class="bottoms">
-              <div class="inputs">
-                <div class="inputs">
-                  <input placeholder="" v-model="xl_qdname" />
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- 终点名称 -->
-          <div class="tjBlock">
-            <div class="tops">告警时间</div>
-            <div class="bottoms">
-              <div class="inputs">
-                <div class="inputs">
-                  <input placeholder="" v-model="xl_zdname" />
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- 电压等级 -->
-          <div class="tjBlock">
-            <div class="tops">电压等级</div>
-            <div class="bottoms">
-              <div class="inputs">
-                <el-select
-                  v-model="xl_dy_value"
-                  @visible-change="dyClick"
-                  placeholder=""
-                >
-                  <el-option
-                    v-for="item in dianya"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  >
-                  </el-option>
-                </el-select>
-                <img v-show="!dy_show" src="./img/xia.png" />
-                <img v-show="dy_show" src="./img/shang.png" />
-              </div>
-            </div>
-          </div>
-          <!-- 所属地市 -->
-          <div class="tjBlock">
-            <div class="tops">告警类型</div>
-            <div class="bottoms">
-              <div class="inputs">
-                <el-select
-                  v-model="xl_ds_value"
-                  @visible-change="xl_dsClick"
-                  placeholder=""
-                >
-                  <el-option
-                    v-for="item in xl_ds_suoshu"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  >
-                  </el-option>
-                </el-select>
-                <img v-show="!xl_ds_show" src="./img/xia.png" />
-                <img v-show="xl_ds_show" src="./img/shang.png" />
-              </div>
-            </div>
-          </div>
-
-          <div class="tjBlock">
-            <div class="tops">告警等级</div>
-            <div class="bottoms">
-              <div class="inputs">
-                <el-select
-                  v-model="xl_oam_value"
-                  @visible-change="oamClick"
-                  placeholder=""
-                >
-                  <el-option
-                    v-for="item in oam"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  >
-                  </el-option>
-                </el-select>
-                <img v-show="!oam_show" src="./img/xia.png" />
-                <img v-show="oam_show" src="./img/shang.png" />
-              </div>
-            </div>
-          </div>
-          <div class="tjBlock">
-            <div class="tops">设施类型</div>
-            <div class="bottoms">
-              <div class="inputs">
-                <el-select
-                  v-model="xl_oam_value"
-                  @visible-change="oamClick"
-                  placeholder=""
-                >
-                  <el-option
-                    v-for="item in oam"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  >
-                  </el-option>
-                </el-select>
-                <img v-show="!oam_show" src="./img/xia.png" />
-                <img v-show="oam_show" src="./img/shang.png" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </transition>
     <!-- 右侧列表模块 -->
+
     <transition name="transitionRight">
       <div
         class="rightBtn"
         :class="showRZK ? 'rightBtn2' : ''"
         v-show="showZDtb && showRight && !showRZK && showDemo"
       >
+        <div class="gl_top">
+          <span class="span1">当前区域：</span>
+          <div class="names">
+            <span>xxxxx区域名称</span>
+          </div>
+          <div class="fanhui" @click="fanhuiClick"></div>
+        </div>
         <!-- 箭头 -->
         <!-- <div class="jt"></div> -->
         <!-- 开关 -->
         <div class="rkg" @click="kgClick" :class="showRZK ? 'rkg2' : ''"></div>
         <div class="j_titles">
-          <span class="span1">告警列表</span>
+          <span class="span1">违规导线统计</span>
+        </div>
+        <div class="jbBlock">
+          <img src="./img/jt2.png" />
+          <span class="span1">现状不符合要求的导线数量：</span>
+          <span class="span2">02</span>
+          <span class="span3">条</span>
         </div>
         <div class="t_bg">
           <el-table
@@ -262,7 +107,7 @@
         <!-- 开关 -->
         <div class="rkg rkg2" @click="kgClick"></div>
         <div class="mxTT">
-          <span>告警列表</span>
+          <span>违规导线统计</span>
         </div>
         <div class="t_bg t_bg2">
           <el-table
@@ -370,7 +215,7 @@ export default {
       showDemo: true,
       showTJ: false,
       btnIndex: -1, //是否选中按钮
-
+      value1: "",
       //线路名称
       xl_name: "",
       // 起点名称
@@ -509,6 +354,7 @@ export default {
           conductorName: "xxx",
           conductorType: "xxx",
         },
+
         {
           voltageGrade: "xxx",
           belongLine: "xxx",
@@ -521,18 +367,7 @@ export default {
           conductorName: "xxx",
           conductorType: "xxx",
         },
-        {
-          voltageGrade: "xxx",
-          belongLine: "xxx",
-          conductorName: "xxx",
-          conductorType: "xxx",
-        },
-        {
-          voltageGrade: "xxx",
-          belongLine: "xxx",
-          conductorName: "xxx",
-          conductorType: "xxx",
-        },
+
         {
           voltageGrade: "xxx",
           belongLine: "xxx",
@@ -547,17 +382,17 @@ export default {
         },
       ],
       tableColumnList: [
-        { propName: "告警时间", prop: "voltageGrade" },
-        { propName: "告警分类", prop: "belongLine" },
-        { propName: "电压等级", prop: "conductorName" },
-        { propName: "告警等级", prop: "conductorType" },
+        { propName: "导线ID", prop: "voltageGrade" },
+        { propName: "导线名称", prop: "belongLine" },
+        { propName: "违规内容", prop: "conductorName" },
+        { propName: "所属线路", prop: "conductorType" },
       ],
       tableColumnList2: [],
       tableColumnList3: [],
       tableColumnList4: [], //存放接口数据 收缩表头
       tableColumnList5: [], //存放接口数据 展开表头
       // -----------------------------------------------------------------------
-      showRight: false, //是否显示右侧列表
+      showRight: true, //是否显示右侧列表
       showSelect: false, //是否显示复选框
       showRZK: false, //是否展开右侧列表
       selectList: [], //复选数组
@@ -634,6 +469,9 @@ export default {
     window.ue.interface.getxlTh = this.getxlTh;
   },
   methods: {
+    fanhuiClick() {
+      this.$emit("geshihua");
+    },
     // 是否显示网架电站
     showWjDz() {
       if (this.showwjdz) {
@@ -1455,10 +1293,10 @@ export default {
 <style scoped>
 .rightBtn {
   width: 398px;
-  height: 880px;
+  height: 860px;
   position: absolute;
   right: 10px;
-  top: 140px;
+  top: 160px;
   background: url("img/mxBtn.png") no-repeat;
   background-size: 100% 100%;
 }
@@ -1500,7 +1338,7 @@ export default {
 }
 .t_bg {
   width: 98%;
-  height: 800px;
+  height: 710px;
   margin-left: 1%;
   margin-top: 15px;
 }
@@ -1781,5 +1619,143 @@ export default {
 }
 .j_titles > .span4 {
   color: #ffffff;
+}
+</style>
+
+<style scoped>
+.jbBlock {
+  width: 100%;
+  height: 34px;
+  display: flex;
+  margin-top: 18px;
+  position: relative;
+  align-items: center;
+}
+.jbBlock > img {
+  width: 34px;
+  height: 26px;
+  margin-left: 10px;
+}
+.jbBlock > .span1 {
+  font-family: Source Han Sans CN;
+  font-size: 14px;
+  font-weight: normal;
+  background: linear-gradient(to bottom, #ffffff, #6bedff);
+  -webkit-background-clip: text;
+  color: transparent;
+  margin-right: 6px;
+}
+.jbBlock > .span2 {
+  font-family: DIN Alternate;
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+  background: linear-gradient(to bottom, #ffffff, #6bedff);
+  -webkit-background-clip: text;
+  color: transparent;
+  margin-right: 10px;
+}
+.jbBlock > .span3 {
+  font-family: DIN Alternate;
+  font-size: 10px;
+  font-weight: bold;
+  text-align: center;
+  background: linear-gradient(to bottom, #ffffff, #6bedff);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+.inputs {
+  width: 100%;
+  height: 100%;
+  /* background: url("img/ip.png") no-repeat !important;
+  background-size: 100% 100% !important; */
+  position: relative;
+  background: rgba(25, 61, 112, 0.8);
+  box-sizing: border-box;
+  border: 1px solid #3876b6;
+}
+.inputs > img {
+  position: absolute;
+  top: 10px;
+  right: 8px;
+  width: 14px;
+  height: 8px;
+}
+</style>
+
+<style>
+.el-date-table td.in-range div,
+.el-date-table td.in-range div:hover,
+.el-date-table.is-week-mode .el-date-table__row.current div,
+.el-date-table.is-week-mode .el-date-table__row:hover div {
+  background-color: transparent;
+}
+</style>
+<style scoped>
+::v-deep .el-input__icon {
+  margin-top: -6px;
+}
+::v-deep .el-input__inner {
+  background-color: transparent;
+  border: 0;
+  height: 32px;
+}
+::v-deep .el-date-editor .el-range-separator {
+  color: #ffffff;
+  margin-top: -6px;
+}
+::v-deep .el-date-editor .el-range-input {
+  color: #fff;
+}
+::v-deep .el-date-table td.in-range div {
+  background-color: transparent !important;
+}
+.zdfxLeft {
+  width: 379px;
+  height: 974px;
+  position: absolute;
+  top: 92px;
+  left: 10px;
+}
+</style>
+
+<style scoped>
+.gl_top {
+  width: 351px;
+  height: 50px;
+  position: fixed;
+  top: 93px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  background: url("img/gl_bg.png") no-repeat !important;
+  background-size: 100% 100% !important;
+}
+.gl_top > .span1 {
+  font-family: Source Han Sans CN;
+  font-size: 20px;
+  font-weight: normal;
+  color: #ffffff;
+  margin-left: 37px;
+  margin-right: 5px;
+}
+.gl_top > .names {
+  width: 130px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  margin-right: 24px;
+}
+.gl_top > .names > span {
+  font-family: Source Han Sans CN;
+  font-size: 18px;
+  font-weight: bold;
+  color: #ffffff;
+}
+.gl_top > .fanhui {
+  width: 31px;
+  height: 31px;
+  background: url("img/fanhui.png") no-repeat !important;
+  background-size: 100% 100% !important;
 }
 </style>

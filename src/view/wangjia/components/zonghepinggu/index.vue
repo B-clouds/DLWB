@@ -2,7 +2,7 @@
   <div class="buidan">
     <!-- 子级导航 -->
     <transition name="transitionBottom">
-      <div v-show="show && showNavs" class="navs">
+      <div v-show="show && showNavs && !d2Item" class="navs">
         <div
           class="blocks"
           @click="navClick(index)"
@@ -32,9 +32,23 @@
       <zdfxRight v-if="show && detiles1" />
     </transition>
     <!-- 诊断查询 -->
-    <zdcx v-if="show && detiles2" />
+    <zdcx @showZDCXItem="showZDCXItem" v-show="show && detiles2 && !d2Item" />
+    <!-- 诊断查询 结果 -->
+    <zdcxItem @fanhuiCX="fanhuiCX" v-if="show && detiles2 && d2Item" />
     <!-- 目标管理 -->
-    <mbgl v-if="show && detiles3" />
+    <transition name="transitionRight">
+      <mbgl v-if="show && detiles3" />
+    </transition>
+    <!-- 截面分析 -->
+    <transition name="transitionRight">
+      <jmfx v-if="show && detiles4" />
+    </transition>
+    <!-- 用电分析 -->
+    <transition name="transitionLeft">
+      <ydfx v-if="show && detiles5" />
+    </transition>
+    <!-- 运行管理 -->
+    <yxgl v-if="show && detiles6" />
     <!-- 3D图层 -->
     <div class="jr_threeD" v-show="show && showRights && !showNavs">
       <div
@@ -60,7 +74,11 @@ import jRight from "./components/jRight.vue";
 import zdfxLeft from "./components/zdfxLeft.vue";
 import zdfxRight from "./components/zdfxRight.vue";
 import zdcx from "./components/zdcx.vue";
+import zdcxItem from "./components/zdcxItem.vue";
 import mbgl from "./components/mbgl.vue";
+import jmfx from "./components/jmfx.vue";
+import ydfx from "./components/ydfx.vue";
+import yxgl from "./components/yxgl.vue";
 export default {
   name: "zonghepinggu",
   components: {
@@ -69,7 +87,11 @@ export default {
     zdfxLeft,
     zdfxRight,
     zdcx,
+    zdcxItem,
     mbgl,
+    jmfx,
+    ydfx,
+    yxgl,
   },
   data() {
     return {
@@ -79,9 +101,11 @@ export default {
       tgId: null,
       detiles1: false,
       detiles2: false,
+      d2Item: false,
       detiles3: false,
       detiles4: false,
       detiles5: false,
+      detiles6: false,
       navList: [
         "诊断分析",
         "诊断查询",
@@ -108,9 +132,15 @@ export default {
     this.show = false;
   },
   methods: {
+    fanhuiCX() {
+      this.d2Item = false;
+    },
     geshihua() {
       this.showNavs = false;
       this.detiles1 = false;
+    },
+    showZDCXItem() {
+      this.d2Item = true;
     },
     showNav() {
       this.showNavs = true;
@@ -130,30 +160,42 @@ export default {
         this.detiles3 = false;
         this.detiles4 = false;
         this.detiles5 = false;
+        this.detiles6 = false;
       } else if (e == 1) {
         this.detiles2 = true;
         this.detiles1 = false;
         this.detiles3 = false;
         this.detiles4 = false;
         this.detiles5 = false;
+        this.detiles6 = false;
       } else if (e == 2) {
         this.detiles3 = true;
         this.detiles1 = false;
         this.detiles2 = false;
         this.detiles4 = false;
         this.detiles5 = false;
+        this.detiles6 = false;
       } else if (e == 3) {
         this.detiles4 = true;
         this.detiles1 = false;
         this.detiles2 = false;
         this.detiles3 = false;
         this.detiles5 = false;
+        this.detiles6 = false;
       } else if (e == 4) {
         this.detiles5 = true;
         this.detiles1 = false;
         this.detiles2 = false;
         this.detiles3 = false;
         this.detiles4 = false;
+        this.detiles6 = false;
+      } else if (e == 5) {
+        this.detiles5 = false;
+        this.detiles1 = false;
+        this.detiles2 = false;
+        this.detiles3 = false;
+        this.detiles4 = false;
+        this.detiles6 = true;
       }
     },
     showRight(e) {
