@@ -660,7 +660,7 @@ export default {
 }
 .jr_t_b > .blocks > .rights > .bottoms > span {
   font-family: Source Han Sans CN;
-  font-size: 14px;
+  font-size: 10px;
   font-weight: normal;
   line-height: 26px;
   letter-spacing: 0px;
