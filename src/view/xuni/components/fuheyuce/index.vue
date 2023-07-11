@@ -5,7 +5,7 @@
       <div v-show="show" class="wl"></div>
     </transition>
     <transition name="transitionRight">
-      <div v-show="show" class="wr"></div>
+      <div v-show="show && isShowRight" class="wr"></div>
     </transition>
     <!-- 子级导航 -->
     <transition name="transitionBottom">
@@ -34,6 +34,12 @@
     <fhgkRight v-if="show && detiles2 && navIndex == 0"/>
     <!-- 大用户接入 -->
     <dyhLeft v-if="show && detiles2 && navIndex == 1"/>
+    <!-- 负荷预测 -->
+    <fhycLeft v-if="show && detiles2 && navIndex == 2"/>
+    <!-- 预测查询 -->
+    <yccxLeft v-if="show && detiles2 && navIndex == 3"/>
+    <!-- 远景负荷 -->
+    <yjfhLeft v-if="show && detiles2 && navIndex == 4"/>
   </div>
 </template>
 
@@ -44,6 +50,9 @@ import fhRight from "./components/fhRight.vue";
 import fhgkLeft from "./components/fhgkLeft.vue";
 import fhgkRight from "./components/fhgkRight.vue";
 import dyhLeft from "./components/dyhLeft.vue";
+import fhycLeft from "./components/fhycLeft.vue";
+import yccxLeft from "./components/yccxLeft.vue";
+import yjfhLeft from "./components/yjfhLeft.vue";
 export default {
   name: "fuheyuce",
   components: {
@@ -52,6 +61,9 @@ export default {
     fhgkLeft,
     fhgkRight,
     dyhLeft,
+    fhycLeft,
+    yccxLeft,
+    yjfhLeft,
   },
   data() {
     return {
@@ -64,6 +76,7 @@ export default {
       navList: ["负荷概括", "大用户接入", "负荷预测", "预测查询", "远景负荷"],
       navIndex: 0,
       showNavs: false,
+      isShowRight: true,
     };
   },
   mounted() {
@@ -91,6 +104,7 @@ export default {
     this.detiles1 = true;
     this.detiles2 = false;
     this.showNavs = false;
+    this.isShowRight = true;
   },
   methods: {
     getOid(e) {
@@ -104,6 +118,11 @@ export default {
     },
     navClick(e) {
       this.navIndex = e;
+      if(e == 2 || e == 4) {
+        this.isShowRight = false;
+      }else {
+        this.isShowRight = true;
+      }
     },
   },
 };
@@ -126,6 +145,7 @@ export default {
   bottom: 21px;
   display: flex;
   justify-content: space-between;
+  z-index: 999;
 }
 .navs > .blocks {
   width: 136px;
