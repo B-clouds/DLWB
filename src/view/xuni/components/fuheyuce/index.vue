@@ -34,6 +34,7 @@
     <fhgkRight v-if="show && detiles2 && navIndex == 0"/>
     <!-- 大用户接入 -->
     <dyhLeft v-if="show && detiles2 && navIndex == 1"/>
+    <dyhRight v-if="show && detiles2 && navIndex == 1"/>
     <!-- 负荷预测 -->
     <fhycLeft v-if="show && detiles2 && navIndex == 2"/>
     <!-- 预测查询 -->
@@ -50,6 +51,7 @@ import fhRight from "./components/fhRight.vue";
 import fhgkLeft from "./components/fhgkLeft.vue";
 import fhgkRight from "./components/fhgkRight.vue";
 import dyhLeft from "./components/dyhLeft.vue";
+import dyhRight from "./components/dyhRight.vue";
 import fhycLeft from "./components/fhycLeft.vue";
 import yccxLeft from "./components/yccxLeft.vue";
 import yjfhLeft from "./components/yjfhLeft.vue";
@@ -61,6 +63,7 @@ export default {
     fhgkLeft,
     fhgkRight,
     dyhLeft,
+    dyhRight,
     fhycLeft,
     yccxLeft,
     yjfhLeft,
