@@ -3,7 +3,48 @@
     <!-- 配平建议-->
     <div class="jr_block">
       <div class="j_titles">
-        <span>配平建议</span>
+        <span class="span1">配平建议</span>
+      </div>
+      <div class="j_t_tr jt1">
+        <div class="blocks">
+          <span class="span1">时间</span>
+        </div>
+        <div class="blocks">
+          <span class="span1">容量需求</span>
+        </div>
+        <div class="blocks">
+          <span class="span1">新增数量</span>
+        </div>
+        <div class="blocks">
+          <span class="span1">容载比</span>
+        </div>
+        <div class="blocks">
+          <span class="span1">单个容量</span>
+        </div>
+      </div>
+      <div class="j_t_table">
+        <div
+          class="j_t_tr"
+          :class="index % 2 == 0 ? 'j_t_bg' : ''"
+          v-for="(item, index) in 6"
+          :key="index"
+        >
+          <div class="blocks">
+            <span class="span2">xxxx</span>
+          </div>
+          <div class="blocks">
+            <span class="span2">xxxx</span>
+          </div>
+          <div class="blocks">
+            <span class="span2">xxxx</span>
+          </div>
+          <div class="blocks">
+            <span class="span2">xxxx</span>
+          </div>
+          <div class="blocks">
+            <span class="span2">xxxx</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -35,6 +76,10 @@ export default {
   position: absolute;
   top: 125px;
   right: 10px;
+}
+.pr_t {
+  width: 100%;
+  height: 247px;
 }
 </style>
 <style scoped>
@@ -113,66 +158,6 @@ export default {
   font-weight: bold;
   color: #ffffff;
 }
-.jr_t_b {
-  width: 100%;
-  height: 50px;
-  display: flex;
-  margin-top: 30px;
-}
-.jr_t_b > .blocks {
-  width: 50%;
-  height: 100%;
-  display: flex;
-}
-.jr_t_b > .blocks > img {
-  width: 43px;
-  height: 44px;
-  margin-left: 24px;
-  margin-right: 5px;
-  margin-top: 4px;
-}
-.jr_t_b > .blocks > .rights {
-  width: 120px;
-  height: 100%;
-}
-.jr_t_b > .blocks > .rights > .tops {
-  width: 100%;
-  height: 30px;
-  display: flex;
-  align-items: center;
-}
-.jr_t_b > .blocks > .rights > .tops > .span1 {
-  font-family: YouSheBiaoTiHei;
-  font-size: 24px;
-  font-weight: normal;
-  background-image: -webkit-linear-gradient(top, #a3ffff, #ffffff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.jr_t_b > .blocks > .rights > .tops > .span2 {
-  font-family: Source Han Sans CN;
-  font-size: 14px;
-  font-weight: normal;
-  /* 文字三级 */
-  color: #b3b3b3;
-  margin-left: 3px;
-  margin-top: 4px;
-}
-.jr_t_b > .blocks > .rights > .bottoms {
-  width: 100%;
-  height: 20px;
-  display: flex;
-  align-items: flex-end;
-}
-.jr_t_b > .blocks > .rights > .bottoms > span {
-  font-family: Source Han Sans CN;
-  font-size: 14px;
-  font-weight: normal;
-  line-height: 26px;
-  letter-spacing: 0px;
-  color: #d6d6d6;
-}
-
 .j_titles {
   width: 100%;
   height: 40px;
@@ -274,5 +259,57 @@ export default {
   font-weight: normal;
   color: #ffffff;
   margin-left: 18px;
+}
+</style>
+
+<style scoped>
+.j_t_tr {
+  width: 100%;
+  height: 36px;
+  display: flex;
+}
+.jt1 {
+  margin-top: 8px;
+}
+.j_t_tr > .blocks {
+  width: 25%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.j_t_tr > .blocks > .span1 {
+  font-family: Source Han Sans SC;
+  font-size: 14px;
+  color: #ffffff;
+}
+.j_t_tr > .blocks > .span2 {
+  opacity: 0.7;
+  font-family: Source Han Sans SC;
+  font-size: 12px;
+  font-weight: normal;
+  color: #ffffff;
+}
+</style>
+<style scoped>
+.j_t_table {
+  width: 100%;
+  height: 186px;
+  overflow-y: scroll;
+}
+.j_t_table::-webkit-scrollbar {
+  display: none;
+}
+.j_t_bg {
+  background: url("img/gblock.png") no-repeat !important;
+  background-size: 100% 100% !important;
+}
+.jr_two {
+  width: 100%;
+  height: 262px;
+}
+.jr_three {
+  width: 100%;
+  height: 218px;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div id="xt1" style="width: 379px; height: 348px"></div>
+  <div id="x4" style="width: 1879px; height: 250px"></div>
 </template>
 
 <script>
@@ -7,32 +7,27 @@ export default {
   name: "yEC",
   data() {
     return {
-      riqiLists: [],
-      pingjunLists: [],
-      zuidaLists: [],
-      zuixiaoLists: [],
+      xList2: [],
+      yList2: [],
+      units2: "kW",
     };
   },
-  props: ["riqiList", "pingjunList", "zuidaList", "zuixiaoList"],
+  props: ["xLists", "yLists", "units"],
   mounted() {
     this.drawLine();
     this.WidthAdaptive();
   },
   watch: {
-    riqiList(e, f) {
-      this.riqiLists = e;
+    xLists(e, f) {
+      this.xList2 = e;
       this.drawLine();
     },
-    pingjunList(e, f) {
-      this.pingjunLists = e;
+    yLists(e, f) {
+      this.yList2 = e;
       this.drawLine();
     },
-    zuidaList(e, f) {
-      this.zuidaLists = e;
-      this.drawLine();
-    },
-    zuixiaoList(e, f) {
-      this.zuixiaoLists = e;
+    units(e, f) {
+      this.units2 = e;
       this.drawLine();
     },
   },
@@ -45,11 +40,11 @@ export default {
     },
     drawLine() {
       // 基于准备好的dom，初始化echarts实例
-      let myChart = this.$echarts.init(document.getElementById("xt1"));
-      let xLabel = this.riqiLists;
-      let goOutSchool = this.zuidaLists;
-      let goOutSchool2 = this.zuixiaoLists;
-      let goOutSchool3 = this.pingjunLists;
+      let myChart = this.$echarts.init(document.getElementById("x4"));
+      let xLabel = ["08/02", "08/03", "08/04", "08/05", "08/06"];
+      let goOutSchool = ["300", "850", "602", "365", "130"];
+      let goOutSchool2 = ["600", "650", "422", "165", "730"];
+      let goOutSchool3 = ["200", "150", "202", "465", "330"];
       let option = {
         backgroundColor: "transparent",
         tooltip: {
@@ -66,19 +61,7 @@ export default {
           },
           data: [
             {
-              name: "最大有功功率",
-              textStyle: {
-                color: "#D8D8D8",
-              },
-            },
-            {
-              name: "最小有功功率",
-              textStyle: {
-                color: "#D8D8D8",
-              },
-            },
-            {
-              name: "平均有功功率",
+              name: "负载率",
               textStyle: {
                 color: "#D8D8D8",
               },
@@ -87,9 +70,9 @@ export default {
         },
         grid: {
           top: "25%",
-          left: "12%",
-          right: "5%",
-          bottom: "10%",
+          left: "3%",
+          right: "3%",
+          bottom: "12%",
           // containLabel: true
         },
         xAxis: [
@@ -158,7 +141,7 @@ export default {
         ],
         series: [
           {
-            name: "最大有功功率",
+            name: "负载率",
             type: "line",
             symbol: "circle", // 默认是空心圆（中间是白色的），改成实心圆
             showAllSymbol: true,
@@ -190,80 +173,6 @@ export default {
                 {
                   name: "最大值",
                   type: "max",
-                },
-              ],
-            },
-          },
-          {
-            name: "最小有功功率",
-            type: "line",
-            symbol: "circle", // 默认是空心圆（中间是白色的），改成实心圆
-            showAllSymbol: true,
-            symbolSize: 0,
-            smooth: true,
-            lineStyle: {
-              normal: {
-                width: this.WidthAdaptive(2),
-                color: "#FFE856", // 线条颜色
-              },
-              borderColor: "rgba(0,0,0,.4)",
-            },
-            itemStyle: {
-              color: "#FFE856",
-            },
-            tooltip: {
-              show: true,
-            },
-            data: goOutSchool2,
-            markPoint: {
-              symbol: "image://" + require("./img/2.png"),
-              symbolSize: 13,
-              label: {
-                show: true,
-                formatter: "{c}kw",
-                position: "bottom",
-              },
-              data: [
-                {
-                  name: "最小值",
-                  type: "min",
-                },
-              ],
-            },
-          },
-          {
-            name: "平均有功功率",
-            type: "line",
-            symbol: "circle", // 默认是空心圆（中间是白色的），改成实心圆
-            showAllSymbol: true,
-            symbolSize: 0,
-            smooth: true,
-            lineStyle: {
-              normal: {
-                width: this.WidthAdaptive(2),
-                color: "#1664FF", // 线条颜色
-              },
-              borderColor: "rgba(0,0,0,.4)",
-            },
-            itemStyle: {
-              color: "#1664FF",
-            },
-            tooltip: {
-              show: true,
-            },
-            data: goOutSchool3,
-            markPoint: {
-              symbol: "image://" + require("./img/3.png"),
-              symbolSize: 13,
-              label: {
-                show: true,
-                formatter: "{c}kw",
-                position: "top",
-              },
-              data: [
-                {
-                  name: "平均值",
-                  type: "average",
                 },
               ],
             },

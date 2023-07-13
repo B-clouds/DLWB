@@ -120,10 +120,27 @@
             <div class="bottoms">
               <div class="inputs">
                 <el-date-picker
+                  v-show="jd_value == 0 || jd_value == 1"
                   v-model="value1"
                   @change="dateClick"
                   value-format="yyyy-MM-dd"
                   type="date"
+                  placeholder="选择投运运日期"
+                >
+                </el-date-picker>
+                <el-date-picker
+                  v-show="jd_value == 2"
+                  value-format="yyyy-MM"
+                  v-model="value3"
+                  type="month"
+                  placeholder="选择投运运日期"
+                >
+                </el-date-picker>
+                <el-date-picker
+                  v-show="jd_value == 3"
+                  value-format="yyyy"
+                  v-model="value5"
+                  type="year"
                   placeholder="选择投运运日期"
                 >
                 </el-date-picker>
@@ -136,10 +153,27 @@
             <div class="bottoms">
               <div class="inputs">
                 <el-date-picker
+                  v-show="jd_value == 0 || jd_value == 1"
                   v-model="value2"
                   @change="dateClick2"
                   value-format="yyyy-MM-dd"
                   type="date"
+                  placeholder="选择退运日期"
+                >
+                </el-date-picker>
+                <el-date-picker
+                  v-show="jd_value == 2"
+                  v-model="value4"
+                  value-format="yyyy-MM"
+                  type="month"
+                  placeholder="选择退运日期"
+                >
+                </el-date-picker>
+                <el-date-picker
+                  v-show="jd_value == 3"
+                  v-model="value6"
+                  value-format="yyyy"
+                  type="year"
                   placeholder="选择退运日期"
                 >
                 </el-date-picker>
@@ -166,7 +200,44 @@
           <div class="kong"></div>
           <!-- 统计数据展示 -->
           <div class="jc_echarts" v-show="showSpan == 0">
-            <xt1 />
+            <xt1
+              :riqiList="riqiList"
+              :pingjunList="pingjunList"
+              :zuidaList="zuidaList"
+              :zuixiaoList="zuixiaoList"
+              v-show="jd_value != 0 && cj_value == 0"
+            />
+            <x1
+              :riqiList="riqiList"
+              :rineiList="rineiList"
+              v-show="jd_value == 0 && cj_value == 0"
+            />
+
+            <xt11
+              :riqiList="riqiList"
+              :pingjunList="pingjunList"
+              :zuidaList="zuidaList"
+              :zuixiaoList="zuixiaoList"
+              v-show="jd_value != 0 && cj_value == 1"
+            />
+            <x11
+              :riqiList="riqiList"
+              :rineiList="rineiList"
+              v-show="jd_value == 0 && cj_value == 1"
+            />
+
+            <xt12
+              :riqiList="riqiList"
+              :pingjunList="pingjunList"
+              :zuidaList="zuidaList"
+              :zuixiaoList="zuixiaoList"
+              v-show="jd_value != 0 && cj_value == 2"
+            />
+            <x12
+              :riqiList="riqiList"
+              :rineiList="rineiList"
+              v-show="jd_value == 0 && cj_value == 2"
+            />
           </div>
           <!-- 数据明细 -->
           <div class="jc_echarts" v-show="showSpan == 1">
@@ -180,6 +251,11 @@
 
 <script>
 import xt1 from "./echarts/xt1.vue";
+import x1 from "./echarts/x1.vue";
+import xt11 from "./echarts/xt11.vue";
+import x11 from "./echarts/x11.vue";
+import xt12 from "./echarts/xt12.vue";
+import x12 from "./echarts/x12.vue";
 import sjmxTable from "./table/sjmxTable.vue";
 export default {
   name: "newLieBiao",
@@ -196,9 +272,7 @@ export default {
     dy_value(e, f) {
       this.getDateLists();
     },
-    cj_value(e, f) {
-      this.getDateLists();
-    },
+
     jd_value(e, f) {
       this.getDateLists();
     },
@@ -220,16 +294,45 @@ export default {
     zdmc(e, f) {
       this.getDateLists();
     },
+    jd_value(e) {
+      console.log(e);
+    },
+    value1() {
+      this.getRightDate();
+    },
+    value2() {
+      this.getRightDate();
+    },
+    value3() {
+      this.getRightDate();
+    },
+    value4() {
+      this.getRightDate();
+    },
+    value5() {
+      this.getRightDate();
+    },
+    value6() {
+      this.getRightDate();
+    },
+    cj_value(e) {
+      this.getRightDate();
+    },
   },
   components: {
     xt1,
+    x1,
     sjmxTable,
+    xt11,
+    x11,
+    xt12,
+    x12,
   },
   data() {
     return {
       showXX: true,
       showDemo: true,
-      showTJ: false,
+      showTJ: true,
       btnIndex: -1, //是否选中按钮
       // 电缆名称
       jdmc: "",
@@ -310,40 +413,40 @@ export default {
       // --------------------------模型状态---------------------------
       chuangjian: [
         {
-          value: "有功功率",
+          value: "0",
           label: "有功功率",
         },
         {
-          value: "无功功率",
+          value: "1",
           label: "无功功率",
         },
         {
-          value: "电流",
+          value: "2",
           label: "电流",
         },
       ],
-      cj_value: "",
+      cj_value: "0",
       cj_show: false,
       // --------------------------节点状态---------------------------
       jiedian: [
         {
-          value: "日内",
+          value: "0",
           label: "日内",
         },
         {
-          value: "日度",
+          value: "1",
           label: "日度",
         },
         {
-          value: "月度",
+          value: "2",
           label: "月度",
         },
         {
-          value: "年度",
+          value: "3",
           label: "年度",
         },
       ],
-      jd_value: "",
+      jd_value: "0",
       jd_show: false,
       // 数据来源----------------------------------
       dd: [
@@ -370,7 +473,7 @@ export default {
       tableColumnList4: [], //存放接口数据 收缩表头
       tableColumnList5: [], //存放接口数据 展开表头
       // -----------------------------------------------------------------------
-      showRight: false, //是否显示右侧列表
+      showRight: true, //是否显示右侧列表
       showSelect: false, //是否显示复选框
       showRZK: false, //是否展开右侧列表
       selectList: [], //复选数组
@@ -379,9 +482,21 @@ export default {
       total: 0,
       value1: "",
       value2: "",
+      value3: "",
+      value4: "",
+      value5: "",
+      value6: "",
       span1: "统计数据展示", //统计数据展示
       span2: "数据明细", //数据明细
       showSpan: 0, //0：统计数据展示  1：数据明细
+      // 查询所需oid
+      sssb: "",
+
+      riqiList: [], //日期
+      rineiList: [], //日内
+      pingjunList: [], //平均
+      zuidaList: [], //最大
+      zuixiaoList: [], //最小
     };
   },
   deactivated() {
@@ -399,7 +514,9 @@ export default {
     that.$bus.$on("leixChaXun", () => {
       that.getDateLists();
     });
+    this.sssb = window.ccOid;
   },
+
   methods: {
     //  0 切换成大图模式, 1 切换成大图模式
     changeDXT() {
@@ -455,8 +572,154 @@ export default {
           this.showTJ = true;
         }
         // this.getDateLists(0);
+        this.getRightDate();
       }
     },
+    // 获取右侧图表数据
+    getRightDate() {
+      let starts = "";
+      let ends = "";
+      if (this.jd_value == 0) {
+        starts = this.value1;
+        ends = this.value1;
+      } else if (this.jd_value == 1) {
+        starts = this.value1;
+        ends = this.value2;
+      } else if (this.jd_value == 2) {
+        starts = this.value3 + "-01";
+        ends = this.value4 + "-01";
+      } else if (this.jd_value == 3) {
+        starts = this.value5 + "-01-01";
+        ends = this.value6 + "-01-01";
+      }
+      this.$axios
+        .get(window.shebeiUrl, {
+          params: {
+            sssb: window.ccOid,
+            // sssb: "1057769",
+            type: this.jd_value,
+            start: starts,
+            end: ends,
+          },
+        })
+        .then((res) => {
+          console.log(res, "------------");
+          let array = res.data.data;
+          let xList = []; //日期存放
+          let ygglList = []; //存放日内有功功率
+          let maxList = []; //存放最大有功功率
+          let minList = []; //存放最小有功功率
+          let pjList = []; //存放平均有功功率
+          let newRq = "";
+          if (this.cj_value == 0) {
+            for (let i = 0; i < array.length; ++i) {
+              if (this.jd_value == 0) {
+                // 日内-显示小时
+                newRq = array[i].rq.slice(11, 16);
+                ygglList.push(array[i].yggl);
+                console.log(array[i].yggl);
+              } else if (this.jd_value == 1) {
+                // 日度-显示几号
+                newRq = array[i].rq.slice(8, 10);
+                let gl = array[i].yggl.split(",");
+                pjList.push(gl[0]);
+                maxList.push(gl[1]);
+                minList.push(gl[2]);
+              } else if (this.jd_value == 2) {
+                // 月度-显示几月
+                newRq = array[i].rq.slice(5, 7);
+                let gl = array[i].yggl.split(",");
+                pjList.push(gl[0]);
+                maxList.push(gl[1]);
+                minList.push(gl[2]);
+              } else if (this.jd_value == 3) {
+                // 年度-显示年份
+                newRq = array[i].rq.slice(0, 4);
+                let gl = array[i].yggl.split(",");
+                pjList.push(gl[0]);
+                maxList.push(gl[1]);
+                minList.push(gl[2]);
+              }
+              xList.push(newRq);
+            }
+          } else if (this.cj_value == 1) {
+            for (let i = 0; i < array.length; ++i) {
+              if (this.jd_value == 0) {
+                // 日内-显示小时
+                newRq = array[i].rq.slice(11, 16);
+                ygglList.push(array[i].wggl);
+                console.log(array[i].wggl);
+              } else if (this.jd_value == 1) {
+                // 日度-显示几号
+                newRq = array[i].rq.slice(8, 10);
+                let gl = array[i].wggl.split(",");
+                pjList.push(gl[0]);
+                maxList.push(gl[1]);
+                minList.push(gl[2]);
+              } else if (this.jd_value == 2) {
+                // 月度-显示几月
+                newRq = array[i].rq.slice(5, 7);
+                let gl = array[i].wggl.split(",");
+                pjList.push(gl[0]);
+                maxList.push(gl[1]);
+                minList.push(gl[2]);
+              } else if (this.jd_value == 3) {
+                // 年度-显示年份
+                newRq = array[i].rq.slice(0, 4);
+                let gl = array[i].wggl.split(",");
+                pjList.push(gl[0]);
+                maxList.push(gl[1]);
+                minList.push(gl[2]);
+              }
+              xList.push(newRq);
+            }
+          } else if (this.cj_value == 2) {
+            for (let i = 0; i < array.length; ++i) {
+              if (this.jd_value == 0) {
+                // 日内-显示小时
+                newRq = array[i].rq.slice(11, 16);
+                ygglList.push(array[i].dlA);
+                console.log(array[i].dlA);
+              } else if (this.jd_value == 1) {
+                // 日度-显示几号
+                newRq = array[i].rq.slice(8, 10);
+                let gl = array[i].dlA.split(",");
+                pjList.push(gl[0]);
+                maxList.push(gl[1]);
+                minList.push(gl[2]);
+              } else if (this.jd_value == 2) {
+                // 月度-显示几月
+                newRq = array[i].rq.slice(5, 7);
+                let gl = array[i].dlA.split(",");
+                pjList.push(gl[0]);
+                maxList.push(gl[1]);
+                minList.push(gl[2]);
+              } else if (this.jd_value == 3) {
+                // 年度-显示年份
+                newRq = array[i].rq.slice(0, 4);
+                let gl = array[i].dlA.split(",");
+                pjList.push(gl[0]);
+                maxList.push(gl[1]);
+                minList.push(gl[2]);
+              }
+              xList.push(newRq);
+            }
+          }
+
+          this.riqiList = xList;
+          this.rineiList = ygglList;
+          this.pingjunList = pjList;
+          this.zuidaList = maxList;
+          this.zuixiaoList = minList;
+          console.log(xList, "rq");
+          console.log(ygglList, "0");
+          console.log(pjList, "1");
+          console.log(maxList, "2");
+          console.log(minList, "3");
+        })
+        .catch((error) => {});
+    },
+
     // 投运日期
     dateClick(e) {
       let v = {
