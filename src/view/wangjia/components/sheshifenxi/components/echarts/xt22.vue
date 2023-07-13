@@ -1,5 +1,5 @@
 <template>
-  <div id="xt1" style="width: 379px; height: 348px"></div>
+  <div id="xt22" style="width: 1879px; height: 250px"></div>
 </template>
 
 <script>
@@ -45,7 +45,7 @@ export default {
     },
     drawLine() {
       // 基于准备好的dom，初始化echarts实例
-      let myChart = this.$echarts.init(document.getElementById("xt1"));
+      let myChart = this.$echarts.init(document.getElementById("xt22"));
       let xLabel = this.riqiLists;
       let goOutSchool = this.zuidaLists;
       let goOutSchool2 = this.zuixiaoLists;
@@ -66,19 +66,19 @@ export default {
           },
           data: [
             {
-              name: "最大有功功率",
+              name: "最大电流",
               textStyle: {
                 color: "#D8D8D8",
               },
             },
             {
-              name: "最小有功功率",
+              name: "最小电流",
               textStyle: {
                 color: "#D8D8D8",
               },
             },
             {
-              name: "平均有功功率",
+              name: "平均电流",
               textStyle: {
                 color: "#D8D8D8",
               },
@@ -87,9 +87,9 @@ export default {
         },
         grid: {
           top: "25%",
-          left: "12%",
-          right: "5%",
-          bottom: "10%",
+          left: "3%",
+          right: "3%",
+          bottom: "12%",
           // containLabel: true
         },
         xAxis: [
@@ -158,7 +158,7 @@ export default {
         ],
         series: [
           {
-            name: "最大有功功率",
+            name: "最大电流",
             type: "line",
             symbol: "circle", // 默认是空心圆（中间是白色的），改成实心圆
             showAllSymbol: true,
@@ -195,7 +195,7 @@ export default {
             },
           },
           {
-            name: "最小有功功率",
+            name: "最小电流",
             type: "line",
             symbol: "circle", // 默认是空心圆（中间是白色的），改成实心圆
             showAllSymbol: true,
@@ -232,7 +232,7 @@ export default {
             },
           },
           {
-            name: "平均有功功率",
+            name: "平均电流",
             type: "line",
             symbol: "circle", // 默认是空心圆（中间是白色的），改成实心圆
             showAllSymbol: true,

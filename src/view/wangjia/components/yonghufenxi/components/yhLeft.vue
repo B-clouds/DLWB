@@ -31,12 +31,12 @@
           node-key="oid"
           lazy
           :load="loadNode"
-          :key="tree_key"
+          :key="tree_key_yh"
           :accordion="true"
           :indent="20"
           :default-expanded-keys="defaultExpand"
           :default-checked-keys="defaultExpand"
-          ref="treeForm_mx"
+          ref="treeForm_yh"
         ></el-tree>
       </div>
     </div>
@@ -89,7 +89,7 @@ export default {
       // 用于存放选中的树结构点
       selectData: {},
       selectNode: {},
-      tree_key: 0,
+      tree_key_yh: 0,
 
       defaultExpand: [],
       show: true,
@@ -97,7 +97,7 @@ export default {
   },
   watch: {
     filterText(val) {
-      this.$refs.treeForm_mx.filter(val);
+      this.$refs.treeForm_yh.filter(val);
     },
   },
   mounted() {
@@ -122,7 +122,7 @@ export default {
         this.$axios
           .get(window.wanggeUrl, {
             params: {
-              oid: node.data.id,
+              oid: node.data.oid,
             },
           })
           .then((res) => {
@@ -157,10 +157,10 @@ export default {
 
     // 复选框被选中时
     selectTree(node, list) {
-      const node2 = this.$refs.treeForm_mx.getNode(node.oid);
+      const node2 = this.$refs.treeForm_yh.getNode(node.oid);
       this.setNode(node2);
       if (list.checkedKeys.length == 2) {
-        this.$refs.treeForm_mx.setCheckedKeys([node.oid]);
+        this.$refs.treeForm_yh.setCheckedKeys([node.oid]);
       }
       if (this.selectData.id != node.oid) {
         this.selectData = node;
@@ -237,9 +237,9 @@ export default {
     },
     handleCheckChange(data, checked, indeterminate) {
       if (checked) {
-        let node2 = this.$refs.treeForm_mx.getNode(data.oid);
+        let node2 = this.$refs.treeForm_yh.getNode(data.oid);
         this.setNode(node2);
-        this.$refs.treeForm_mx.setCheckedKeys([data.oid]);
+        this.$refs.treeForm_yh.setCheckedKeys([data.oid]);
       }
     },
     // 获取树状图

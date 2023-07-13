@@ -537,6 +537,7 @@ export default {
         ],
       };
       ue.interface.broadcast("PSAPI", JSON.stringify(data));
+      console.log("是否发送", data);
       window.ue.interface.backVertices = this.backVertices;
     },
     backVertices(e) {
@@ -606,7 +607,7 @@ export default {
     handleCheckChange(data, checked, indeterminate) {
       if (checked) {
         let node2 = this.$refs.treeForm_mx.getNode(data.oid);
-        this.setNode(node2);
+        // this.setNode(node2);
         this.$refs.treeForm_mx.setCheckedKeys([data.oid]);
       }
     },

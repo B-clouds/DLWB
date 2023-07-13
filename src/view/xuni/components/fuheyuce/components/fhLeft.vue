@@ -327,7 +327,7 @@ export default {
     // 确认
     okClick() {
       this.$bus.$emit("initSubpage", true);
-    }
+    },
   },
 };
 </script>
@@ -657,7 +657,7 @@ export default {
   left: 120px;
   width: 105px;
   height: 30px;
-  background: url(img/ok.png)no-repeat;
+  background: url(img/ok.png) no-repeat;
   background-size: 100% 100%;
   cursor: pointer;
 }

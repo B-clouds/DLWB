@@ -861,7 +861,7 @@ export default {
         ],
       };
       ue.interface.broadcast("PSAPI", JSON.stringify(data));
-      this.$bus.$emit("");
+      window.ccOid = e.oid;
       this.$router.push({
         path: "/wj/ssfxItem",
       });

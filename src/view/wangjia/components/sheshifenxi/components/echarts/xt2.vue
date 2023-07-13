@@ -1,5 +1,5 @@
 <template>
-  <div id="xt2" style="width: 1879px;  height: 250px;"></div>
+  <div id="xt2" style="width: 1879px; height: 250px"></div>
 </template>
 
 <script>
@@ -7,27 +7,32 @@ export default {
   name: "yEC",
   data() {
     return {
-      xList2: [],
-      yList2: [],
-      units2: "kW",
+      riqiLists: [],
+      pingjunLists: [],
+      zuidaLists: [],
+      zuixiaoLists: [],
     };
   },
-  props: ["xLists", "yLists", "units"],
+  props: ["riqiList", "pingjunList", "zuidaList", "zuixiaoList"],
   mounted() {
     this.drawLine();
     this.WidthAdaptive();
   },
   watch: {
-    xLists(e, f) {
-      this.xList2 = e;
+    riqiList(e, f) {
+      this.riqiLists = e;
       this.drawLine();
     },
-    yLists(e, f) {
-      this.yList2 = e;
+    pingjunList(e, f) {
+      this.pingjunLists = e;
       this.drawLine();
     },
-    units(e, f) {
-      this.units2 = e;
+    zuidaList(e, f) {
+      this.zuidaLists = e;
+      this.drawLine();
+    },
+    zuixiaoList(e, f) {
+      this.zuixiaoLists = e;
       this.drawLine();
     },
   },
@@ -41,10 +46,10 @@ export default {
     drawLine() {
       // 基于准备好的dom，初始化echarts实例
       let myChart = this.$echarts.init(document.getElementById("xt2"));
-      let xLabel = ["08/02", "08/03", "08/04", "08/05", "08/06"];
-      let goOutSchool = ["300", "850", "602", "365", "130"];
-      let goOutSchool2 = ["600", "650", "422", "165", "730"];
-      let goOutSchool3 = ["200", "150", "202", "465", "330"];
+      let xLabel = this.riqiLists;
+      let goOutSchool = this.zuidaLists;
+      let goOutSchool2 = this.zuixiaoLists;
+      let goOutSchool3 = this.pingjunLists;
       let option = {
         backgroundColor: "transparent",
         tooltip: {
@@ -104,7 +109,7 @@ export default {
                 color: "rgba(255, 255, 255, 0.8)",
                 padding: this.WidthAdaptive(2),
               },
-              formatter: function(data) {
+              formatter: function (data) {
                 return data;
               },
             },
@@ -257,19 +262,15 @@ export default {
               },
               data: [
                 {
-                  name: "最大值",
-                  type: "max",
-                },
-                {
-                  name: "最小值",
-                  type: "min",
+                  name: "平均值",
+                  type: "average",
                 },
               ],
             },
           },
         ],
       };
-      window.onresize = function() {
+      window.onresize = function () {
         myChart.resize();
       };
       myChart.setOption(option);
