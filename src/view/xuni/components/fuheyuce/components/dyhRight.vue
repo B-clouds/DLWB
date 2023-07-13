@@ -21,40 +21,40 @@
       </div>
       <div class="j_table">
         <div class="j_t_tr jt1">
-        <div class="blocks">
-          <span class="span1">规划时间</span>
-        </div>
-        <div class="blocks">
-          <span class="span1">项目名称</span>
-        </div>
-        <div class="blocks">
-          <span class="span1">项目类型</span>
-        </div>
-        <div class="blocks">
-          <span class="span1">容量</span>
-        </div>
-      </div>
-      <div class="j_t_table">
-        <div
-          class="j_t_tr j_t_tr1"
-          :class="index % 2 == 0 ? 'j_t_bg' : ''"
-          v-for="(item, index) in 6"
-          :key="index"
-        >
           <div class="blocks">
-            <span class="span2">xxxx</span>
+            <span class="span1">规划时间</span>
           </div>
           <div class="blocks">
-            <span class="span2">xxxx</span>
+            <span class="span1">项目名称</span>
           </div>
           <div class="blocks">
-            <span class="span2">xxxx</span>
+            <span class="span1">项目类型</span>
           </div>
           <div class="blocks">
-            <span class="span2">xxxx</span>
+            <span class="span1">容量</span>
           </div>
         </div>
-      </div>
+        <div class="j_t_table">
+          <div
+            class="j_t_tr j_t_tr1"
+            :class="index % 2 == 0 ? 'j_t_bg' : ''"
+            v-for="(item, index) in 6"
+            :key="index"
+          >
+            <div class="blocks">
+              <span class="span2">xxxx</span>
+            </div>
+            <div class="blocks">
+              <span class="span2">xxxx</span>
+            </div>
+            <div class="blocks">
+              <span class="span2">xxxx</span>
+            </div>
+            <div class="blocks">
+              <span class="span2">xxxx</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

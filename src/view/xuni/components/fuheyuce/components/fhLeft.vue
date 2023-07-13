@@ -122,7 +122,7 @@ export default {
         this.$axios
           .get(window.wanggeUrl, {
             params: {
-              oid: node.data.id,
+              oid: node.data.oid,
             },
           })
           .then((res) => {
