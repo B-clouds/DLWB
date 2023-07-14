@@ -1,5 +1,5 @@
 <template>
-  <div class="newLieBiao">
+  <div class="newLieBiao" v-show="show">
     <!-- 左侧阴影 -->
     <div class="zuo"></div>
     <div class="s_show1" v-show="!showZDtb"></div>
@@ -455,7 +455,7 @@ export default {
       showDemo: true,
       showTJ: false,
       btnIndex: -1, //是否选中按钮
-
+      show: false,
       //线路名称
       xl_name: "",
       // 起点名称
@@ -571,26 +571,8 @@ export default {
       showwjdz: false,
     };
   },
-  deactivated() {
-    this.zfType_value = "";
-    this.xl_ds_value = "";
-    this.xl_name = "";
-    this.xl_qdname = "";
-    this.xl_zdname = "";
-    this.xl_oam_value = "";
-    this.xl_dy_value = "";
-    this.zf_cj_value = "";
-    this.page = 1;
-    this.page1 = 1;
-  },
-  mounted() {
-    let that = this;
-    that.$bus.$on("leixChaXun", () => {
-      that.getDateLists();
-    });
-    that.$bus.$on("suofangAnNiu", (e) => {
-      this.showZDtb = e;
-    });
+  activated() {
+    this.show = true;
     let data = {
       functionName: "GetSelectKv",
       backFunctionName: "BackGetSelectKv",
@@ -602,6 +584,7 @@ export default {
       ],
     };
     ue.interface.broadcast("PSAPI", JSON.stringify(data));
+    console.log("打印------------------", data);
     window.ue.interface.BackGetSelectKv = this.BackGetSelectKv;
     // 获取表头
     let v = {
@@ -621,6 +604,28 @@ export default {
     };
     ue.interface.broadcast("PSAPI", JSON.stringify(data2));
     window.ue.interface.getxlTh = this.getxlTh;
+  },
+  deactivated() {
+    this.zfType_value = "";
+    this.xl_ds_value = "";
+    this.xl_name = "";
+    this.xl_qdname = "";
+    this.xl_zdname = "";
+    this.xl_oam_value = "";
+    this.xl_dy_value = "";
+    this.zf_cj_value = "";
+    this.page = 1;
+    this.page1 = 1;
+    this.show = false;
+  },
+  mounted() {
+    let that = this;
+    that.$bus.$on("leixChaXun", () => {
+      that.getDateLists();
+    });
+    that.$bus.$on("suofangAnNiu", (e) => {
+      this.showZDtb = e;
+    });
   },
   methods: {
     // 是否显示网架电站
@@ -699,6 +704,7 @@ export default {
       this.xl_ds_show = e;
     },
     BackGetSelectKv(e) {
+      console.log(e, "--------------,11111111111111111111");
       let data = JSON.parse(e).value;
       this.xlKV = data;
       for (let i = 0; i < this.xlKV.length; i++) {
@@ -834,7 +840,18 @@ export default {
     getxlTh(e) {
       let data2 = JSON.parse(e).data;
       this.tableColumnList = data2.data;
-      this.dataList = [];
+      console.log(this.tableColumnList, "-------------------");
+      let datas = [];
+      for (let i = 0; i < 3; i++) {
+        datas.push(this.tableColumnList[i]);
+      }
+      this.tableColumnList4 = datas;
+      this.tableColumnList5 = this.tableColumnList;
+      if (this.showRZK) {
+        this.tableColumnList = this.tableColumnList5;
+      } else {
+        this.tableColumnList = this.tableColumnList4;
+      }
     },
     // 双击单行
     hangClick(e) {
@@ -866,7 +883,6 @@ export default {
       };
 
       ue.interface.broadcast("PSAPI", JSON.stringify(data));
-      this.$bus.$emit("");
       this.$router.push({
         path: "/wj/ssfxItem",
       });
@@ -913,6 +929,25 @@ export default {
           this.showTJ = true;
         }
         this.getDateLists(0);
+
+        // 获取表头
+        let v = {
+          URL: "data/tableColumnInfo/" + 1001 + "/" + 0 + "/" + 1000 + "/" + 1,
+          StructName: "获取线路表头",
+          verbType: "GET",
+        };
+        let data2 = {
+          functionName: "WebServerMsg",
+          backFunctionName: "getxlTh",
+          functionParameters: [
+            {
+              key: "WebServerMsg",
+              value: JSON.stringify(v),
+            },
+          ],
+        };
+        ue.interface.broadcast("PSAPI", JSON.stringify(data2));
+        window.ue.interface.getxlTh = this.getxlTh;
       }
     },
     getDateLists(e) {
@@ -1099,8 +1134,6 @@ export default {
       window.ue.interface.zx_create = this.zx_create;
     },
     zx_create(e) {
-      this.dataList = [];
-      this.tableColumnList = [];
       this.selectList = [];
       let that = this;
       setTimeout(() => {
@@ -1118,8 +1151,6 @@ export default {
       }
     },
     zx_publish() {
-      this.dataList = [];
-      this.tableColumnList = [];
       this.selectList = [];
 
       let that = this;
@@ -1156,8 +1187,6 @@ export default {
       window.ue.interface.zx_delete = this.zx_delete;
     },
     zx_delete(e) {
-      this.dataList = [];
-      this.tableColumnList = [];
       this.selectList = [];
 
       let that = this;

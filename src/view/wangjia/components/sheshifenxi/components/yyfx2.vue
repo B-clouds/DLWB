@@ -156,7 +156,7 @@
             v-show="jd_value == 0 && cj_value == 0"
           />
 
-          <xt1
+          <xt2
             :riqiList="riqiList"
             :pingjunList="pingjunList"
             :zuidaList="zuidaList"

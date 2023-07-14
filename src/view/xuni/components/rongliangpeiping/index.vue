@@ -37,6 +37,14 @@
     <transition name="transitionRight">
       <ppfxRight v-if="show && detiles2" />
     </transition>
+    <!-- 电源规划 -->
+    <transition name="transitionLeft">
+      <dyghLeft v-if="show && detiles3" />
+    </transition>
+    <!-- 电量平衡 -->
+    <transition name="transitionLeft">
+      <dlph v-if="show && detiles4" />
+    </transition>
   </div>
 </template>
 
@@ -47,6 +55,8 @@ import rlxzLeft from "./components/rlxzLeft.vue";
 import rlxzRight from "./components/rlxzRight.vue";
 import ppfxLeft from "./components/ppfxLeft.vue";
 import ppfxRight from "./components/ppfxRight.vue";
+import dyghLeft from "./components/dyghLeft.vue";
+import dlph from "./components/dlph.vue";
 
 export default {
   name: "zonghepinggu",
@@ -57,6 +67,8 @@ export default {
     rlxzRight,
     ppfxLeft,
     ppfxRight,
+    dyghLeft,
+    dlph,
   },
   data() {
     return {
