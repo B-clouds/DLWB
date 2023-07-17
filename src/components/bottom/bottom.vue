@@ -228,6 +228,10 @@ export default {
           label: "智能选线",
         },
         {
+          value: "xinnengyuanjieru",
+          label: "新能源接入",
+        },
+        {
           value: "dianqibaogao",
           label: "电气报告",
           children: [
@@ -739,6 +743,18 @@ export default {
           one: "虚拟规划",
           two: "",
           three: "智能选线",
+          right1: ">",
+          right2: "",
+        };
+        this.$bus.$emit("setCrumbs", e);
+      } else if (data == "xinnengyuanjieru") {
+        this.$router.push({
+          path: "/xn/xnyjr",
+        });
+        let e = {
+          one: "虚拟规划",
+          two: "",
+          three: "新能源接入",
           right1: ">",
           right2: "",
         };

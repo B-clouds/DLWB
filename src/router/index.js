@@ -126,6 +126,8 @@ const XFZFX = () => import('../view/xuni/components/fuheyuce/index.vue')
 const RLPP = () => import('../view/xuni/components/rongliangpeiping/index.vue')
 // 选址定容
 const XZDR = () => import('../view/xuni/components/xuanzhidingrong/index.vue')
+// 新能源接入
+const XNYJR = () => import('../view/xuni/components/xinnengyaunjieru/index.vue')
 // 智能选线
 const ZNXX = () => import('../view/xuni/components/zhinengxuanxian/index.vue')
 // 电气报告-潮流计算
@@ -382,6 +384,11 @@ const routes = [{
             path: "znxx",
             name: "zhinengxuanxian",
             component: ZNXX
+        }, {
+            path: "xnyjr",
+            name: "xinnengyuanjieru",
+            component: XNYJR
+
         }, {
             path: "cljs",
             name: "chaoliujisuan",

@@ -571,36 +571,12 @@ export default {
         this.$emit("showKSH", false);
       }
       if (e.towerType !== undefined) {
-        let obj = e.towerType;
-        let data = {
-          functionName: "ModelManage",
-          backFunctionName: "",
-          functionParameters: [
-            {
-              key: "ModelID",
-              value: obj,
-            },
-          ],
-        };
-        ue.interface.broadcast("PSAPI", JSON.stringify(data));
         this.$emit("showRight", true);
         let that = this;
         setTimeout(() => {
-          // that.$bus.$emit("getTables", e.towerType);
           that.$bus.$emit("getTZlist", e);
         }, 50);
       } else {
-        let data = {
-          functionName: "ModelManage",
-          backFunctionName: "",
-          functionParameters: [
-            {
-              key: "ModelID",
-              value: "",
-            },
-          ],
-        };
-        ue.interface.broadcast("PSAPI", JSON.stringify(data));
         this.$emit("showRight", false);
       }
     },

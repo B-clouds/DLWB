@@ -6,3 +6,6 @@ window.wanggeUrl = "http://beta.picimos.com:8025/plan/cityData"
 // 电网分析-设施分析-设备分析-聚焦后存放oid
 window.ccOid = ""
 window.shebeiUrl = "http://192.168.2.22:8025/equipment"
+
+// 电网分析-设施分析-设备分析-聚焦后存放 选中类型 0：电站 1：线路
+window.types = 0

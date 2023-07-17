@@ -114,9 +114,9 @@
               </div>
             </div>
           </div>
-          <!-- 投运日期 -->
+          <!-- 开始时间 -->
           <div class="tjBlock">
-            <div class="tops">投运日期</div>
+            <div class="tops">开始时间</div>
             <div class="bottoms">
               <div class="inputs">
                 <el-date-picker
@@ -147,9 +147,9 @@
               </div>
             </div>
           </div>
-          <!-- 退运日期 -->
+          <!-- 结束时间 -->
           <div class="tjBlock">
-            <div class="tops">退运日期</div>
+            <div class="tops">结束时间</div>
             <div class="bottoms">
               <div class="inputs">
                 <el-date-picker
@@ -614,7 +614,7 @@ export default {
         .catch((error) => {});
     },
 
-    // 投运日期
+    // 开始时间
     dateClick(e) {
       let v = {
         ChooseType: "CurTime",
@@ -631,7 +631,7 @@ export default {
       };
       ue.interface.broadcast("PSAPI", JSON.stringify(data));
     },
-    // 退运日期
+    // 结束时间
     dateClick2(e) {
       let v = {
         ChooseType: "CurTime",

@@ -74,7 +74,7 @@
         </div>
       </div>
       <div class="d_btn">
-        <span>确认</span>
+        <span>确定</span>
       </div>
     </div>
     <div class="jr_block jr_block2">

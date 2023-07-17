@@ -70,7 +70,7 @@
               <img v-show="!jd_show" src="./img/xia.png" />
               <img v-show="jd_show" src="./img/shang.png" />
             </div>
-            <span class="span2">投运日期</span>
+            <span class="span2">开始时间</span>
             <div class="selectss">
               <el-date-picker
                 v-show="jd_value == 0 || jd_value == 1"
@@ -98,7 +98,7 @@
               >
               </el-date-picker>
             </div>
-            <span class="span2">退运日期</span>
+            <span class="span2">结束时间</span>
             <div class="selectss">
               <el-date-picker
                 v-show="jd_value == 0 || jd_value == 1"

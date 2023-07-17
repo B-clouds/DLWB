@@ -192,12 +192,6 @@ export default {
   width: 90px;
   height: 30%;
   margin-top: 13%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
 }
 .j_item > .items > .rights > span {
   font-family: Source Han Sans SC;
