@@ -130,7 +130,7 @@
           </div>
         </div>
         <!-- 层级切换按钮 -->
-        <div class="cengji">
+        <div class="cengji" v-show="typess == 0">
           <div
             class="cj_item"
             :class="{ cj_item2: cjIndex == index }"
@@ -289,7 +289,16 @@ export default {
       pingjunList: [], //平均
       zuidaList: [], //最大
       zuixiaoList: [], //最小
+      typess: 0, //0：电站 1：线路
     };
+  },
+  mounted() {
+    this.typess = window.types;
+    console.log(this.typess, "-----------2");
+  },
+  activated() {
+    this.typess = window.types;
+    console.log(this.typess, "-----------2");
   },
   methods: {
     // 返回默认页面

@@ -33,7 +33,7 @@ export default {
         path: "/wj/sheshi",
       });
       // 设置设施分析页面-视角
-      this.$bus.$emit("setShiJiao", 0);
+      this.$bus.$emit("setShiJiao", 1);
       // 设置设施分析页面-是否夜间模式
       this.$bus.$emit("setYeJian", 0);
       let datas = {

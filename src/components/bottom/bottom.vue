@@ -521,7 +521,6 @@ export default {
           right2: ">",
         };
         this.$bus.$emit("setCrumbs", e);
-      } else if (data == "jiangeguanli3") {
       }
       this.value = "电网孪生";
       let v = { ChooseType: "ShowCompass", value: true };
@@ -536,11 +535,16 @@ export default {
       };
       ue.interface.broadcast("PSAPI", JSON.stringify(data2));
       let that = this;
+      console.log("1111,", window.showOnec);
       if (window.showOnec == true) {
+        console.log(window.showOnec, "--------------------");
         setTimeout(() => {
           that.$bus.$emit("ymtz", data);
-          window.showOnec = false;
-        }, 600);
+          console.log(window.showOnec, "------是否延迟--------------");
+          setTimeout(() => {
+            window.showOnec = false;
+          }, 10);
+        }, 700);
       } else {
         that.$bus.$emit("ymtz", data);
       }
@@ -570,7 +574,7 @@ export default {
           path: "/wj/sheshi",
         });
         // 设置设施分析页面-视角
-        this.$bus.$emit("setShiJiao", 0);
+        this.$bus.$emit("setShiJiao", 1);
         // 设置设施分析页面-是否夜间模式
         this.$bus.$emit("setYeJian", 0);
         let e = {

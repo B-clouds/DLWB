@@ -143,6 +143,10 @@ export default {
       // 电压等级
       dy: [
         {
+          value: "交流1000kV",
+          label: "1000kV",
+        },
+        {
           value: "交流500kV",
           label: "500kV",
         },

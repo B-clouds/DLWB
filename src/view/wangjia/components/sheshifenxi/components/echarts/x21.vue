@@ -103,7 +103,7 @@ export default {
         ],
         yAxis: [
           {
-            name: "单位：kW",
+            name: "单位：Kvar",
             nameTextStyle: {
               color: " #D8D8D8",
               fontSize: this.WidthAdaptive(14),
@@ -159,7 +159,7 @@ export default {
               symbolSize: 13,
               label: {
                 show: true,
-                formatter: "{c}kw",
+                formatter: "{c}",
                 position: "top",
               },
               data: [

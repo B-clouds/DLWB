@@ -11,7 +11,7 @@
             <span>供电区域：</span>
           </div>
           <div class="rights">
-            <span>石家庄 AB 区</span>
+            <span>雄安 AB 区</span>
           </div>
         </div>
         <div class="items">

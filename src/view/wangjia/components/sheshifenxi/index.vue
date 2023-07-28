@@ -105,6 +105,7 @@
       <yyfx2
         @changeDXT="changeDXT"
         @goJiBen="goJiBen"
+        :types="types"
         v-show="show && showItem && detiles2 && showXX && showDt"
       />
     </transition>
@@ -122,6 +123,7 @@
       <fzfx2
         @changeDXT2="changeDXT2"
         @goJiBen="goJiBen"
+        :types="types"
         v-show="show && showItem && detiles3 && showXX && showDt2"
       />
     </transition>
@@ -221,6 +223,7 @@ export default {
     this.show = true;
     this.showNavList = true;
     this.types = window.types;
+    console.log(this.types, "--------------1");
   },
   deactivated() {
     this.show = false;

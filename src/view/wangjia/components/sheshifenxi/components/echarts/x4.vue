@@ -166,7 +166,7 @@ export default {
               symbolSize: 13,
               label: {
                 show: true,
-                formatter: "{c}kw",
+                formatter: "{c}",
                 position: "top",
               },
               data: [

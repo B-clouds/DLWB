@@ -13,6 +13,7 @@
           <span class="span1">{{ span1 }}</span>
           <span class="span2" @click="spanClick">{{ span2 }}</span>
         </div>
+        <div class="xinzeng2" v-show="showSpan == 0"></div>
         <div class="shaixuan">
           <div class="sx_item">
             <span class="span1">设备类型</span>
@@ -130,7 +131,7 @@
           </div>
         </div>
         <!-- 层级切换按钮 -->
-        <div class="cengji">
+        <div class="cengji" v-show="typess == 0">
           <div
             class="cj_item"
             :class="{ cj_item2: cjIndex == index }"
@@ -246,7 +247,16 @@ export default {
       pingjunList: [], //平均
       zuidaList: [], //最大
       zuixiaoList: [], //最小
+      typess: 0, //0：电站 1：线路
     };
+  },
+  mounted() {
+    this.typess = window.types;
+    console.log(this.typess, "-----------2");
+  },
+  activated() {
+    this.typess = window.types;
+    console.log(this.typess, "-----------2");
   },
   methods: {
     // 返回默认页面
@@ -384,14 +394,14 @@ export default {
 }
 .yy_block {
   width: 1879px;
-  height: 350px;
+  height: 420px;
   position: absolute;
   left: 21px;
   bottom: 11px;
 }
 .jcxx {
   width: 100%;
-  height: 350px;
+  height: 420px;
   background: url("img/jbg.png") no-repeat !important;
   background-size: 100% 100% !important;
   position: relative;
@@ -418,6 +428,14 @@ export default {
   font-weight: normal;
   color: #cbc9c9;
   cursor: pointer;
+}
+.xinzeng2 {
+  width: 1502px;
+  height: 46px;
+  margin-left: 23px;
+  margin-top: 20px;
+  background: url("img/xinzeng2.png") no-repeat !important;
+  background-size: 100% 100% !important;
 }
 .shaixuan {
   width: 100%;
@@ -493,7 +511,7 @@ export default {
   height: 29px;
   position: fixed;
   right: 20px;
-  bottom: 379px;
+  bottom: 439px;
   display: flex;
   justify-content: space-between;
   align-items: center;

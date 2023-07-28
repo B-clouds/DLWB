@@ -248,6 +248,7 @@ export default {
       tree_key: 0,
 
       defaultExpand: [],
+      newIDs: "",
     };
   },
   watch: {
@@ -257,6 +258,27 @@ export default {
   },
   mounted() {
     // this.getThree();
+  },
+  deactivated() {
+    if (this.newIDs != "" || this.newIDs != null || this.newIDs != undefined) {
+      let v = {
+        Type: "ShowPolygonIDS",
+        Ids: this.newIDs,
+        wgmc: "",
+        Value: false,
+      };
+      let data = {
+        functionName: "GridNavigationTree",
+        backFunctionName: "backVertices",
+        functionParameters: [
+          {
+            key: "GridNavigationTree",
+            value: JSON.stringify(v),
+          },
+        ],
+      };
+      ue.interface.broadcast("PSAPI", JSON.stringify(data));
+    }
   },
   methods: {
     loadNode(node, resolve) {
@@ -516,6 +538,7 @@ export default {
       }
       this.$emit("getIds", ids);
       this.$emit("getOid", node.data.oid);
+      this.newIDs = ids;
       let that = this;
       setTimeout(() => {
         that.$bus.$emit("leftOid", node.data.oid);

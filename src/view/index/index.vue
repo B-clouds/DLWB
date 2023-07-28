@@ -23,8 +23,19 @@
       </div>
     </div>
     <!-- 显示的线路 -->
-    <div class="xlBlock" v-show="showxlTk">
+    <div
+      class="xlBlock"
+      :class="currentIndex == 1 ? 'xlBlock2' : ''"
+      v-show="showxlTk"
+    >
       <div class="xlBlockItem">
+        <div
+          class="xlItmes"
+          @click="xlClick(6)"
+          :class="xlIndex6 == 1 ? 'xlItmes2' : ''"
+        >
+          <span style="color: rgb(0, 0, 255)">1000kV</span>
+        </div>
         <div
           class="xlItmes"
           @click="xlClick(0)"
@@ -32,6 +43,8 @@
         >
           <span style="color: rgb(255, 0, 0)">500kV</span>
         </div>
+      </div>
+      <div class="xlBlockItem">
         <div
           class="xlItmes"
           @click="xlClick(1)"
@@ -39,8 +52,6 @@
         >
           <span style="color: rgb(192, 0, 192)">220kV</span>
         </div>
-      </div>
-      <div class="xlBlockItem">
         <div
           class="xlItmes"
           @click="xlClick(2)"
@@ -48,6 +59,8 @@
         >
           <span style="color: rgb(0, 128, 0)">110kV</span>
         </div>
+      </div>
+      <div class="xlBlockItem">
         <div
           class="xlItmes"
           @click="xlClick(3)"
@@ -55,8 +68,6 @@
         >
           <span style="color: rgb(255, 204, 0)">35kV</span>
         </div>
-      </div>
-      <div class="xlBlockItem">
         <div
           class="xlItmes"
           @click="xlClick(4)"
@@ -64,11 +75,12 @@
         >
           <span style="color: rgb(185, 72, 66)">10kV</span>
         </div>
+      </div>
+      <div class="xlBlockItem" v-show="currentIndex != 1">
         <div
           class="xlItmes"
           @click="xlClick(5)"
           :class="xlIndex5 == 1 ? 'xlItmes2' : ''"
-          v-show="currentIndex != 1"
         >
           <span style="color: #76c9f7">0.4kV</span>
         </div>
@@ -274,18 +286,21 @@ export default {
       xlIndex3: -1,
       xlIndex4: -1,
       xlIndex5: -1,
+      xlIndex6: -1,
       lindex1: 0,
       lindex2: 0,
       lindex3: 0,
       lindex4: 0,
       lindex5: 0,
       lindex6: 0,
+      lindex7: 0,
       l2index1: 0,
       l2index2: 0,
       l2index3: 0,
       l2index4: 0,
       l2index5: 0,
       l2index6: 0,
+      l2index7: 0,
       // 是否显示网架线路加载loading
       showZheZhao: false,
       // 是否显示底图加载loading
@@ -394,8 +409,6 @@ export default {
   },
   activated() {
     this.show = true;
-    this.$bus.$emit("setShiJiao", 1);
-    this.$bus.$emit("setYeJian", 0);
 
     this.xlIndex = -1;
     this.xlIndex1 = -1;
@@ -403,18 +416,21 @@ export default {
     this.xlIndex3 = -1;
     this.xlIndex4 = -1;
     this.xlIndex5 = -1;
+    this.xlIndex6 = -1;
     this.lindex1 = 0;
     this.lindex2 = 0;
     this.lindex3 = 0;
     this.lindex4 = 0;
     this.lindex5 = 0;
     this.lindex6 = 0;
+    this.lindex7 = 0;
     this.l2index1 = 0;
     this.l2index2 = 0;
     this.l2index3 = 0;
     this.l2index4 = 0;
     this.l2index5 = 0;
     this.l2index6 = 0;
+    this.l2index7 = 0;
     this.getSelectKv();
     let that = this;
     let xm;
@@ -438,28 +454,37 @@ export default {
       functionParameters: [],
     };
     ue.interface.broadcast("PSAPI", JSON.stringify(data));
+    setTimeout(() => {
+      that.$bus.$emit("setShiJiao", 1);
+      that.$bus.$emit("setYeJian", 0);
+    }, 200);
   },
   deactivated() {
     this.show = false;
     this.showZheZhao = false;
+    this.showxlTk = false;
+    this.currentIndex = -1;
     this.xlIndex = -1;
     this.xlIndex1 = -1;
     this.xlIndex2 = -1;
     this.xlIndex3 = -1;
     this.xlIndex4 = -1;
     this.xlIndex5 = -1;
+    this.xlIndex6 = -1;
     this.lindex1 = 0;
     this.lindex2 = 0;
     this.lindex3 = 0;
     this.lindex4 = 0;
     this.lindex5 = 0;
     this.lindex6 = 0;
+    this.lindex7 = 0;
     this.l2index1 = 0;
     this.l2index2 = 0;
     this.l2index3 = 0;
     this.l2index4 = 0;
     this.l2index5 = 0;
     this.l2index6 = 0;
+    this.l2index7 = 0;
     this.isShowZD = false;
     this.showQH = false;
     this.showDT = false;
@@ -617,18 +642,21 @@ export default {
           this.xlIndex3 = -1;
           this.xlIndex4 = -1;
           this.xlIndex5 = -1;
+          this.xlIndex6 = -1;
           this.lindex1 = 0;
           this.lindex2 = 0;
           this.lindex3 = 0;
           this.lindex4 = 0;
           this.lindex5 = 0;
           this.lindex6 = 0;
+          this.lindex7 = 0;
           this.l2index1 = 0;
           this.l2index2 = 0;
           this.l2index3 = 0;
           this.l2index4 = 0;
           this.l2index5 = 0;
           this.l2index6 = 0;
+          this.l2index7 = 0;
           this.getSelectKv();
         } else {
           this.xlIndex = -1;
@@ -637,18 +665,21 @@ export default {
           this.xlIndex3 = -1;
           this.xlIndex4 = -1;
           this.xlIndex5 = -1;
+          this.xlIndex6 = -1;
           this.lindex1 = 0;
           this.lindex2 = 0;
           this.lindex3 = 0;
           this.lindex4 = 0;
           this.lindex5 = 0;
           this.lindex6 = 0;
+          this.lindex7 = 0;
           this.l2index1 = 0;
           this.l2index2 = 0;
           this.l2index3 = 0;
           this.l2index4 = 0;
           this.l2index5 = 0;
           this.l2index6 = 0;
+          this.l2index7 = 0;
           this.getSelectKvs();
         }
       }
@@ -985,6 +1016,60 @@ export default {
           ],
         };
         ue.interface.broadcast("PSAPI", JSON.stringify(data));
+      } else if (e == 6) {
+        if (this.xlIndex6 == 1) {
+          this.xlIndex6 = 0;
+        } else {
+          this.xlIndex6 = 1;
+          if (this.lindex7 == 0) {
+            this.list = ["数据请求中"];
+            if (this.l2index7 == 0) {
+              this.showZheZhao = true;
+              this.l2index7 = 1;
+            }
+          }
+        }
+        let show;
+        if (this.xlIndex6 == 1) {
+          show = true;
+        } else {
+          show = false;
+        }
+        let v = {
+          PowerLevel: "交流1000kV",
+          value: show,
+          data: [
+            {
+              key: "fbzt",
+              value: "已发布",
+            },
+            {
+              key: "dydj",
+              value: "交流1000kV",
+            },
+            {
+              key: "ssdt",
+              value: window.xianMing,
+            },
+          ],
+        };
+        let functionName;
+        if (this.currentIndex == 0) {
+          functionName = "SwitchPowerLevel";
+        } else {
+          functionName = "SwitchHStationPowerLevel";
+        }
+        let data = {
+          functionName: functionName,
+          backFunctionName: "",
+          functionParameters: [
+            {
+              key: functionName,
+              value: JSON.stringify(v),
+            },
+          ],
+        };
+        ue.interface.broadcast("PSAPI", JSON.stringify(data));
       }
     },
     rbtnClick(e) {
@@ -1196,49 +1281,38 @@ export default {
         let gj;
 
         if (e == 0) {
-          gj = "CLMJ";
+          gj = { Toolkit: "Area", State: false };
           let data = {
-            functionName: "NavigationPage",
+            functionName: "Toolkit",
             functionParameters: [
               {
-                key: "gongjubao",
-                value: gj,
-              },
-              {
-                key: "isSelect",
-                value: false,
+                key: "Toolkit",
+                value: JSON.stringify(gj),
               },
             ],
           };
           ue.interface.broadcast("PSAPI", JSON.stringify(data));
         } else if (e == 1) {
-          gj = "CLJL";
+          gj = { Toolkit: "Distance", State: false };
           let data = {
-            functionName: "NavigationPage",
+            functionName: "Toolkit",
             functionParameters: [
               {
-                key: "gongjubao",
-                value: gj,
-              },
-              {
-                key: "isSelect",
-                value: false,
+                key: "Toolkit",
+                value: JSON.stringify(gj),
               },
             ],
           };
           ue.interface.broadcast("PSAPI", JSON.stringify(data));
         } else if (e == 2) {
-          gj = "CLJD";
+          gj = { Toolkit: "Angle", State: false };
+
           let data = {
-            functionName: "NavigationPage",
+            functionName: "Toolkit",
             functionParameters: [
               {
-                key: "gongjubao",
-                value: gj,
-              },
-              {
-                key: "isSelect",
-                value: false,
+                key: "Toolkit",
+                value: JSON.stringify(gj),
               },
             ],
           };
@@ -1248,49 +1322,39 @@ export default {
         this.gjbIndex = e;
         let gj;
         if (e == 0) {
-          gj = "CLMJ";
+          gj = { Toolkit: "Area", State: true };
           let data = {
-            functionName: "NavigationPage",
+            functionName: "Toolkit",
             functionParameters: [
               {
-                key: "gongjubao",
-                value: gj,
-              },
-              {
-                key: "isSelect",
-                value: true,
+                key: "Toolkit",
+                value: JSON.stringify(gj),
               },
             ],
           };
           ue.interface.broadcast("PSAPI", JSON.stringify(data));
         } else if (e == 1) {
-          gj = "CLJL";
+          gj = { Toolkit: "Distance", State: true };
+
           let data = {
-            functionName: "NavigationPage",
+            functionName: "Toolkit",
             functionParameters: [
               {
-                key: "gongjubao",
-                value: gj,
-              },
-              {
-                key: "isSelect",
-                value: true,
+                key: "Toolkit",
+                value: JSON.stringify(gj),
               },
             ],
           };
           ue.interface.broadcast("PSAPI", JSON.stringify(data));
         } else if (e == 2) {
-          gj = "CLJD";
+          gj = { Toolkit: "Angle", State: true };
+
           let data = {
-            functionName: "NavigationPage",
+            functionName: "Toolkit",
             functionParameters: [
               {
-                key: "gongjubao",
-                value: gj,
-              },
-              {
-                key: "isSelect",
-                value: true,
+                key: "Toolkit",
+                value: JSON.stringify(gj),
               },
             ],
           };
@@ -1340,6 +1404,10 @@ export default {
           this.xlIndex5 = 1;
           this.lindex6 = 1;
         }
+        if (data[i] == "交流1000kV") {
+          this.xlIndex6 = 1;
+          this.lindex7 = 1;
+        }
       }
     },
     // 获取加载的网架线路
@@ -1384,6 +1452,10 @@ export default {
         if (data[i] == "交流0.4kV") {
           this.xlIndex5 = 1;
           this.lindex6 = 1;
+        }
+        if (data[i] == "交流1000kV") {
+          this.xlIndex6 = 1;
+          this.lindex7 = 1;
         }
       }
     },
@@ -1502,7 +1574,7 @@ export default {
 <style scoped>
 .xlBlock {
   width: 279px;
-  height: 156px;
+  height: 226px;
   position: fixed;
   left: 65px;
   bottom: 78px;
@@ -1510,6 +1582,9 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+}
+.xlBlock2 {
+  height: 156px !important;
 }
 .xlBlockItem {
   width: 100%;

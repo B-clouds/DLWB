@@ -5,8 +5,8 @@
       ref="sjmx"
       :data="dataList"
       tooltip-effect="dark"
-      class="sjmx_e_table "
-      height="340px"
+      class="sjmx_e_table"
+      height="600px"
       :header-cell-style="{
         'text-align': 'center',
         height: '29px !important',
@@ -46,6 +46,13 @@ export default {
     return {
       dataList: [
         { rq: "06.12", zdz: "78W", zxz: "53W", pjz: "64W" },
+        { rq: "06.13", zdz: "78W", zxz: "53W", pjz: "64W" },
+        { rq: "06.14", zdz: "78W", zxz: "53W", pjz: "64W" },
+        { rq: "06.15", zdz: "78W", zxz: "53W", pjz: "64W" },
+        { rq: "06.16", zdz: "78W", zxz: "53W", pjz: "64W" },
+        { rq: "06.17", zdz: "78W", zxz: "53W", pjz: "64W" },
+        { rq: "06.18", zdz: "78W", zxz: "53W", pjz: "64W" },
+        { rq: "06.19", zdz: "78W", zxz: "53W", pjz: "64W" },
         { rq: "06.13", zdz: "78W", zxz: "53W", pjz: "64W" },
         { rq: "06.14", zdz: "78W", zxz: "53W", pjz: "64W" },
         { rq: "06.15", zdz: "78W", zxz: "53W", pjz: "64W" },

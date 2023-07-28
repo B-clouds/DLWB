@@ -28,19 +28,22 @@
       @getIds="getIds"
       v-if="show && detiles1"
     />
-    <fhRight v-if="show && showRights && detiles1"/>
+    <fhRight v-if="show && showRights && detiles1" />
     <!-- 负荷概括 -->
-    <fhgkLeft v-if="show && detiles2 && navIndex == 0"/>
-    <fhgkRight v-if="show && detiles2 && navIndex == 0"/>
+    <fhgkLeft v-if="show && detiles2 && navIndex == 0" />
+    <fhgkRight v-if="show && detiles2 && navIndex == 0" />
     <!-- 大用户接入 -->
-    <dyhLeft v-if="show && detiles2 && navIndex == 1"/>
-    <dyhRight v-if="show && detiles2 && navIndex == 1"/>
+    <dyhLeft v-if="show && detiles2 && navIndex == 1" />
+    <dyhRight v-if="show && detiles2 && navIndex == 1" />
     <!-- 负荷预测 -->
-    <fhycLeft v-if="show && detiles2 && navIndex == 2"/>
+    <fhycLeft v-if="show && detiles2 && navIndex == 2" />
     <!-- 预测查询 -->
-    <yccxLeft v-if="show && detiles2 && navIndex == 3"/>
+    <yccxLeft v-if="show && detiles2 && navIndex == 3" />
     <!-- 远景负荷 -->
-    <yjfhLeft v-if="show && detiles2 && navIndex == 4"/>
+    <yjfhLeft v-if="show && detiles2 && navIndex == 4" />
+
+    <!-- 网架电站 -->
+    <wjdz v-if="show && detiles1" />
   </div>
 </template>
 
@@ -55,6 +58,7 @@ import dyhRight from "./components/dyhRight.vue";
 import fhycLeft from "./components/fhycLeft.vue";
 import yccxLeft from "./components/yccxLeft.vue";
 import yjfhLeft from "./components/yjfhLeft.vue";
+import wjdz from "@/components/wjdz/index.vue";
 export default {
   name: "fuheyuce",
   components: {
@@ -67,6 +71,7 @@ export default {
     fhycLeft,
     yccxLeft,
     yjfhLeft,
+    wjdz,
   },
   data() {
     return {
@@ -99,7 +104,7 @@ export default {
     });
   },
   activated() {
-    this.show = true; 
+    this.show = true;
   },
   deactivated() {
     this.showRights = false;
@@ -121,9 +126,9 @@ export default {
     },
     navClick(e) {
       this.navIndex = e;
-      if(e == 2 || e == 4) {
+      if (e == 2 || e == 4) {
         this.isShowRight = false;
-      }else {
+      } else {
         this.isShowRight = true;
       }
     },

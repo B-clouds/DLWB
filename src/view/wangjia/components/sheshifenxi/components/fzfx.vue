@@ -198,6 +198,7 @@
             <span class="span2" @click="spanClick">{{ span2 }}</span>
           </div>
           <div class="kong"></div>
+          <div class="xinzeng" v-show="showSpan == 0"></div>
           <!-- 统计数据展示 -->
           <div class="jc_echarts" v-show="showSpan == 0">
             <xt3
@@ -1102,7 +1103,7 @@ export default {
 <style scoped>
 .jcxx {
   width: 100%;
-  height: 388px;
+  height: 680px;
   background: url("img/jbg.png") no-repeat !important;
   background-size: 100% 100% !important;
   position: relative;
@@ -1158,5 +1159,16 @@ export default {
 .kong {
   width: 100%;
   height: 40px;
+}
+</style>
+<style scoped>
+.xinzeng {
+  width: 323px;
+  height: 214px;
+  margin-left: 12px;
+  margin-top: 14px;
+  margin-bottom: 20px;
+  background: url("img/xinzeng.png") no-repeat !important;
+  background-size: 100% 100% !important;
 }
 </style>

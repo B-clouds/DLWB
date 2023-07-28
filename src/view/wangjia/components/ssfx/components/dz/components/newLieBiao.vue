@@ -450,6 +450,10 @@ export default {
       // ------------------------------电压--------------------------
       dianya: [
         {
+          value: "交流1000kV",
+          label: "1000kV",
+        },
+        {
           value: "交流500kV",
           label: "500kV",
         },
@@ -547,14 +551,8 @@ export default {
     this.xlIndex4 = -1;
     this.xlIndex5 = -1;
   },
-  mounted() {
-    let that = this;
-    that.$bus.$on("leixChaXun", () => {
-      that.getDateLists();
-    });
-    that.$bus.$on("suofangAnNiu", (e) => {
-      this.showZDtb = e;
-    });
+  activated() {
+    console.log("------------1111111111-------------");
     let data = {
       functionName: "GetSelectHStationKv",
       backFunctionName: "BackGetSelectKvs",
@@ -567,6 +565,7 @@ export default {
     };
     ue.interface.broadcast("PSAPI", JSON.stringify(data));
     window.ue.interface.BackGetSelectKvs = this.BackGetSelectKvs;
+    console.log(data, "调用-------------");
     // 获取表头
     let v = {
       URL: "data/tableColumnInfo/" + 1000 + "/" + 0 + "/" + 1000 + "/" + 1,
@@ -585,6 +584,15 @@ export default {
     };
     ue.interface.broadcast("PSAPI", JSON.stringify(data2));
     window.ue.interface.getxlTh = this.getxlTh;
+  },
+  mounted() {
+    let that = this;
+    that.$bus.$on("leixChaXun", () => {
+      that.getDateLists();
+    });
+    that.$bus.$on("suofangAnNiu", (e) => {
+      this.showZDtb = e;
+    });
   },
   methods: {
     hang2s(row, column, event) {
@@ -707,6 +715,10 @@ export default {
     },
     BackGetSelectKvs(e) {
       let data = JSON.parse(e).value;
+      console.log(
+        "------------------------------------------11111111111111111",
+        e
+      );
       this.xlKV = data;
       for (let i = 0; i < this.xlKV.length; i++) {
         if (this.xlKV[i] == "交流500kV") {

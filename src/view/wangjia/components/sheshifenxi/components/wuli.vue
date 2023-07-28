@@ -38,7 +38,7 @@
             <span>所属地方：</span>
           </div>
           <div class="rights">
-            <span>石家庄</span>
+            <span>雄安</span>
           </div>
         </div>
       </div>
@@ -48,7 +48,7 @@
             <span>站房名称：</span>
           </div>
           <div class="rights">
-            <span>石家庄A站</span>
+            <span>雄安A站</span>
           </div>
         </div>
         <div class="items">
@@ -56,7 +56,7 @@
             <span>站房地址：</span>
           </div>
           <div class="rights">
-            <span>石家庄A区</span>
+            <span>雄安A区</span>
           </div>
         </div>
       </div>
@@ -117,7 +117,7 @@
             <span>设备名称：</span>
           </div>
           <div class="rights">
-            <span>石家庄地调</span>
+            <span>雄安地调</span>
           </div>
         </div>
       </div>
@@ -127,7 +127,7 @@
             <span>调度大区：</span>
           </div>
           <div class="rights">
-            <span>石家庄</span>
+            <span>雄安</span>
           </div>
         </div>
         <div class="items">
@@ -135,7 +135,7 @@
             <span>调度单位：</span>
           </div>
           <div class="rights">
-            <span>石家庄</span>
+            <span>雄安</span>
           </div>
         </div>
       </div>

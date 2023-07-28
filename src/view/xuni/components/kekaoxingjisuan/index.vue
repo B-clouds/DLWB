@@ -7,6 +7,7 @@
     <transition name="transitionRight">
       <div v-show="show" class="wr"></div>
     </transition>
+    <div class="zwf"></div>
     <!-- 基本管理 -->
     <kkxLeft
       @showRight="showRight"
@@ -14,7 +15,7 @@
       @getIds="getIds"
       v-if="show && detiles1"
     />
-    <kkxRight v-if="show && showRights && detiles1"/>
+    <kkxRight v-if="show && showRights && detiles1" />
   </div>
 </template>
 
@@ -37,11 +38,9 @@ export default {
       detiles1: true,
     };
   },
-  mounted() {
-   
-  },
+  mounted() {},
   activated() {
-    this.show = true; 
+    this.show = true;
   },
   deactivated() {
     this.showRights = false;
@@ -88,5 +87,17 @@ export default {
   background: url("img/wr.png") no-repeat !important;
   background-size: 100% 100% !important;
   z-index: -1;
+}
+</style>
+
+<style scoped>
+.zwf {
+  width: 367px;
+  height: 77px;
+  background: url("img/zwf.png") no-repeat !important;
+  background-size: 100% 100% !important;
+  position: absolute;
+  left: 777px;
+  bottom: 4px;
 }
 </style>

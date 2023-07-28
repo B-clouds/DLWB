@@ -153,7 +153,7 @@
             <span>所属调度：</span>
           </div>
           <div class="rights">
-            <span>石家庄地调</span>
+            <span>雄安</span>
           </div>
         </div>
       </div>

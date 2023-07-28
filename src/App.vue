@@ -13,6 +13,9 @@
       <div v-show="this.$route.path != '/hongguan'">
         <!-- top图片 -->
         <div class="tops" v-show="this.$route.path != '/login'">
+          <div class="biaoti">
+            <span>{{ xtName }}</span>
+          </div>
           <div class="tianqi"></div>
           <span class="span">27℃</span>
           <div class="fenge"></div>
@@ -261,11 +264,13 @@ export default {
       showGH: 0,
       isShowZNZ: true, //是否显示指南针
       showMB: false,
+
+      xtName: "", //系统名称
     };
   },
   mounted() {
     this.setupClientBindings();
-
+    this.xtName = window.xtName;
     let v = {
       ChooseType: "SwitchPowerType",
       value: "now",
@@ -305,22 +310,26 @@ export default {
     let that = this;
     that.$bus.$on("setShiJiao", (e) => {
       that.sjIndex = e;
+      console.log("11111", e);
       let sj;
       if (e == 0) {
-        sj = "WXSJ";
+        sj = "Satellite";
       } else if (e == 1) {
-        sj = "HPSJ";
+        sj = "Aerial";
       } else if (e == 2) {
-        sj = "WRJSJ";
+        sj = "Drone";
       } else if (e == 3) {
-        sj = "XRSJ";
+        sj = "Pedestrian";
       }
+      let v = {
+        ViewType: sj,
+      };
       let data = {
-        functionName: "NavigationPage",
+        functionName: "ChangeViewType",
         functionParameters: [
           {
-            key: "shijiaoXZ",
-            value: sj,
+            key: "ChangeViewType",
+            value: JSON.stringify(v),
           },
         ],
       };
@@ -780,24 +789,28 @@ export default {
       this.sjIndex = e;
       let sj;
       if (e == 0) {
-        sj = "WXSJ";
+        sj = "Satellite";
       } else if (e == 1) {
-        sj = "HPSJ";
+        sj = "Aerial";
       } else if (e == 2) {
-        sj = "WRJSJ";
+        sj = "Drone";
       } else if (e == 3) {
-        sj = "XRSJ";
+        sj = "Pedestrian";
       }
+      let v = {
+        ViewType: sj,
+      };
       let data = {
-        functionName: "NavigationPage",
+        functionName: "ChangeViewType",
         functionParameters: [
           {
-            key: "shijiaoXZ",
-            value: sj,
+            key: "ChangeViewType",
+            value: JSON.stringify(v),
           },
         ],
       };
       ue.interface.broadcast("PSAPI", JSON.stringify(data));
+      console.log(data, "dainji");
     },
     // 夜间模式
     yjClick() {
@@ -1306,6 +1319,24 @@ input:focus {
   background: url("assets/image/tianqi.png") no-repeat !important;
   background-size: 100% 100% !important;
   margin-right: 9px;
+}
+.tops > .biaoti {
+  width: 1000px;
+  height: 100%;
+  position: absolute;
+  left: 460px;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tops > .biaoti > span {
+  font-family: Source Han Sans SC;
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: #ffffff;
 }
 .tops > .wendu {
   width: 18px;
