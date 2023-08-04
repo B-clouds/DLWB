@@ -13,6 +13,5 @@ module.exports = {
                 // hhhhh
                 remUnit: 192
             })
-    },
-
+    }
 }

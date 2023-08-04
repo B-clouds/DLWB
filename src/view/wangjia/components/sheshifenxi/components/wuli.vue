@@ -12,7 +12,7 @@
             <span>设备标识：</span>
           </div>
           <div class="rights">
-            <span>AA-BB-CC-DD</span>
+            <span>{{ leftData.sbbs }}</span>
           </div>
         </div>
         <div class="items">
@@ -20,7 +20,7 @@
             <span>设备编码：</span>
           </div>
           <div class="rights">
-            <span>23974</span>
+            <span>{{ leftData.sbbm }}</span>
           </div>
         </div>
       </div>
@@ -30,7 +30,7 @@
             <span>站房类型：</span>
           </div>
           <div class="rights">
-            <span>智能变电站</span>
+            <span>{{ leftData.sblx }}</span>
           </div>
         </div>
         <div class="items">
@@ -38,7 +38,7 @@
             <span>所属地方：</span>
           </div>
           <div class="rights">
-            <span>雄安</span>
+            <span>{{ leftData.ssds }}</span>
           </div>
         </div>
       </div>
@@ -48,7 +48,7 @@
             <span>站房名称：</span>
           </div>
           <div class="rights">
-            <span>雄安A站</span>
+            <span>{{ leftData.sbmc }}</span>
           </div>
         </div>
         <div class="items">
@@ -56,7 +56,7 @@
             <span>站房地址：</span>
           </div>
           <div class="rights">
-            <span>雄安A区</span>
+            <span>{{ leftData.sbdz }}</span>
           </div>
         </div>
       </div>
@@ -66,7 +66,7 @@
             <span>占地面积：</span>
           </div>
           <div class="rights">
-            <span>200㎡</span>
+            <span>{{ leftData.zdmj }}</span>
           </div>
         </div>
         <div class="items">
@@ -74,7 +74,7 @@
             <span>建筑面积：</span>
           </div>
           <div class="rights">
-            <span>500㎡</span>
+            <span>{{ leftData.zdmj }}</span>
           </div>
         </div>
       </div>
@@ -84,7 +84,7 @@
             <span>资产性质：</span>
           </div>
           <div class="rights">
-            <span>国有</span>
+            <span>{{ leftData.zcxz }}</span>
           </div>
         </div>
         <div class="items">
@@ -92,7 +92,7 @@
             <span>资产单位：</span>
           </div>
           <div class="rights">
-            <span>河北电网</span>
+            <span>{{ leftData.zcdw }}</span>
           </div>
         </div>
       </div>
@@ -109,7 +109,7 @@
             <span>调度ID：</span>
           </div>
           <div class="rights">
-            <span>32132</span>
+            <span>{{ leftData.ddid }}</span>
           </div>
         </div>
         <div class="items">
@@ -117,7 +117,7 @@
             <span>设备名称：</span>
           </div>
           <div class="rights">
-            <span>雄安地调</span>
+            <span>{{ leftData.sbmc }}</span>
           </div>
         </div>
       </div>
@@ -127,7 +127,7 @@
             <span>调度大区：</span>
           </div>
           <div class="rights">
-            <span>雄安</span>
+            <span>{{ leftData.dddq }}</span>
           </div>
         </div>
         <div class="items">
@@ -135,7 +135,7 @@
             <span>调度单位：</span>
           </div>
           <div class="rights">
-            <span>雄安</span>
+            <span>{{ leftData.dddw }}</span>
           </div>
         </div>
       </div>
@@ -145,7 +145,7 @@
             <span>是否满足 N-1：</span>
           </div>
           <div class="rights">
-            <span>否</span>
+            <span>{{ leftData.n_1 | sfn_1 }}</span>
           </div>
         </div>
       </div>
@@ -157,16 +157,42 @@
 export default {
   name: "wuli",
   data() {
-    return {};
+    return {
+      leftData: {},
+    };
   },
+  activated() {},
   mounted() {
     let that = this;
+    that.getJBXX();
     that.$bus.$on("detiles2", (e) => {
       that.getDetail(e);
     });
   },
-  activated() {},
-  methods: {},
+  filters: {
+    sfn_1(e) {
+      if (e == "1") {
+        return "是";
+      } else {
+        return "否";
+      }
+    },
+  },
+  methods: {
+    getJBXX() {
+      this.$axios
+        .get(window.zfjbxx, {
+          params: {
+            sssb: window.ccOid,
+            twinType: "1000",
+          },
+        })
+        .then((res) => {
+          this.leftData = res.data.data[0];
+        })
+        .catch((error) => {});
+    },
+  },
 };
 </script>
 

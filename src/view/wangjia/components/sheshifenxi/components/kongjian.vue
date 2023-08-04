@@ -11,7 +11,7 @@
             <span>供电区域：</span>
           </div>
           <div class="rights">
-            <span>雄安 AB 区</span>
+            <span>{{ rightData.gdqy }}</span>
           </div>
         </div>
         <div class="items">
@@ -19,7 +19,7 @@
             <span>运行容量：</span>
           </div>
           <div class="rights">
-            <span>300MW</span>
+            <span>{{ rightData.rl }}</span>
           </div>
         </div>
       </div>
@@ -29,7 +29,7 @@
             <span>电压等级：</span>
           </div>
           <div class="rights">
-            <span>220kV</span>
+            <span>{{ rightData.dydj }}</span>
           </div>
         </div>
         <div class="items">
@@ -37,7 +37,7 @@
             <span>布置方式：</span>
           </div>
           <div class="rights">
-            <span>露天</span>
+            <span>{{ rightData.bzfs }}</span>
           </div>
         </div>
       </div>
@@ -47,7 +47,7 @@
             <span>是否智能变电站：</span>
           </div>
           <div class="rights">
-            <span>是</span>
+            <span>{{ rightData.znsb | sfzn }}</span>
           </div>
         </div>
         <div class="items">
@@ -55,7 +55,7 @@
             <span>是否枢纽 站：</span>
           </div>
           <div class="rights">
-            <span>是</span>
+            <span>{{ rightData.snsb | sfzn }}</span>
           </div>
         </div>
       </div>
@@ -65,7 +65,7 @@
             <span>变电站 重要级别：</span>
           </div>
           <div class="rights">
-            <span>一级</span>
+            <span>{{ rightData.zydj }}</span>
           </div>
         </div>
         <div class="items">
@@ -73,7 +73,7 @@
             <span>是否农网：</span>
           </div>
           <div class="rights">
-            <span>否</span>
+            <span>{{ rightData.nw | sfzn }}</span>
           </div>
         </div>
       </div>
@@ -83,7 +83,7 @@
             <span>是否集中 监控：</span>
           </div>
           <div class="rights">
-            <span>是</span>
+            <span>{{ rightData.jzjk | sfzn }}</span>
           </div>
         </div>
         <div class="items">
@@ -91,7 +91,7 @@
             <span>投运日期：</span>
           </div>
           <div class="rights">
-            <span>20080808</span>
+            <span>{{ rightData.tyrq }}</span>
           </div>
         </div>
       </div>
@@ -101,7 +101,7 @@
             <span>退运日期:</span>
           </div>
           <div class="rights">
-            <span>20991231</span>
+            <span>{{ rightData.tuiyrq }}</span>
           </div>
         </div>
       </div>
@@ -113,11 +113,38 @@
 export default {
   name: "kongjian",
   data() {
-    return {};
+    return {
+      rightData: {},
+    };
   },
-  mounted() {},
+  mounted() {
+    this.getJBXX();
+  },
+  filters: {
+    sfzn(e) {
+      if (e == "1") {
+        return "是";
+      } else {
+        return "否";
+      }
+    },
+  },
   activated() {},
-  methods: {},
+  methods: {
+    getJBXX() {
+      this.$axios
+        .get(window.zfjbxx, {
+          params: {
+            sssb: window.ccOid,
+            twinType: "1000",
+          },
+        })
+        .then((res) => {
+          this.rightData = res.data.data[0];
+        })
+        .catch((error) => {});
+    },
+  },
 };
 </script>
 

@@ -86,6 +86,9 @@
           ref="treeForm_mx"
         ></el-tree>
       </div>
+      <div class="l_btn" @click="btnClick" v-show="showQueRen">
+        <span>确认</span>
+      </div>
     </div>
     <!-- 编辑弹框 -->
     <div class="zhezhao" v-show="showMB">
@@ -249,6 +252,7 @@ export default {
 
       defaultExpand: [],
       newIDs: "",
+      showQueRen: false,
     };
   },
   watch: {
@@ -528,10 +532,12 @@ export default {
       if (node.checked) {
         // 展示右侧，并发送消息
         this.$emit("showRight", true);
+        this.showQueRen = true;
         showLefts = true;
       } else {
         // 取消展示右侧
         this.$emit("showRight", false);
+        this.showQueRen = false;
         showLefts = false;
         //当前是取消选中,将所有子节点都取消选中
         this.setChildenNode(node);
@@ -585,7 +591,9 @@ export default {
         this.setChildenNode(node.childNodes[i]);
       }
     },
-
+    btnClick() {
+      this.$emit("showNav");
+    },
     handleNodeClick(e) {
       this.$emit("chongzhi");
       if (e.ShowKSH !== undefined) {
@@ -894,7 +902,7 @@ export default {
 
 .blockItem {
   width: 360px;
-  height: 840px;
+  height: 755px;
   border-radius: 2px;
   position: absolute;
   overflow-y: scroll;
@@ -1084,5 +1092,37 @@ export default {
   font-size: 16px;
   font-weight: normal;
   color: #e2e2e2;
+}
+</style>
+
+<style scoped>
+.l_btn {
+  width: 105px;
+  height: 30px;
+  position: absolute;
+  right: 139px;
+  bottom: 20px;
+  background: url("img/d_btn.png") no-repeat;
+  background-size: 100% 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.l_btn > span {
+  font-family: Source Han Sans CN;
+  font-size: 13px;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.7);
+}
+.l_btn:hover {
+  background: url("img/d_btn2.png") no-repeat !important;
+  background-size: 100% 100% !important;
+}
+.l_btn:hover > span {
+  font-family: Source Han Sans CN;
+  font-size: 13px;
+  font-weight: bold;
+  color: #ffffff;
 }
 </style>
