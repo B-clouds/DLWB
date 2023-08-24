@@ -15,3 +15,5 @@ window.types = 0
 // 项目系统名称
 window.xtName = '能源互联网全景智能系统'
 
+// 网格维护 api 通用域名
+window.wgApiUrl = "http://api.dev.picimos.com:8025"

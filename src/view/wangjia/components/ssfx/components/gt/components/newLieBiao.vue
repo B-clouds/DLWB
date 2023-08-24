@@ -15,27 +15,6 @@
         >
           <span>查询</span>
         </div>
-        <!-- <div
-          class="btnItem"
-          @click="createClick"
-          :class="btnIndex == 1 ? 'btnItem2' : ''"
-        >
-          <span>发布</span>
-        </div>
-        <div
-          class="btnItem"
-          @click="repossess"
-          :class="btnIndex == 2 ? 'btnItem2' : ''"
-        >
-          <span>创建</span>
-        </div>
-        <div
-          class="btnItem"
-          @click="deleteClick"
-          :class="btnIndex == 3 ? 'btnItem2' : ''"
-        >
-          <span>删除</span>
-        </div> -->
       </div>
       <!-- 箭头 -->
       <div @click="jtClick" class="jianTou"></div>
@@ -117,27 +96,6 @@
           >
             <span>查询</span>
           </div>
-          <!-- <div
-            class="btnItem"
-            @click="createClick"
-            :class="btnIndex == 1 ? 'btnItem2' : ''"
-          >
-            <span>发布</span>
-          </div>
-          <div
-            class="btnItem"
-            @click="repossess"
-            :class="btnIndex == 2 ? 'btnItem2' : ''"
-          >
-            <span>创建</span>
-          </div>
-          <div
-            class="btnItem"
-            @click="deleteClick"
-            :class="btnIndex == 3 ? 'btnItem2' : ''"
-          >
-            <span>删除</span>
-          </div> -->
         </div>
         <!-- 箭头 -->
         <div @click="jtClick" class="jianTou jianTou2"></div>
@@ -148,107 +106,79 @@
         <div class="tjTT">
           <span>条件选择</span>
         </div>
-        <div class="tj_bck">
-          <!-- 线路名称 -->
-          <div class="tjBlock">
-            <div class="tops">线路名称</div>
-            <div class="bottoms">
+        <div class="tjBlock">
+          <div class="tops">杆塔名称</div>
+          <div class="bottoms">
+            <div class="inputs">
               <div class="inputs">
-                <div class="inputs">
-                  <input placeholder="" v-model="xl_name" />
-                </div>
+                <input placeholder="" v-model="search" />
               </div>
             </div>
           </div>
-          <!-- 起点名称 -->
-          <div class="tjBlock">
-            <div class="tops">起点名称</div>
-            <div class="bottoms">
-              <div class="inputs">
-                <div class="inputs">
-                  <input placeholder="" v-model="xl_qdname" />
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- 终点名称 -->
-          <div class="tjBlock">
-            <div class="tops">终点名称</div>
-            <div class="bottoms">
-              <div class="inputs">
-                <div class="inputs">
-                  <input placeholder="" v-model="xl_zdname" />
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- 电压等级 -->
-          <div class="tjBlock">
-            <div class="tops">电压等级</div>
-            <div class="bottoms">
-              <div class="inputs">
-                <el-select
-                  v-model="xl_dy_value"
-                  @visible-change="dyClick"
-                  placeholder=""
+        </div>
+        <div class="tjBlock">
+          <div class="tops">运维单位</div>
+          <div class="bottoms">
+            <div class="inputs">
+              <el-select
+                v-model="oam_value"
+                @visible-change="oamClick"
+                placeholder=""
+              >
+                <el-option
+                  v-for="item in oam"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
                 >
-                  <el-option
-                    v-for="item in dianya"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  >
-                  </el-option>
-                </el-select>
-                <img v-show="!dy_show" src="./img/xia.png" />
-                <img v-show="dy_show" src="./img/shang.png" />
-              </div>
+                </el-option>
+              </el-select>
+              <img v-show="!oam_show" src="./img/xia.png" />
+              <img v-show="oam_show" src="./img/shang.png" />
             </div>
           </div>
-          <!-- 所属地市 -->
-          <div class="tjBlock">
-            <div class="tops">所属地市</div>
-            <div class="bottoms">
-              <div class="inputs">
-                <el-select
-                  v-model="xl_ds_value"
-                  @visible-change="xl_dsClick"
-                  placeholder=""
+        </div>
+        <div class="tjBlock">
+          <div class="tops">电压等级</div>
+          <div class="bottoms">
+            <div class="inputs">
+              <el-select
+                v-model="dy_value"
+                @visible-change="dyClick"
+                placeholder=""
+              >
+                <el-option
+                  v-for="item in dianya"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
                 >
-                  <el-option
-                    v-for="item in xl_ds_suoshu"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  >
-                  </el-option>
-                </el-select>
-                <img v-show="!xl_ds_show" src="./img/xia.png" />
-                <img v-show="xl_ds_show" src="./img/shang.png" />
-              </div>
+                </el-option>
+              </el-select>
+              <img v-show="!dy_show" src="./img/xia.png" />
+              <img v-show="dy_show" src="./img/shang.png" />
             </div>
           </div>
-
-          <div class="tjBlock">
-            <div class="tops">运维单位</div>
-            <div class="bottoms">
-              <div class="inputs">
-                <el-select
-                  v-model="xl_oam_value"
-                  @visible-change="oamClick"
-                  placeholder=""
+        </div>
+        <div class="tjBlock">
+          <div class="tops">模型状态</div>
+          <div class="bottoms">
+            <div class="inputs">
+              <el-select
+                v-model="cj_value"
+                @visible-change="cjClick"
+                placeholder=""
+              >
+                <el-option
+                  v-for="item in chuangjian"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
                 >
-                  <el-option
-                    v-for="item in oam"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  >
-                  </el-option>
-                </el-select>
-                <img v-show="!oam_show" src="./img/xia.png" />
-                <img v-show="oam_show" src="./img/shang.png" />
-              </div>
+                </el-option>
+              </el-select>
+              <img v-show="!cj_show" src="./img/xia.png" />
+              <img v-show="cj_show" src="./img/shang.png" />
             </div>
           </div>
         </div>
@@ -266,7 +196,7 @@
         <!-- 开关 -->
         <div class="rkg" @click="kgClick" :class="showRZK ? 'rkg2' : ''"></div>
         <div class="mxTT">
-          <span>线路明细</span>
+          <span>设备明细</span>
         </div>
         <div class="t_bg">
           <el-table
@@ -347,7 +277,7 @@
         <!-- 开关 -->
         <div class="rkg rkg2" @click="kgClick"></div>
         <div class="mxTT">
-          <span>线路明细</span>
+          <span>设备明细</span>
         </div>
         <div class="t_bg">
           <el-table
@@ -425,28 +355,16 @@
 export default {
   name: "newLieBiao",
   watch: {
-    zfType_value(e, f) {
+    oam_value(e, f) {
       this.getDateLists();
     },
-    xl_oam_value(e, f) {
+    dy_value(e, f) {
       this.getDateLists();
     },
-    xl_dy_value(e, f) {
+    cj_value(e, f) {
       this.getDateLists();
     },
-    zf_cj_value(e, f) {
-      this.getDateLists();
-    },
-    xl_name(e, f) {
-      this.getDateLists();
-    },
-    xl_qdname(e, f) {
-      this.getDateLists();
-    },
-    xl_zdname(e, f) {
-      this.getDateLists();
-    },
-    xl_ds_value(e, f) {
+    search(e, f) {
       this.getDateLists();
     },
   },
@@ -457,9 +375,9 @@ export default {
       btnIndex: -1, //是否选中按钮
 
       //线路名称
-      xl_name: "",
+      sblx: "",
       // 起点名称
-      xl_qdname: "",
+      sbmc: "",
       // 终点名称
       xl_zdname: "",
       // ----------------------------模型----------------------------------
@@ -473,7 +391,7 @@ export default {
           label: "全部",
         },
       ],
-      xl_oam_value: "",
+      ywdw: "",
       oam_show: false,
       // ------------------------------电压--------------------------
       dianya: [
@@ -510,16 +428,20 @@ export default {
           label: "全部",
         },
       ],
-      xl_dy_value: "",
+      dydj: "",
       dy_show: "",
       // 线路所属地市
       xl_ds_suoshu: [
         {
-          value: "",
-          label: "全部",
+          value: "已发布",
+          label: "已发布",
+        },
+        {
+          value: "未发布",
+          label: "未发布",
         },
       ],
-      xl_ds_value: "",
+      fbzt: "",
       xl_ds_show: "",
       // --------------------------模型状态---------------------------
       chuangjian: [
@@ -539,8 +461,78 @@ export default {
           value: "",
           label: "全部",
         },
+      ], //杆塔名称
+      search: "",
+      // ----------------------------运维单位----------------------------------
+      oam: [
+        {
+          value: "国网雄县供电公司",
+          label: "国网雄县供电公司",
+        },
+        {
+          value: "",
+          label: "全部",
+        },
       ],
-      zf_cj_value: "",
+      oam_value: "",
+      oam_show: false,
+      // ------------------------------电压--------------------------
+      dianya: [
+        {
+          value: "交流1000kV",
+          label: "1000kV",
+        },
+        {
+          value: "交流500kV",
+          label: "500kV",
+        },
+        {
+          value: "交流220kV",
+          label: "220kV",
+        },
+        {
+          value: "交流110kV",
+          label: "110kV",
+        },
+        {
+          value: "交流35kV",
+          label: "35kV",
+        },
+        {
+          value: "交流10kV",
+          label: "10kV",
+        },
+        {
+          value: "交流0.4kV",
+          label: "0.4kV",
+        },
+        {
+          value: "",
+          label: "全部",
+        },
+      ],
+      dy_value: "",
+      dy_show: "",
+      // --------------------------模型状态---------------------------
+      chuangjian: [
+        {
+          value: "未创建",
+          label: "未创建",
+        },
+        {
+          value: "已创建",
+          label: "已创建",
+        },
+        {
+          value: "已发布",
+          label: "已发布",
+        },
+        {
+          value: "",
+          label: "全部",
+        },
+      ],
+      cj_value: "",
       cj_show: false,
       // -------------------------------列表数据-----------------------------
       dataList: [],
@@ -575,26 +567,7 @@ export default {
       showwjdz: false,
     };
   },
-  deactivated() {
-    this.zfType_value = "";
-    this.xl_ds_value = "";
-    this.xl_name = "";
-    this.xl_qdname = "";
-    this.xl_zdname = "";
-    this.xl_oam_value = "";
-    this.xl_dy_value = "";
-    this.zf_cj_value = "";
-    this.page = 1;
-    this.page1 = 1;
-  },
-  mounted() {
-    let that = this;
-    that.$bus.$on("leixChaXun", () => {
-      that.getDateLists();
-    });
-    that.$bus.$on("suofangAnNiu", (e) => {
-      this.showZDtb = e;
-    });
+  activated() {
     let data = {
       functionName: "GetSelectKv",
       backFunctionName: "BackGetSelectKv",
@@ -609,8 +582,8 @@ export default {
     window.ue.interface.BackGetSelectKv = this.BackGetSelectKv;
     // 获取表头
     let v = {
-      URL: "data/tableColumnInfo/" + 1001 + "/" + 0 + "/" + 1000 + "/" + 1,
-      StructName: "获取线路表头",
+      URL: "data/tableColumnInfo/" + 1002 + "/" + 0 + "/" + 1002 + "/" + 1,
+      StructName: "获取变压器表头",
       verbType: "GET",
     };
     let data2 = {
@@ -625,6 +598,23 @@ export default {
     };
     ue.interface.broadcast("PSAPI", JSON.stringify(data2));
     window.ue.interface.getxlTh = this.getxlTh;
+  },
+  deactivated() {
+    // this.page = 1;
+    // this.page1 = 1;
+    this.search = "";
+    this.oam_value = "";
+    this.dy_value = "";
+    this.cj_value = "";
+  },
+  mounted() {
+    let that = this;
+    that.$bus.$on("leixChaXun", () => {
+      that.getDateLists();
+    });
+    that.$bus.$on("suofangAnNiu", (e) => {
+      this.showZDtb = e;
+    });
   },
   methods: {
     // 是否显示网架电站
@@ -817,6 +807,7 @@ export default {
     zfTypeClick(e) {
       this.zfType_show = e;
     },
+
     oamClick(e) {
       this.oam_show = e;
     },
@@ -838,39 +829,42 @@ export default {
     getxlTh(e) {
       let data2 = JSON.parse(e).data;
       this.tableColumnList = data2.data;
-      this.dataList = [];
+      let datas = [];
+      for (let i = 0; i < 3; i++) {
+        datas.push(this.tableColumnList[i]);
+      }
+      this.tableColumnList4 = datas;
+      this.tableColumnList5 = this.tableColumnList;
+      if (this.showRZK) {
+        this.tableColumnList = this.tableColumnList5;
+      } else {
+        this.tableColumnList = this.tableColumnList4;
+      }
     },
     // 双击单行
     hangClick(e) {
       let v = {
-        type: "SelectWireFrameLine",
-        selectType: "true",
-        value: {
-          data: [
-            {
-              key: "fbzt",
-              value: "已发布",
-            },
-            {
-              key: "xlmc",
-              value: e.xlmc,
-            },
-          ],
+        FocusTarget: {
+          target: "Tower",
+          ID: e.oid,
+          FocusType: true,
+          IDType: "Tower",
+          EditMode: false,
         },
       };
       let data = {
-        functionName: "WireFrame",
+        functionName: "FocusTower",
         backFunctionName: "",
         functionParameters: [
           {
-            key: "WireFrame",
+            key: "FocusTarget",
             value: JSON.stringify(v),
           },
         ],
       };
-
       ue.interface.broadcast("PSAPI", JSON.stringify(data));
-      this.$bus.$emit("");
+      window.ccOid = e.oid;
+      window.types = 0;
       this.$router.push({
         path: "/wj/ssfxItem",
       });
@@ -917,6 +911,24 @@ export default {
           this.showTJ = true;
         }
         this.getDateLists(0);
+        // 获取表头
+        let v = {
+          URL: "data/tableColumnInfo/" + 1002 + "/" + 0 + "/" + 1002 + "/" + 1,
+          StructName: "获取线路表头",
+          verbType: "GET",
+        };
+        let data2 = {
+          functionName: "WebServerMsg",
+          backFunctionName: "getxlTh",
+          functionParameters: [
+            {
+              key: "WebServerMsg",
+              value: JSON.stringify(v),
+            },
+          ],
+        };
+        ue.interface.broadcast("PSAPI", JSON.stringify(data2));
+        window.ue.interface.getxlTh = this.getxlTh;
       }
     },
     getDateLists(e) {
@@ -935,109 +947,85 @@ export default {
         newPage = this.page1;
       }
       let v;
-      // 线路
       if (window.isXZ == 1) {
         v = {
-          URL: "xa/getCustomData",
-          StructName: "linefile",
-          value: {
-            data: this.xlKV,
-            field: "dydj",
-            queryData: [
-              {
-                key: "xlmc",
-                value: this.xl_name,
-              },
-              {
-                key: "qdwzmc",
-                value: this.xl_qdname,
-              },
-              {
-                key: "zdwzmc",
-                value: this.xl_zdname,
-              },
-              {
-                key: "dydj",
-                value: this.xl_dy_value,
-              },
-              {
-                key: "ssdsmc",
-                value: this.xl_ds_value,
-              },
-              {
-                key: "dddwmc",
-                value: this.xl_oam_value,
-              },
-              {
-                key: "ssdt",
-                value: window.xianMing,
-              },
-            ],
-            name: "Data_LineFileInfo",
-            pageNo: newPage,
-            pageSize: 14,
-            expansionData:
-              "AND tuiyrq >=  '" +
-              window.xzRiQi +
-              "' and  tyrq <='" +
-              window.xzRiQi +
-              "'",
-            tbName: "LineFileInfo",
+          search: {
+            target: "Tower",
+            key: {
+              params: [
+                {
+                  key: "sbmc",
+                  value: this.search,
+                },
+                {
+                  key: "Unit",
+                  value: this.oam_value,
+                },
+                {
+                  key: "dydj",
+                  value: this.dy_value,
+                },
+                {
+                  key: "fbzt",
+                  value: this.cj_value,
+                },
+                {
+                  key: "sfxzdw",
+                  value: window.isXZ,
+                },
+              ],
+
+              page: newPage,
+              pageSize: 14,
+              expansionData:
+                "AND tuiyrq >=  '" +
+                window.xzRiQi +
+                "' and  tyrq <='" +
+                window.xzRiQi +
+                "'",
+            },
           },
-          verbType: "POST",
         };
       } else {
         v = {
-          URL: "xa/getCustomData",
-          StructName: "linefile",
-          value: {
-            data: this.xlKV,
-            field: "dydj",
-            queryData: [
-              {
-                key: "xlmc",
-                value: this.xl_name,
-              },
-              {
-                key: "qdwzmc",
-                value: this.xl_qdname,
-              },
-              {
-                key: "zdwzmc",
-                value: this.xl_zdname,
-              },
-              {
-                key: "dydj",
-                value: this.xl_dy_value,
-              },
-              {
-                key: "ssdsmc",
-                value: this.xl_ds_value,
-              },
-              {
-                key: "dddwmc",
-                value: this.xl_oam_value,
-              },
-              {
-                key: "ssdt",
-                value: window.xianMing,
-              },
-            ],
-            name: "Data_LineFileInfo",
-            pageNo: newPage,
-            pageSize: 14,
-            tbName: "LineFileInfo",
+          search: {
+            target: "Tower",
+            key: {
+              params: [
+                {
+                  key: "sbmc",
+                  value: this.search,
+                },
+                {
+                  key: "Unit",
+                  value: this.oam_value,
+                },
+                {
+                  key: "dydj",
+                  value: this.dy_value,
+                },
+                {
+                  key: "fbzt",
+                  value: this.cj_value,
+                },
+                {
+                  key: "sfxzdw",
+                  value: window.isXZ,
+                },
+              ],
+
+              page: newPage,
+              pageSize: 14,
+            },
           },
-          verbType: "POST",
         };
       }
-
       let data = {
-        functionName: "WebServerMsg",
+        functionName: "Search",
         backFunctionName: "zx_setList",
         functionParameters: [
           {
-            key: "WebServerMsg",
+            key: "search",
             value: JSON.stringify(v),
           },
         ],
@@ -1049,28 +1037,10 @@ export default {
     },
     // 获取数据列表回调
     zx_setList(e) {
-      // let data = JSON.parse(e);
-      // let data2 = JSON.parse(data.value);
-      // this.total = parseInt(data2.total);
-      // this.dataList = data2.dataList;
-      let data2 = JSON.parse(e);
-      this.total = parseInt(data2.data.total);
-      this.dataList = data2.data.LineFileInfo;
-      if (this.dataList.length > 0) {
-        let datas = [];
-        for (let i = 0; i < 3; i++) {
-          datas.push(this.tableColumnList[i]);
-        }
-        this.tableColumnList4 = datas;
-        this.tableColumnList5 = this.tableColumnList;
-        if (this.showRZK) {
-          this.tableColumnList = this.tableColumnList5;
-        } else {
-          this.tableColumnList = this.tableColumnList4;
-        }
-      } else {
-        this.dataList = [];
-      }
+      let data = JSON.parse(e);
+      let data2 = data.data.TowerInfo;
+      this.total = parseInt(data.data.total);
+      this.dataList = data2;
 
       this.$forceUpdate();
     },
@@ -1103,8 +1073,6 @@ export default {
       window.ue.interface.zx_create = this.zx_create;
     },
     zx_create(e) {
-      this.dataList = [];
-      this.tableColumnList = [];
       this.selectList = [];
       let that = this;
       setTimeout(() => {

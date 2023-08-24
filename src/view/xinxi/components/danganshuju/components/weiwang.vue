@@ -1,6 +1,13 @@
 <template>
   <div class="shaiXuan">
     <!-- <div class="bg"></div> -->
+    <div class="gl_top">
+      <span class="span1">当前区域：</span>
+      <div class="names">
+        <span>xxxxx区域名称</span>
+      </div>
+      <div class="fanhui" @click="fanhuiClick"></div>
+    </div>
     <div class="condition">
       <div class="tops">
         <div class="titles">
@@ -803,6 +810,9 @@ export default {
 
       this.getDateLists();
     },
+    fanhuiClick() {
+      this.$emit("fanhuiClick");
+    },
   },
 };
 </script>
@@ -972,7 +982,7 @@ input:focus {
   height: 77px;
   margin-left: 18.15px;
   margin-bottom: 54px;
-  margin-top: 120px;
+  margin-top: 150px;
 }
 .tops {
   width: 100%;
@@ -1253,5 +1263,110 @@ input:focus {
   position: absolute;
   left: 0;
   bottom: -50px;
+}
+</style>
+<style scoped>
+::v-deep .el-table,
+::v-deep .el-table__expanded-cell {
+  background-color: transparent;
+}
+::v-deep .el-table th {
+  background-color: transparent;
+}
+::v-deep .el-table tr {
+  background-color: transparent;
+}
+::v-deep .el-table--enable-row-transition .el-table__body td,
+.el-table .cell {
+  background-color: transparent !important;
+}
+::v-deep .current-row {
+  background: url("img/td2.png") no-repeat !important;
+  background-size: 100% 100% !important;
+}
+::v-deep .el-table::before {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 0px;
+}
+/* 用来设置当前页面element全局table 鼠标移入某行时的背景色*/
+::v-deep .el-table--enable-row-hover .el-table__body tr:hover > td {
+  background-color: transparent !important;
+  /* color: #f19944; */ /* 设置文字颜色，可以选择不设置 */
+}
+
+::v-deep .el-table td.el-table__cell,
+::v-deep .el-table th.el-table__cell.is-leaf {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+::v-deep .el-table__header tr,
+::v-deep .el-table__header th {
+  height: 39.8px;
+  background: rgba(25, 61, 112, 0.5) !important;
+  font-family: SourceHanSansSC-Regular;
+  font-size: 16px;
+  font-weight: normal;
+  color: #ffffff;
+}
+::v-deep .el-table__body tr,
+::v-deep .el-table__body td {
+  height: 48px !important;
+  font-family: SourceHanSansSC-Regular;
+  font-size: 16px;
+  font-weight: normal;
+  color: rgba(255, 255, 255, 0.7);
+}
+::v-deep .el-checkbox__inner {
+  background-color: #155589;
+  border: 1px solid #155589;
+}
+::v-deep .el-checkbox__input.is-checked .el-checkbox__inner,
+::v-deep .el-checkbox__input.is-indeterminate .el-checkbox__inner {
+  background-color: #10acff;
+  border: 1px solid #10acff;
+}
+</style>
+
+<style scoped>
+.gl_top {
+  width: 351px;
+  height: 50px;
+  position: absolute;
+  top: -65px;
+  left: 10px;
+  display: flex;
+  align-items: center;
+  background: url("img/gl_bg.png") no-repeat !important;
+  background-size: 100% 100% !important;
+}
+.gl_top > .span1 {
+  font-family: Source Han Sans CN;
+  font-size: 20px;
+  font-weight: normal;
+  color: #ffffff;
+  margin-left: 37px;
+  margin-right: 5px;
+}
+.gl_top > .names {
+  width: 130px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+.gl_top > .names > span {
+  font-family: Source Han Sans CN;
+  font-size: 18px;
+  font-weight: bold;
+  color: #ffffff;
+}
+.gl_top > .fanhui {
+  width: 31px;
+  height: 31px;
+  background: url("img/fanhui.png") no-repeat !important;
+  background-size: 100% 100% !important;
+  cursor: pointer;
 }
 </style>

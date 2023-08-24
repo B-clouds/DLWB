@@ -2,15 +2,10 @@
   <div class="gRight">
     <div class="jr_block">
       <div class="j_titles">
-        <span class="span1">变电类型统计</span>
+        <span class="span1">光伏规模统计</span>
       </div>
-      <div class="gr_t">
-        <div class="blocks">
-          <span>电压等级（10kV）</span>
-        </div>
-      </div>
-      <div class="gr_one">
-        <gr_one />
+      <div class="gr_one gr_one2">
+        <gr_one2 :xList="xList" :y1="y1" :y2="y2" />
       </div>
     </div>
 
@@ -39,15 +34,51 @@
 </template>
 
 <script>
-import gr_one from "./echarts/gr_one.vue";
+import gr_one2 from "./echarts/gr_one2.vue";
 import gr_two from "./echarts/gr_two.vue";
 import gr_three from "./echarts/gr_three.vue";
 export default {
   name: "gRight",
   components: {
-    gr_one,
+    gr_one2,
     gr_two,
     gr_three,
+  },
+  data() {
+    return {
+      xList: [],
+      y1: [],
+      y2: [],
+    };
+  },
+  created() {
+    this.getGF();
+  },
+  methods: {
+    getGF() {
+      this.$axios
+        .get(window.wgApiUrl + "/view/pvScaleStatistics", {
+          params: {
+            areaId: 10000,
+          },
+        })
+        .then((res) => {
+          let newData = res.data.data;
+          let xList = [];
+          for (let i = 0; i < newData.length; i++) {
+            if (newData[i].type == 0) {
+              xList.push(parseInt(newData[i].date));
+              this.y1.push(newData[i].count);
+            } else if (newData[i].type == 1) {
+              this.y2.push(newData[i].count);
+            }
+          }
+          this.xList = xList.reverse();
+          this.y1 = this.y1.reverse();
+          this.y2 = this.y2.reverse();
+        })
+        .catch((error) => {});
+    },
   },
 };
 </script>
@@ -134,6 +165,9 @@ export default {
 .gr_one {
   width: 100%;
   height: 240px;
+}
+.gr_one2 {
+  height: 270px !important;
 }
 .gr_two {
   width: 100%;

@@ -546,10 +546,23 @@ export default {
       window.ue.interface.getGLJDID = this.getGLJDID;
       window.ue.interface.getGTBXQDZD = this.getGTBXQDZD;
       window.ue.interface.showUEKZs = this.showUEKZs;
+
+      // 路径规划-图表实时更新
+      window.ue.interface.getLJGHlist = this.getLJGHlist;
     },
     showUEKZs(e) {
       let obj = JSON.parse(e);
       this.showUEKZ = obj;
+    },
+    // 路径规划获取图表
+    getLJGHlist(e) {
+      console.log(e, "---------------");
+
+      let obj = JSON.parse(e);
+      let that = this;
+      setTimeout(() => {
+        that.$bus.$emit("ljghList", obj);
+      }, 50);
     },
     // 获取自定义布线设为起点设为终点
     getGTBXQDZD(e) {

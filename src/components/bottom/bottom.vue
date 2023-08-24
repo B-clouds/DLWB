@@ -166,6 +166,36 @@ export default {
             },
           ],
         },
+        {
+          value: "pingmiansheji",
+          label: "平面设计",
+          children: [
+            {
+              value: "lujingguihua",
+              label: "路径规划",
+            },
+            {
+              value: "lujingchaxun",
+              label: "路径查询",
+            },
+            {
+              value: "lujingbianji",
+              label: "路径编辑",
+            },
+            {
+              value: "lujingshanchu",
+              label: "路径删除",
+            },
+            {
+              value: "lujingzuhe",
+              label: "路径组合",
+            },
+            {
+              value: "tuyuanguanli",
+              label: "图元管理",
+            },
+          ],
+        },
       ],
       value2: ["电网分析"],
       options2: [
@@ -416,9 +446,17 @@ export default {
         ],
       };
       ue.interface.broadcast("PSAPI", JSON.stringify(datas));
-      this.$router.push({
-        path: "/mr",
-      });
+      if (
+        data != "dlzhongduan" ||
+        data != "lujingguihua" ||
+        data != "lujingchaxun" ||
+        data != "lujingbianji" ||
+        data != "lujingshanchu"
+      ) {
+        this.$router.push({
+          path: "/mr",
+        });
+      }
 
       if (data == "gantabudian") {
         let e = {
@@ -492,6 +530,18 @@ export default {
           right2: ">",
         };
         this.$bus.$emit("setCrumbs", e);
+      } else if (data == "dlzhongduan") {
+        let e = {
+          one: "电网孪生",
+          two: "电缆孪生",
+          three: "终端管理",
+          right1: ">",
+          right2: ">",
+        };
+        this.$bus.$emit("setCrumbs", e);
+        this.$router.push({
+          path: "/dw/dlzd",
+        });
       }
       // else if (data == "zhongduanguanli") {
       //   let e = {
@@ -521,7 +571,108 @@ export default {
           right2: ">",
         };
         this.$bus.$emit("setCrumbs", e);
+      } else if (data == "lujingguihua") {
+        let e = {
+          one: "电网孪生",
+          two: "平面设计",
+          three: "路径规划",
+          right1: ">",
+          right2: ">",
+        };
+        this.$bus.$emit("setCrumbs", e);
+        this.$router.push({
+          path: "/dw/ljgh",
+        });
+        let v = {
+          ViewType: "PathManager",
+        };
+        let data = {
+          functionName: "ChangeViewType",
+          functionParameters: [
+            {
+              key: "ChangeViewType",
+              value: JSON.stringify(v),
+            },
+          ],
+        };
+        ue.interface.broadcast("PSAPI", JSON.stringify(data));
+      } else if (data == "lujingchaxun") {
+        let e = {
+          one: "电网孪生",
+          two: "平面设计",
+          three: "路径查询",
+          right1: ">",
+          right2: ">",
+        };
+        this.$bus.$emit("setCrumbs", e);
+        this.$router.push({
+          path: "/dw/ljcx",
+        });
+        let v = {
+          ViewType: "PathManager",
+        };
+        let data = {
+          functionName: "ChangeViewType",
+          functionParameters: [
+            {
+              key: "ChangeViewType",
+              value: JSON.stringify(v),
+            },
+          ],
+        };
+        ue.interface.broadcast("PSAPI", JSON.stringify(data));
+      } else if (data == "lujingbianji") {
+        let e = {
+          one: "电网孪生",
+          two: "平面设计",
+          three: "路径编辑",
+          right1: ">",
+          right2: ">",
+        };
+        let v = {
+          ViewType: "PathManager",
+        };
+        let data = {
+          functionName: "ChangeViewType",
+          functionParameters: [
+            {
+              key: "ChangeViewType",
+              value: JSON.stringify(v),
+            },
+          ],
+        };
+        ue.interface.broadcast("PSAPI", JSON.stringify(data));
+        this.$bus.$emit("setCrumbs", e);
+        this.$router.push({
+          path: "/dw/ljbj",
+        });
+      } else if (data == "lujingshanchu") {
+        let e = {
+          one: "电网孪生",
+          two: "平面设计",
+          three: "路径删除",
+          right1: ">",
+          right2: ">",
+        };
+        let v = {
+          ViewType: "PathManager",
+        };
+        let data = {
+          functionName: "ChangeViewType",
+          functionParameters: [
+            {
+              key: "ChangeViewType",
+              value: JSON.stringify(v),
+            },
+          ],
+        };
+        ue.interface.broadcast("PSAPI", JSON.stringify(data));
+        this.$bus.$emit("setCrumbs", e);
+        this.$router.push({
+          path: "/dw/ljsc",
+        });
       }
+
       this.value = "电网孪生";
       let v = { ChooseType: "ShowCompass", value: true };
       let data2 = {
@@ -656,6 +807,7 @@ export default {
           right1: ">",
           right2: "",
         };
+        this.$bus.$emit("setShiJiao", 1);
         this.$bus.$emit("setCrumbs", e);
       } else if (data == "fenxibaogao") {
         this.$router.push({
@@ -819,7 +971,7 @@ export default {
     handleChange4(value) {
       let [...arr] = value;
       let data = arr.pop();
-      if (data == "danganshuju") {
+      if (data == "dianwangshebei") {
         this.$router.push({
           path: "/xx/dangan",
         });

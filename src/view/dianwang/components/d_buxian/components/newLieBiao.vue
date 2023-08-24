@@ -1066,88 +1066,88 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 /* 分页器样式自定义 */
-.el-pagination__total {
+::v-deep .el-pagination__total {
   font-family: SourceHanSansSC-Regular;
   font-size: 12px;
   font-weight: normal;
   color: #f6f6f6;
 }
-.el-pagination button:disabled {
+::v-deep .el-pagination button:disabled {
   background: transparent;
 }
-.el-pagination .btn-next .el-icon,
-.el-pagination .btn-prev .el-icon {
+::v-deep .el-pagination .btn-next .el-icon,
+::v-deep .el-pagination .btn-prev .el-icon {
   color: #fff !important;
   font-size: 14px;
   font-weight: 900;
 }
-.el-pagination .btn-next,
-.el-pagination .btn-prev {
+::v-deep .el-pagination .btn-next,
+::v-deep .el-pagination .btn-prev {
   background: transparent;
 }
-.el-pager li {
+::v-deep .el-pager li {
   background-color: transparent;
   font-size: 12px;
   font-weight: normal;
   color: #ffffff;
 }
-.el-pager li.active {
+::v-deep .el-pager li.active {
   width: 32px;
   height: 31.89px;
   background: rgba(11, 77, 88, 0.5);
   color: rgba(255, 255, 255, 1);
 }
-.el-pager li:hover {
+::v-deep .el-pager li:hover {
   color: rgba(255, 255, 255, 1);
 }
-.el-pager li.btn-quicknext,
-.el-pager li.btn-quickprev {
+::v-deep .el-pager li.btn-quicknext,
+::v-deep .el-pager li.btn-quickprev {
   color: rgba(255, 255, 255, 1);
 }
-.el-popper[x-placement^="bottom"] {
+::v-deep .el-popper[x-placement^="bottom"] {
   margin-top: 4px !important;
 }
 </style>
-<style>
-.el-table,
-.el-table__expanded-cell {
+<style scoped>
+::v-deep .el-table,
+::v-deep .el-table__expanded-cell {
   background-color: transparent;
 }
-.el-table th {
+::v-deep .el-table th {
   background-color: transparent;
 }
-.el-table tr {
+::v-deep .el-table tr {
   background-color: transparent;
 }
-.el-table--enable-row-transition .el-table__body td,
-.el-table .cell {
+::v-deep .el-table--enable-row-transition .el-table__body td,
+::v-deep .el-table .cell {
   background-color: transparent !important;
 }
-.current-row {
+::v-deep .current-row {
   background: url("img/td2.png") no-repeat !important;
   background-size: 100% 100% !important;
 }
-.el-table::before {
+::v-deep .el-table::before {
   left: 0;
   bottom: 0;
   width: 100%;
   height: 0px;
 }
 /* 用来设置当前页面element全局table 鼠标移入某行时的背景色*/
-.el-table--enable-row-hover .el-table__body tr:hover > td {
+::v-deep .el-table--enable-row-hover .el-table__body tr:hover > td {
   background-color: transparent !important;
   /* color: #f19944; */ /* 设置文字颜色，可以选择不设置 */
 }
 
-.el-table td.el-table__cell,
-.el-table th.el-table__cell.is-leaf {
+::v-deep .el-table td.el-table__cell,
+::v-deep .el-table th.el-table__cell.is-leaf {
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.el-table__header tr,
-.el-table__header th {
+::v-deep .el-table__header tr,
+::v-deep .el-table__header th {
   height: 39.8px !important;
   background: rgba(25, 61, 112, 0.5) !important;
   font-family: SourceHanSansSC-Regular;
@@ -1155,20 +1155,20 @@ export default {
   font-weight: normal;
   color: #ffffff;
 }
-.el-table__body tr,
-.el-table__body td {
+::v-deep .el-table__body tr,
+::v-deep .el-table__body td {
   height: 48px !important;
   font-family: SourceHanSansSC-Regular;
   font-size: 16px;
   font-weight: normal;
   color: rgba(255, 255, 255, 0.7);
 }
-.el-checkbox__inner {
+::v-deep .el-checkbox__inner {
   background-color: #155589;
   border: 1px solid #155589;
 }
-.el-checkbox__input.is-checked .el-checkbox__inner,
-.el-checkbox__input.is-indeterminate .el-checkbox__inner {
+::v-deep .el-checkbox__input.is-checked .el-checkbox__inner,
+::v-deep .el-checkbox__input.is-indeterminate .el-checkbox__inner {
   background-color: #10acff;
   border: 1px solid #10acff;
 }

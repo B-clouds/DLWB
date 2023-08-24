@@ -179,7 +179,7 @@
         </div>
         <div class="icons"></div>
         <div class="titleItem">
-          <span>目前网架场景中电站模型尚有</span>
+          <span>目前网架场景中{{ txtSpan }}尚有</span>
           <span class="span1" v-for="(item, index) in kvList" :key="index"
             >{{ item }},</span
           >
@@ -201,7 +201,7 @@
         </div>
         <div class="icons"></div>
         <div class="titleItem">
-          <span>目前网架场景中电站模型尚有</span>
+          <span>目前网架场景中{{ txtSpan }}尚有</span>
           <span class="span1" v-for="(item, index) in kvList" :key="index"
             >{{ item }},</span
           >
@@ -266,6 +266,8 @@ export default {
       // 存放加载信息
       list: ["数据请求中"],
       kvList: ["220kV", "110kV", "35kV", "10kV"],
+      // 存放弹框显示文本
+      txtSpan: "电站模型",
     };
   },
   mounted() {
@@ -807,18 +809,23 @@ export default {
       if (e == 0) {
         v = "DZ";
         this.getSelectKv3();
+        this.txtSpan = "电站模型";
       } else if (e == 1) {
         v = "XL";
         this.getSelectKv2();
+        this.txtSpan = "电网模型";
       } else if (e == 2) {
         v = "BYQ";
         this.getSelectKv2();
+        this.txtSpan = "电网模型";
       } else if (e == 3) {
         v = "GT";
         this.getSelectKv2();
+        this.txtSpan = "电网模型";
       } else if (e == 4) {
         v = "WW";
         this.getSelectKv2();
+        this.txtSpan = "电网模型";
       }
       let data = {
         functionName: "WJFX",

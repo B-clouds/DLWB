@@ -458,12 +458,7 @@ export default {
           equipmentCapacity: "xxx",
         },
       ],
-      tableColumnList: [
-        { propName: "设备编码", prop: "equipmentNumber" },
-        { propName: "设备类型", prop: "equipmentType" },
-        { propName: "设备名称", prop: "equipmentName" },
-        { propName: "装机容量", prop: "equipmentCapacity" },
-      ],
+      tableColumnList: [],
       tableColumnList2: [],
       tableColumnList3: [],
       tableColumnList4: [], //存放接口数据 收缩表头
@@ -489,12 +484,7 @@ export default {
     this.page = 1;
     this.page1 = 1;
   },
-  mounted() {
-    let that = this;
-    that.$bus.$on("leixChaXun", () => {
-      that.getDateLists();
-    });
-
+  activated() {
     // 获取表头
     let v = {
       URL: "data/tableColumnInfo/" + 107 + "/" + 0 + "/" + 107 + "/" + 1,
@@ -512,7 +502,14 @@ export default {
       ],
     };
     ue.interface.broadcast("PSAPI", JSON.stringify(data2));
+    console.log("activated:", data2);
     window.ue.interface.getSSBDTh = this.getSSBDTh;
+  },
+  mounted() {
+    let that = this;
+    that.$bus.$on("leixChaXun", () => {
+      that.getDateLists();
+    });
   },
   methods: {
     // 返回默认页面
@@ -743,7 +740,7 @@ export default {
     getSSBDTh(e) {
       let data2 = JSON.parse(e).data;
       this.tableColumnList = data2.data;
-
+      console.log(data2, "-----------------------------------------");
       let datas = [];
       for (let i = 0; i < 3; i++) {
         datas.push(this.tableColumnList[i]);
@@ -876,6 +873,10 @@ export default {
     jx_setList(e) {
       let data = JSON.parse(e);
       let data2 = data.data.MStationingInfo;
+      console.log(
+        data2,
+        "-------------------查询结果----------------------------"
+      );
       this.total = parseInt(data.data.total);
       this.dataList = data2;
 

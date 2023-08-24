@@ -4,10 +4,12 @@
 
 <script>
 export default {
-  props: ["echartsData"],
+  props: ["echartsData", "xList", "value"],
   data() {
     return {
       pieData: [],
+      xLists: [],
+      values: [],
     };
   },
   mounted() {
@@ -16,6 +18,14 @@ export default {
   },
   watch: {
     echartsData(n, o) {
+      this.myecharts();
+    },
+    xList(e, f) {
+      this.xLists = e;
+      this.myecharts();
+    },
+    value(e, f) {
+      this.values = e;
       this.myecharts();
     },
   },
@@ -53,13 +63,13 @@ export default {
         grid: {
           top: "12%",
           right: "5%",
-          left: "10%",
+          left: "14%",
           bottom: "22%",
         },
         xAxis: [
           {
             type: "category",
-            data: ["10m", "12m", "15m"],
+            data: this.xLists,
             axisLine: {
               lineStyle: {
                 color: "rgba(255,255,255,.5)",
@@ -110,7 +120,7 @@ export default {
           {
             name: "电杆规模",
             type: "bar",
-            data: [68, 50, 69],
+            data: this.values,
             barWidth: this.WidthAdaptive(8),
             itemStyle: {
               normal: {

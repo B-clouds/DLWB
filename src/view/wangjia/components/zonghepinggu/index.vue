@@ -129,15 +129,47 @@ export default {
   },
   deactivated() {
     this.showRights = false;
+    this.showNavs = false;
     this.show = false;
+    this.navIndex = 0;
+    this.detiles1 = false;
+    this.detiles2 = false;
+    this.detiles3 = false;
+    this.detiles4 = false;
+    this.detiles5 = false;
+    this.detiles6 = false;
+    let v = { AreaID: "838693576266354688", State: "false" };
+    let data = {
+      functionName: "AlarmAnalysis",
+      functionParameters: [
+        {
+          key: "AlarmAnalysis",
+          value: JSON.stringify(v),
+        },
+      ],
+    };
+    ue.interface.broadcast("PSAPI", JSON.stringify(data));
   },
   methods: {
     fanhuiCX() {
       this.d2Item = false;
+
+      console.log("------------------------------");
     },
     geshihua() {
       this.showNavs = false;
       this.detiles1 = false;
+      let v = { AreaID: "838693576266354688", State: "false" };
+      let data = {
+        functionName: "AlarmAnalysis",
+        functionParameters: [
+          {
+            key: "AlarmAnalysis",
+            value: JSON.stringify(v),
+          },
+        ],
+      };
+      ue.interface.broadcast("PSAPI", JSON.stringify(data));
     },
     showZDCXItem() {
       this.d2Item = true;
@@ -145,6 +177,17 @@ export default {
     showNav() {
       this.showNavs = true;
       this.detiles1 = true;
+      let v = { AreaID: "838693576266354688", State: "True" };
+      let data = {
+        functionName: "AlarmAnalysis",
+        functionParameters: [
+          {
+            key: "AlarmAnalysis",
+            value: JSON.stringify(v),
+          },
+        ],
+      };
+      ue.interface.broadcast("PSAPI", JSON.stringify(data));
     },
     getOid(e) {
       this.oids = e;

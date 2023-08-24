@@ -34,7 +34,7 @@
     />
     <jRight v-if="showRights && !showNavs && jr_index !== 0" />
     <jRight2 v-if="showRights && !showNavs && jr_index == 0" />
-    <!-- 现状分析 -->
+    <!-- 区域概况 -->
     <transition name="transitionLeft">
       <xzfxLeft @geshihua="geshihua" v-if="show && detiles1" />
     </transition>
@@ -43,33 +43,33 @@
     </transition>
     <!-- 电力分析 -->
     <transition name="transitionLeft">
-      <dlfxLeft @geshihua="geshihua" v-if="show && detiles2" />
+      <!-- <dlfxLeft @geshihua="geshihua" v-if="show && detiles3" /> -->
     </transition>
     <!-- 规模分析 -->
     <transition name="transitionLeft">
-      <gLeft @geshihua="geshihua" v-if="show && detiles3" />
+      <gLeft @geshihua="geshihua" v-if="show && detiles2" />
     </transition>
     <transition name="transitionRight">
-      <gRight v-if="show && detiles3" />
+      <gRight v-if="show && detiles2" />
     </transition>
     <!-- 规划分析 -->
     <transition name="transitionLeft">
-      <ghLeft @geshihua="geshihua" v-if="show && detiles4" />
+      <ghLeft @geshihua="geshihua" v-if="show && detiles6" />
     </transition>
     <transition name="transitionRight">
-      <ghRight v-if="show && detiles4" />
+      <ghRight v-if="show && detiles6" />
     </transition>
     <!-- 规划成效 -->
     <transition name="transitionLeft">
-      <ghcxLeft @geshihua="geshihua" v-if="show && detiles5" />
+      <ghcxLeft @geshihua="geshihua" v-if="show && detiles7" />
     </transition>
     <!-- 单线图 -->
     <transition name="transitionLeft">
-      <dxt @geshihua="geshihua" v-if="show && detiles6" />
+      <dxt @geshihua="geshihua" v-if="show && detiles9" />
     </transition>
     <!-- 公里单元 -->
     <transition name="transitionLeft">
-      <dLeft v-if="show && detiles7" />
+      <!-- <dLeft v-if="show && detiles7" /> -->
     </transition>
 
     <!-- 3D图层 -->
@@ -98,7 +98,7 @@
 import jLeft from "./components/jLeft.vue";
 import jRight from "./components/jRight.vue";
 import jRight2 from "./components/jRight2.vue";
-// 现状分析
+// 区域概况
 import xzfxLeft from "./components/xzfxLeft.vue";
 import xzfxRight from "./components/xzfxRight.vue";
 // 电力分析
@@ -146,14 +146,18 @@ export default {
       detiles5: false,
       detiles6: false,
       detiles7: false,
+      detiles8: false,
+      detiles9: false,
       navList: [
-        "现状分析",
-        "电力分析",
+        "区域概况",
         "规模分析",
+        "线路分析",
+        "配变分析",
+        "用户信息",
         "规划分析",
         "规划成效",
+        "诊断分析",
         "单线图",
-        "公里单元",
       ],
       navIndex: 0,
       showRights: false,
@@ -178,7 +182,10 @@ export default {
     this.detiles5 = false;
     this.detiles6 = false;
     this.detiles7 = false;
+    this.detiles8 = false;
+    this.detiles9 = false;
     this.showNavs = false;
+    this.navIndex = 0;
   },
   methods: {
     showNav() {
@@ -194,6 +201,9 @@ export default {
       this.detiles5 = false;
       this.detiles6 = false;
       this.detiles7 = false;
+
+      this.detiles8 = false;
+      this.detiles9 = false;
     },
     getOid(e) {
       this.oids = e;
@@ -211,6 +221,9 @@ export default {
         this.detiles5 = false;
         this.detiles6 = false;
         this.detiles7 = false;
+
+        this.detiles8 = false;
+        this.detiles9 = false;
       } else if (e == 1) {
         this.detiles2 = true;
         this.detiles1 = false;
@@ -219,6 +232,8 @@ export default {
         this.detiles5 = false;
         this.detiles6 = false;
         this.detiles7 = false;
+        this.detiles8 = false;
+        this.detiles9 = false;
       } else if (e == 2) {
         this.detiles3 = true;
         this.detiles1 = false;
@@ -227,6 +242,8 @@ export default {
         this.detiles5 = false;
         this.detiles6 = false;
         this.detiles7 = false;
+        this.detiles8 = false;
+        this.detiles9 = false;
       } else if (e == 3) {
         this.detiles3 = false;
         this.detiles1 = false;
@@ -235,6 +252,8 @@ export default {
         this.detiles5 = false;
         this.detiles6 = false;
         this.detiles7 = false;
+        this.detiles8 = false;
+        this.detiles9 = false;
       } else if (e == 4) {
         this.detiles3 = false;
         this.detiles1 = false;
@@ -243,6 +262,8 @@ export default {
         this.detiles5 = true;
         this.detiles6 = false;
         this.detiles7 = false;
+        this.detiles8 = false;
+        this.detiles9 = false;
       } else if (e == 5) {
         this.detiles3 = false;
         this.detiles1 = false;
@@ -251,6 +272,8 @@ export default {
         this.detiles5 = false;
         this.detiles6 = true;
         this.detiles7 = false;
+        this.detiles8 = false;
+        this.detiles9 = false;
       } else if (e == 6) {
         this.detiles3 = false;
         this.detiles1 = false;
@@ -259,6 +282,28 @@ export default {
         this.detiles5 = false;
         this.detiles6 = false;
         this.detiles7 = true;
+        this.detiles8 = false;
+        this.detiles9 = false;
+      } else if (e == 7) {
+        this.detiles3 = false;
+        this.detiles1 = false;
+        this.detiles2 = false;
+        this.detiles4 = false;
+        this.detiles5 = false;
+        this.detiles6 = false;
+        this.detiles7 = false;
+        this.detiles8 = true;
+        this.detiles9 = false;
+      } else if (e == 8) {
+        this.detiles3 = false;
+        this.detiles1 = false;
+        this.detiles2 = false;
+        this.detiles4 = false;
+        this.detiles5 = false;
+        this.detiles6 = false;
+        this.detiles7 = false;
+        this.detiles8 = false;
+        this.detiles9 = true;
       }
     },
     showRight(e) {
@@ -355,16 +400,16 @@ export default {
 
 <style scoped>
 .navs {
-  width: 970px;
+  width: 1070px;
   height: 40px;
   position: fixed;
-  left: 460px;
+  left: 430px;
   bottom: 21px;
   display: flex;
   justify-content: space-between;
 }
 .navs > .blocks {
-  width: 136px;
+  width: 116px;
   height: 39px;
   background: url("img/nav.png") no-repeat;
   background-size: 100% 100%;
@@ -374,7 +419,7 @@ export default {
   cursor: pointer;
 }
 .navs > .blocks > span {
-  font-size: 22px !important;
+  font-size: 18px !important;
   text-align: center;
   font-weight: normal;
   margin-top: 4px;

@@ -9,63 +9,58 @@
     </div>
     <div class="jr_block">
       <div class="j_titles">
-        <span class="span1">主要技术原则</span>
+        <span class="span1">整改规划</span>
       </div>
-      <div class="j_t_tr jt1">
-        <div class="blocks">
-          <span class="span1">类型</span>
-        </div>
-        <div class="blocks">
-          <span class="span1">10kV</span>
-        </div>
-        <div class="blocks">
-          <span class="span1">0.4kV</span>
-        </div>
-      </div>
-      <div class="j_t_table">
-        <div
-          class="j_t_tr"
-          :class="index % 2 == 0 ? 'j_t_bg' : ''"
-          v-for="(item, index) in 6"
-          :key="index"
-        >
-          <div class="blocks">
-            <span class="span2">xxxx</span>
+      <div class="gundong">
+        <div class="jbBlock">
+          <div class="jbLeft">
+            <span>是否整改</span>
           </div>
-          <div class="blocks">
-            <span class="span2">xxxx</span>
-          </div>
-          <div class="blocks">
-            <span class="span2">xxxx</span>
+          <div class="jbRight">
+            <span>{{ zgData.sfzg }}</span>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="jr_block jr_block3">
-      <div class="j_titles">
-        <span class="span1">规划预期</span>
-      </div>
-      <div class="jbBlock">
-        <div class="jbLeft">
-          <span>是否纳入“十三五”期间改造</span>
-        </div>
-        <div class="jbRight">
-          <span>是</span>
-        </div>
-      </div>
-      <div class="jbBlock">
-        <div class="jbLeft">
-          <span>规划改造年份</span>
-        </div>
-        <div class="jbRight">
-          <span>2025年</span>
-        </div>
-      </div>
-    </div>
 
+        <div class="jbBlock">
+          <div class="jbLeft">
+            <span>下达整改计划</span>
+          </div>
+          <div class="jbRight">
+            <span>{{ zgData.xdzgjh }}</span>
+          </div>
+        </div>
+
+        <div class="jbBlock">
+          <div class="jbLeft">
+            <span>规划改造年份</span>
+          </div>
+          <div class="jbRight">
+            <span>{{ zgData.ghgznf }}</span>
+          </div>
+        </div>
+
+        <div class="jbBlock">
+          <div class="jbLeft">
+            <span>整改类型</span>
+          </div>
+          <div class="jbRight">
+            <span>{{ zgData.zglx }}</span>
+          </div>
+        </div>
+
+        <div class="jbBlock">
+          <div class="jbLeft">
+            <span>整改情况</span>
+          </div>
+          <div class="jbRight">
+            <span>{{ zgData.zgqk }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="jr_block jr_block2">
       <div class="j_titles">
-        <span class="span1">户表规模</span>
+        <span class="span1">户表投资</span>
       </div>
       <div class="j_t_tr jt1">
         <div class="blocks blocks2">
@@ -88,23 +83,23 @@
         <div
           class="j_t_tr"
           :class="index % 2 == 0 ? 'j_t_bg' : ''"
-          v-for="(item, index) in 6"
+          v-for="(item, index) in tdData"
           :key="index"
         >
           <div class="blocks">
-            <span class="span2">xxxx</span>
+            <span class="span2">{{ item.lx }}</span>
           </div>
           <div class="blocks">
-            <span class="span2">xxxx</span>
+            <span class="span2">{{ item.xh }}</span>
           </div>
           <div class="blocks">
-            <span class="span2">xxxx</span>
+            <span class="span2">{{ item.sl }}</span>
           </div>
           <div class="blocks">
-            <span class="span2">xxxx</span>
+            <span class="span2">{{ item.gm }}</span>
           </div>
           <div class="blocks">
-            <span class="span2">xxxx</span>
+            <span class="span2">{{ item.tz }}</span>
           </div>
         </div>
       </div>
@@ -116,9 +111,43 @@
 export default {
   name: "gLeft",
   components: {},
+  data() {
+    return {
+      zgData: [],
+      tdData: [],
+    };
+  },
+  created() {
+    this.getZG();
+    this.getHB();
+  },
   methods: {
     fanhui() {
       this.$emit("geshihua");
+    },
+    getZG() {
+      this.$axios
+        .get(window.wgApiUrl + "/gridding/rectificationPlan", {
+          params: {
+            areaId: 10000,
+          },
+        })
+        .then((res) => {
+          this.zgData = res.data.data[0];
+        })
+        .catch((error) => {});
+    },
+    getHB() {
+      this.$axios
+        .get(window.wgApiUrl + "/gridding/gridPlanningHouseholdInvestment", {
+          params: {
+            areaId: 10000,
+          },
+        })
+        .then((res) => {
+          this.tdData = res.data.data;
+        })
+        .catch((error) => {});
     },
   },
 };
@@ -172,7 +201,7 @@ export default {
 }
 .jr_block {
   width: 100%;
-  height: 317px;
+  height: 557px;
   background: url("img/bg4.png") no-repeat !important;
   background-size: 100% 100% !important;
   margin-bottom: 15px;
@@ -274,7 +303,7 @@ export default {
   width: 100%;
   height: 34px;
   display: flex;
-  margin-top: 42px;
+  margin-top: 18px;
   position: relative;
 }
 .jbBlock > .jbBtn {
@@ -297,13 +326,11 @@ export default {
   color: #e2e2e2;
 }
 .jbBlock > .jbLeft {
-  width: 200px;
+  width: 146px;
   height: 100%;
   display: flex;
   align-items: center;
-
   margin-left: 14px;
-  justify-content: flex-end;
 }
 .jbBlock > .jbLeft2 {
   width: 80px;
@@ -316,14 +343,13 @@ export default {
 .jbBlock > .jbLeft > span {
   font-family: Source Han Sans SC;
   font-size: 14px;
-  margin-right: 15px;
   font-weight: normal;
   letter-spacing: 0em;
 
   color: rgba(255, 255, 255, 0.7);
 }
 .jbBlock > .jbRight {
-  width: 104px;
+  width: 204px;
   height: 100%;
   display: flex;
   align-items: center;
@@ -360,5 +386,14 @@ export default {
   right: 8px;
   width: 14px;
   height: 8px;
+}
+
+.gundong {
+  width: 100%;
+  height: 460px;
+  overflow: scroll;
+}
+.gundong::-webkit-scrollbar {
+  display: none;
 }
 </style>

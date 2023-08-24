@@ -385,7 +385,7 @@ export default {
       }
       // 获取表头
       let v = {
-        URL: "data/tableColumnInfo/" + ids + "/" + 0 + "/" + 1000 + "/" + 1,
+        URL: "data/tableColumnInfo/" + ids + "/" + 0 + "/" + ids + "/" + 1,
         StructName: "获取线路表头",
         verbType: "GET",
       };

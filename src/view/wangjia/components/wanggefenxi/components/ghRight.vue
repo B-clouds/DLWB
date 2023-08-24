@@ -2,46 +2,46 @@
   <div class="gRight">
     <div class="jr_block">
       <div class="j_titles">
-        <span class="span1">配变规模</span>
+        <span class="span1">配变投资</span>
       </div>
       <div class="jbBlock">
         <div class="jbLeft jbLeft2">
           <span>投资（万元）</span>
         </div>
         <div class="jbRight">
-          <span>7</span>
+          <span>{{ pbtz }}</span>
         </div>
       </div>
-      <ghr_one />
+      <ghr_one :xList="xList" :y1="y1" :y2="y2" />
     </div>
 
     <div class="jr_block jr_block2">
       <div class="j_titles">
-        <span class="span1">线路规模</span>
+        <span class="span1">线路投资</span>
       </div>
       <div class="jbBlock">
         <div class="jbLeft jbLeft2">
           <span>投资（万元）</span>
         </div>
         <div class="jbRight">
-          <span>3.91</span>
+          <span>{{ xltz }}</span>
         </div>
       </div>
-      <ghr_two />
+      <ghr_two :xList="xList2" :y1="y12" :y2="y22" />
     </div>
     <div class="jr_block jr_block3">
       <div class="j_titles">
-        <span class="span1">电杆规模</span>
+        <span class="span1">电杆投资</span>
       </div>
       <div class="jbBlock">
         <div class="jbLeft jbLeft2">
           <span>投资（万元）</span>
         </div>
         <div class="jbRight">
-          <span>1.08</span>
+          <span>{{ dgtz }}</span>
         </div>
       </div>
-      <ghr_three />
+      <ghr_three :xList="xList3" :value="value3" />
     </div>
   </div>
 </template>
@@ -56,6 +56,104 @@ export default {
     ghr_one,
     ghr_two,
     ghr_three,
+  },
+  data() {
+    return {
+      pbtz: 0,
+      xList: [],
+      y1: [],
+      y2: [],
+      xltz: 0,
+      xList2: [],
+      y12: [],
+      y22: [],
+      dgtz: 0,
+      xList3: [],
+      value3: [],
+    };
+  },
+  created() {
+    this.getPBTZ();
+    this.getXLTZ();
+    this.getDGTZ();
+  },
+  methods: {
+    // ----------------------------------- 配变投资 ------------------------------------------------
+
+    getPBTZ() {
+      this.$axios
+        .get(window.wgApiUrl + "/gridding/distributionTransformerInvest", {
+          params: {
+            areaId: "10000",
+          },
+        })
+        .then((res) => {
+          let newData = res.data.data.result;
+          this.pbtz = res.data.data.pbtz;
+          let xList = [];
+          let y1 = [];
+          let y2 = [];
+          for (let i = 0; i < newData.length; i++) {
+            if (newData[i].type == 0) {
+              xList.push(newData[i].dy);
+              y1.push(newData[i].sl);
+            } else if (newData[i].type == 1) {
+              y2.push(newData[i].sl);
+            }
+          }
+          this.xList = xList;
+          this.y1 = y1;
+          this.y2 = y2;
+        })
+        .catch((error) => {});
+    },
+    // ------------------------------------ 线路投资-----------------------------------------
+
+    getXLTZ() {
+      this.$axios
+        .get(window.wgApiUrl + "/gridding/lineInvest", {
+          params: {
+            areaId: "10000",
+          },
+        })
+        .then((res) => {
+          let newData = res.data.data.result;
+          this.xltz = res.data.data.xltz;
+          let xList = [];
+          let y1 = [];
+          let y2 = [];
+          for (let i = 0; i < newData.length; i++) {
+            if (newData[i].type == 0) {
+              xList.push(newData[i].xl);
+              y1.push(newData[i].sl);
+            } else if (newData[i].type == 1) {
+              y2.push(newData[i].sl);
+            }
+          }
+          this.xList2 = xList;
+          this.y12 = y1;
+          this.y22 = y2;
+        })
+        .catch((error) => {});
+    },
+    // ----------------------------------电杆投资-------------------------------------------------
+    getDGTZ() {
+      this.$axios
+        .get(window.wgApiUrl + "/gridding/towerInvest", {
+          params: {
+            areaId: "10000",
+          },
+        })
+        .then((res) => {
+          this.dgtz = res.data.data.dgtz;
+          let newData = res.data.data.result;
+          for (let i = 0; i < newData.length; ++i) {
+            this.xList3.push(newData[i].gd);
+            this.value3.push(newData[i].sl);
+          }
+        })
+        .catch((error) => {});
+    },
   },
 };
 </script>

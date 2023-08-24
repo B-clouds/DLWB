@@ -4,10 +4,14 @@
 
 <script>
 export default {
-  props: ["echartsData"],
+  props: ["echartsData", "xList", "y1", "y2", "oneType"],
   data() {
     return {
       pieData: [],
+      xLists: [],
+      y1s: [],
+      y2s: [],
+      oneTypes: [],
     };
   },
   mounted() {
@@ -16,6 +20,22 @@ export default {
   },
   watch: {
     echartsData(n, o) {
+      this.myecharts();
+    },
+    xList(e, f) {
+      this.xLists = e;
+      this.myecharts();
+    },
+    y1(e, f) {
+      this.y1s = e;
+      this.myecharts();
+    },
+    y2(e, f) {
+      this.y2s = e;
+      this.myecharts();
+    },
+    oneType(e, f) {
+      this.oneTypes = e;
       this.myecharts();
     },
   },
@@ -52,13 +72,13 @@ export default {
         grid: {
           top: "17%",
           right: "5%",
-          left: "10%",
+          left: "14%",
           bottom: "20%",
         },
         xAxis: [
           {
             type: "category",
-            data: ["JKLGYJ-120", "JKLGYJ-70", "JKLGYJ-50"],
+            data: this.xLists,
             axisLine: {
               lineStyle: {
                 color: "rgba(255,255,255,.5)",
@@ -107,9 +127,9 @@ export default {
         ],
         series: [
           {
-            name: "10kV线路",
+            name: this.oneTypes.type0,
             type: "bar",
-            data: [68, 50, 69],
+            data: this.y1s,
             barWidth: this.WidthAdaptive(8),
             itemStyle: {
               normal: {
@@ -134,9 +154,9 @@ export default {
             },
           },
           {
-            name: "0.4kV",
+            name: this.oneTypes.type1,
             type: "bar",
-            data: [68, 50, 69],
+            data: this.y2s,
             barWidth: this.WidthAdaptive(8),
             itemStyle: {
               normal: {

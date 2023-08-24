@@ -1,5 +1,5 @@
 <template>
-  <div id="xl_three" style="width: 379px; height: 210px"></div>
+  <div id="xl_three" style="width: 379px; height: 200px"></div>
 </template>
 
 <script>
@@ -8,14 +8,25 @@ export default {
   data() {
     return {
       pieData: [],
+      yh_xLists: [],
+      yh_values: [],
     };
   },
+  props: ["yh_xList", "yh_value"],
   mounted() {
     this.myecharts();
     this.WidthAdaptive();
   },
   watch: {
     echartsData(n, o) {
+      this.myecharts();
+    },
+    yh_xList(e, f) {
+      this.yh_xLists = e;
+      this.myecharts();
+    },
+    yh_value(e, f) {
+      this.yh_values = e;
       this.myecharts();
     },
   },
@@ -52,7 +63,7 @@ export default {
           },
         },
         grid: {
-          top: "20%",
+          top: "15%",
           right: "5%",
           left: "10%",
           bottom: "10%",
@@ -60,7 +71,7 @@ export default {
         xAxis: [
           {
             type: "category",
-            data: ["综合配变台数", "农排配变容器", "机井"],
+            data: this.yh_xLists,
             axisLine: {
               lineStyle: {
                 color: "rgba(255,255,255,.5)",
@@ -69,6 +80,8 @@ export default {
             axisLabel: {
               margin: 10,
               color: "#e2e9ff",
+              interval: 0,
+
               textStyle: {
                 fontSize: this.WidthAdaptive(10),
               },
@@ -110,8 +123,17 @@ export default {
         series: [
           {
             type: "bar",
-            data: [68, 50, 69],
+            data: this.yh_values,
             barWidth: this.WidthAdaptive(8),
+            label: {
+              show: true,
+              formatter: "{c}户",
+              position: "top",
+              textStyle: {
+                color: "rgba(255,255,255,.9)",
+                fontSize: this.WidthAdaptive(10),
+              },
+            },
             itemStyle: {
               normal: {
                 color: new this.$echarts.graphic.LinearGradient(

@@ -489,6 +489,7 @@ export default {
     this.showQH = false;
     this.showDT = false;
     this.dtIndex = -1;
+    this.escClose();
 
     // this.showYXDT = false;
     // this.showSWDT = false;
@@ -1274,6 +1275,43 @@ export default {
     },
     gjbClick() {
       this.showGJB = !this.showGJB;
+    },
+    escClose() {
+      let gj;
+      gj = { Toolkit: "Area", State: false };
+      let data1 = {
+        functionName: "Toolkit",
+        functionParameters: [
+          {
+            key: "Toolkit",
+            value: JSON.stringify(gj),
+          },
+        ],
+      };
+      ue.interface.broadcast("PSAPI", JSON.stringify(data1));
+      gj = { Toolkit: "Distance", State: false };
+      let data2 = {
+        functionName: "Toolkit",
+        functionParameters: [
+          {
+            key: "Toolkit",
+            value: JSON.stringify(gj),
+          },
+        ],
+      };
+      ue.interface.broadcast("PSAPI", JSON.stringify(data2));
+      gj = { Toolkit: "Angle", State: false };
+
+      let data3 = {
+        functionName: "Toolkit",
+        functionParameters: [
+          {
+            key: "Toolkit",
+            value: JSON.stringify(gj),
+          },
+        ],
+      };
+      ue.interface.broadcast("PSAPI", JSON.stringify(data3));
     },
     gjClick(e) {
       if (e == this.gjbIndex) {

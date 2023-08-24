@@ -4,10 +4,13 @@
 
 <script>
 export default {
-  props: ["echartsData"],
+  props: ["echartsData", "xList", "y1", "y2"],
   data() {
     return {
       pieData: [],
+      xLists: [],
+      y1s: [],
+      y2s: [],
     };
   },
   mounted() {
@@ -16,6 +19,18 @@ export default {
   },
   watch: {
     echartsData(n, o) {
+      this.myecharts();
+    },
+    xList(e, f) {
+      this.xLists = e;
+      this.myecharts();
+    },
+    y1(e, f) {
+      this.y1s = e;
+      this.myecharts();
+    },
+    y2(e, f) {
+      this.y2s = e;
       this.myecharts();
     },
   },
@@ -52,13 +67,13 @@ export default {
         grid: {
           top: "17%",
           right: "5%",
-          left: "10%",
+          left: "14%",
           bottom: "20%",
         },
         xAxis: [
           {
             type: "category",
-            data: ["100kVA", "200kVA", "315kVA", "400kVA"],
+            data: this.xLists,
             axisLine: {
               lineStyle: {
                 color: "rgba(255,255,255,.5)",
@@ -109,7 +124,7 @@ export default {
           {
             name: "数量",
             type: "bar",
-            data: [68, 50, 69, 75],
+            data: this.y1s,
             barWidth: this.WidthAdaptive(8),
             itemStyle: {
               normal: {
@@ -134,9 +149,9 @@ export default {
             },
           },
           {
-            name: "规模（km/kVA）",
+            name: "规模(km/kVA)",
             type: "bar",
-            data: [68, 50, 69, 75],
+            data: this.y2s,
             barWidth: this.WidthAdaptive(8),
             itemStyle: {
               normal: {

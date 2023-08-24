@@ -117,7 +117,7 @@ export default {
       this.pageRotate += 90;
     },
     setFd() {
-      this.scale += 5;
+      this.scale += 15;
       this.$refs.pdf[0].$el.style.width = parseInt(this.scale) + "%";
     },
     setSx() {
@@ -125,7 +125,7 @@ export default {
       if (this.scale == 100) {
         return;
       }
-      this.scale += -5;
+      this.scale += -15;
       this.$refs.pdf[0].$el.style.width = parseInt(this.scale) + "%";
     },
     hlslClick(e) {
@@ -137,8 +137,27 @@ export default {
   },
 };
 </script>
-
+<style></style>
 <style scoped>
+/*滚动条整体粗细样式*/
+::v-deep ::-webkit-scrollbar {
+  /*高宽分别对应横竖滚动条的尺寸*/
+  width: 8px;
+  height: 8px;
+}
+/*滚动条里面小方块*/
+::v-deep ::-webkit-scrollbar-thumb {
+  border-radius: 10px !important;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2) !important;
+  background-color: #4ea8e8 !important;
+}
+/*滚动条轨道*/
+::v-deep ::-webkit-scrollbar-track {
+  border-radius: 10px !important;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2) !important;
+  background: #ededed !important;
+}
+
 .setPdfs {
   width: 100%;
 }

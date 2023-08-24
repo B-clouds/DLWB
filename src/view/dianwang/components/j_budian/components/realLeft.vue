@@ -250,8 +250,16 @@ export default {
       cfOid: "", //存放oid
       cfty: "", //存放投运日期
       cftuiy: "", //存放退运日期
-      dataList3: [],
-      tableColumnList: [],
+      dataList3: [{ a1: "1", a2: 2, a3: 2, a4: 2, a5: 2, a6: 2, a7: 2 }],
+      tableColumnList: [
+        { prop: "a1", propName: "aasadadaa" },
+        { prop: "a2", propName: "aaaadasdasa" },
+        { prop: "a3", propName: "aaaadasdasa" },
+        { prop: "a4", propName: "aaaadasdasa" },
+        { prop: "a5", propName: "aaaadasdasa" },
+        { prop: "a6", propName: "aaaadasdasa" },
+        { prop: "a7", propName: "aaaadasdasa" },
+      ],
       featureInfoList: [],
       tk_title: "", //新增编辑表头
       showAdTk: "", //是否显示新增弹框

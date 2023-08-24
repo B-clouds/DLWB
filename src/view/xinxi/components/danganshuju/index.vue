@@ -1,14 +1,8 @@
 <template>
   <div class="dasj">
-    <!-- 列表页左侧选项 -->
-    <!-- <transition name="transitionLeft">
-      <dh @navclick="navclick" v-show="show" />
-    </transition> -->
     <!-- 子级导航 -->
     <transition name="transitionBottom">
-      <div v-if="show" class="navs">
-        <div class="navsLeft" @click="navListQ"></div>
-        <div class="navsRight" @click="navListQ"></div>
+      <div v-if="show && !detiles0" class="navs">
         <div
           class="blocks"
           @click="navclick(index)"
@@ -20,43 +14,77 @@
         </div>
       </div>
     </transition>
-
+    <!-- 默认页面 -->
+    <transition name="transitionLeft">
+      <jLeft v-if="show && detiles0" @showNav="showNav" />
+    </transition>
     <!-- ------------------------------------- 站房档案 --------------------------------- -->
     <transition name="transitionBottom">
-      <zhanfang v-if="show && detiles1"></zhanfang>
+      <zhanfang
+        @fanhuiClick="fanhuiClick"
+        v-if="show && detiles1 && !detiles0"
+      ></zhanfang>
     </transition>
     <transition name="transitionBottom">
-      <ganta v-if="show && detiles2"></ganta>
+      <ganta
+        @fanhuiClick="fanhuiClick"
+        v-if="show && detiles2 && !detiles0"
+      ></ganta>
     </transition>
     <transition name="transitionBottom">
-      <xianlu v-if="show && detiles3"></xianlu>
+      <xianlu
+        @fanhuiClick="fanhuiClick"
+        v-if="show && detiles3 && !detiles0"
+      ></xianlu>
     </transition>
     <transition name="transitionBottom">
-      <taiqu v-if="show && detiles4"></taiqu>
+      <taiqu
+        @fanhuiClick="fanhuiClick"
+        v-if="show && detiles4 && !detiles0"
+      ></taiqu>
     </transition>
     <transition name="transitionBottom">
-      <dianlan v-if="show && detiles5"></dianlan>
+      <dianlan
+        @fanhuiClick="fanhuiClick"
+        v-if="show && detiles5 && !detiles0"
+      ></dianlan>
     </transition>
     <transition name="transitionBottom">
-      <weiwang v-if="show && detiles6"></weiwang>
+      <weiwang
+        @fanhuiClick="fanhuiClick"
+        v-if="show && detiles6 && !detiles0"
+      ></weiwang>
     </transition>
     <transition name="transitionBottom">
-      <jiange v-if="show && detiles7"></jiange>
+      <jiang
+        @fanhuiClick="fanhuiClick"
+        v-if="show && detiles7 && !detiles0"
+      ></jiang>
     </transition>
     <transition name="transitionBottom">
-      <kaiguan v-if="show && detiles8"></kaiguan>
+      <kaiguan
+        @fanhuiClick="fanhuiClick"
+        v-if="show && detiles8 && !detiles0"
+      ></kaiguan>
     </transition>
     <transition name="transitionBottom">
-      <wulian v-if="show && detiles9"></wulian>
+      <wulian
+        @fanhuiClick="fanhuiClick"
+        v-if="show && detiles9 && !detiles0"
+      ></wulian>
     </transition>
     <transition name="transitionBottom">
-      <wangluo v-if="show && detiles10"></wangluo>
+      <wangluo
+        @fanhuiClick="fanhuiClick"
+        v-if="show && detiles10 && !detiles0"
+      ></wangluo>
     </transition>
   </div>
 </template>
 
 <script>
 import dh from "./components/dh.vue";
+import jLeft from "./components/jLeft.vue";
 import zhanfang from "./components/zhanfang.vue";
 import ganta from "./components/ganta.vue";
 import xianlu from "./components/xianlu.vue";
@@ -81,11 +109,13 @@ export default {
     kaiguan,
     wulian,
     wangluo,
+    jLeft,
   },
   data() {
     return {
       show: false,
-      detiles1: true,
+      detiles0: true,
+      detiles1: false,
       detiles2: false,
       detiles3: false,
       detiles4: false,
@@ -95,11 +125,19 @@ export default {
       detiles8: false,
       detiles9: false,
       detiles10: false,
-      navList: ["站房档案", "杆塔档案", "线路档案", "台区档案", "电缆档案"],
-      navList2: ["站房档案", "杆塔档案", "线路档案", "台区档案", "电缆档案"],
-      navList3: ["微网档案", "间隔档案", "开关档案", "物联档案", "网格档案"],
+      navList: [
+        "站房档案",
+        "杆塔档案",
+        "线路档案",
+        "台区档案",
+        "电缆档案",
+        "微网档案",
+        "间隔档案",
+        "开关档案",
+        "物联档案",
+        "网格档案",
+      ],
       navIndex: 0,
-      navData: 0,
     };
   },
 
@@ -109,151 +147,173 @@ export default {
   deactivated() {
     this.show = false;
     this.navIndex = 0;
-    this.detiles1 = true;
+    this.detiles0 = true;
+    this.detiles10 = false;
+    this.detiles1 = false;
+    this.detiles2 = false;
+    this.detiles3 = false;
+    this.detiles4 = false;
+    this.detiles6 = false;
+    this.detiles7 = false;
+    this.detiles8 = false;
+    this.detiles9 = false;
+    this.detiles5 = false;
   },
   methods: {
     navclick(e) {
       this.navIndex = e;
-      if (this.navData == 0) {
-        if (e == 0) {
-          this.detiles1 = true;
-          this.detiles2 = false;
-          this.detiles3 = false;
-          this.detiles4 = false;
-          this.detiles5 = false;
-          this.detiles6 = false;
-          this.detiles7 = false;
-          this.detiles8 = false;
-          this.detiles9 = false;
-          this.detiles10 = false;
-        } else if (e == 1) {
-          this.detiles2 = true;
-          this.detiles1 = false;
-          this.detiles3 = false;
-          this.detiles4 = false;
-          this.detiles5 = false;
-          this.detiles6 = false;
-          this.detiles7 = false;
-          this.detiles8 = false;
-          this.detiles9 = false;
-          this.detiles10 = false;
-        } else if (e == 2) {
-          this.detiles3 = true;
-          this.detiles1 = false;
-          this.detiles2 = false;
-          this.detiles4 = false;
-          this.detiles5 = false;
-          this.detiles6 = false;
-          this.detiles7 = false;
-          this.detiles8 = false;
-          this.detiles9 = false;
-          this.detiles10 = false;
-        } else if (e == 3) {
-          this.detiles4 = true;
-          this.detiles1 = false;
-          this.detiles2 = false;
-          this.detiles3 = false;
-          this.detiles5 = false;
-          this.detiles6 = false;
-          this.detiles7 = false;
-          this.detiles8 = false;
-          this.detiles9 = false;
-          this.detiles10 = false;
-        } else if (e == 4) {
-          this.detiles5 = true;
-          this.detiles1 = false;
-          this.detiles2 = false;
-          this.detiles3 = false;
-          this.detiles4 = false;
-          this.detiles6 = false;
-          this.detiles7 = false;
-          this.detiles8 = false;
-          this.detiles9 = false;
-          this.detiles10 = false;
-        }
-      } else {
-        if (e == 0) {
-          this.detiles5 = false;
-          this.detiles1 = false;
-          this.detiles2 = false;
-          this.detiles3 = false;
-          this.detiles4 = false;
-          this.detiles6 = true;
-          this.detiles7 = false;
-          this.detiles8 = false;
-          this.detiles9 = false;
-          this.detiles10 = false;
-        } else if (e == 1) {
-          this.detiles5 = false;
-          this.detiles1 = false;
-          this.detiles2 = false;
-          this.detiles3 = false;
-          this.detiles4 = false;
-          this.detiles6 = false;
-          this.detiles7 = true;
-          this.detiles8 = false;
-          this.detiles9 = false;
-          this.detiles10 = false;
-        } else if (e == 2) {
-          this.detiles5 = false;
-          this.detiles1 = false;
-          this.detiles2 = false;
-          this.detiles3 = false;
-          this.detiles4 = false;
-          this.detiles6 = false;
-          this.detiles7 = false;
-          this.detiles8 = true;
-          this.detiles9 = false;
-          this.detiles10 = false;
-        } else if (e == 3) {
-          this.detiles5 = false;
-          this.detiles1 = false;
-          this.detiles2 = false;
-          this.detiles3 = false;
-          this.detiles4 = false;
-          this.detiles6 = false;
-          this.detiles7 = false;
-          this.detiles8 = false;
-          this.detiles9 = true;
-          this.detiles10 = false;
-        } else if (e == 4) {
-          this.detiles5 = false;
-          this.detiles1 = false;
-          this.detiles2 = false;
-          this.detiles3 = false;
-          this.detiles4 = false;
-          this.detiles6 = false;
-          this.detiles7 = false;
-          this.detiles8 = false;
-          this.detiles9 = false;
-          this.detiles10 = true;
-        }
+      if (e == 0) {
+        this.detiles1 = true;
+        this.detiles2 = false;
+        this.detiles3 = false;
+        this.detiles4 = false;
+        this.detiles5 = false;
+        this.detiles6 = false;
+        this.detiles7 = false;
+        this.detiles8 = false;
+        this.detiles9 = false;
+        this.detiles10 = false;
+      } else if (e == 1) {
+        this.detiles2 = true;
+        this.detiles1 = false;
+        this.detiles3 = false;
+        this.detiles4 = false;
+        this.detiles5 = false;
+        this.detiles6 = false;
+        this.detiles7 = false;
+        this.detiles8 = false;
+        this.detiles9 = false;
+        this.detiles10 = false;
+      } else if (e == 2) {
+        this.detiles3 = true;
+        this.detiles1 = false;
+        this.detiles2 = false;
+        this.detiles4 = false;
+        this.detiles5 = false;
+        this.detiles6 = false;
+        this.detiles7 = false;
+        this.detiles8 = false;
+        this.detiles9 = false;
+        this.detiles10 = false;
+      } else if (e == 3) {
+        this.detiles4 = true;
+        this.detiles1 = false;
+        this.detiles2 = false;
+        this.detiles3 = false;
+        this.detiles5 = false;
+        this.detiles6 = false;
+        this.detiles7 = false;
+        this.detiles8 = false;
+        this.detiles9 = false;
+        this.detiles10 = false;
+      } else if (e == 4) {
+        this.detiles5 = true;
+        this.detiles1 = false;
+        this.detiles2 = false;
+        this.detiles3 = false;
+        this.detiles4 = false;
+        this.detiles6 = false;
+        this.detiles7 = false;
+        this.detiles8 = false;
+        this.detiles9 = false;
+        this.detiles10 = false;
+      } else if (e == 5) {
+        this.detiles6 = true;
+        this.detiles1 = false;
+        this.detiles2 = false;
+        this.detiles3 = false;
+        this.detiles4 = false;
+        this.detiles5 = false;
+        this.detiles7 = false;
+        this.detiles8 = false;
+        this.detiles9 = false;
+        this.detiles10 = false;
+      } else if (e == 6) {
+        this.detiles7 = true;
+        this.detiles1 = false;
+        this.detiles2 = false;
+        this.detiles3 = false;
+        this.detiles4 = false;
+        this.detiles6 = false;
+        this.detiles5 = false;
+        this.detiles8 = false;
+        this.detiles9 = false;
+        this.detiles10 = false;
+      } else if (e == 7) {
+        this.detiles8 = true;
+        this.detiles1 = false;
+        this.detiles2 = false;
+        this.detiles3 = false;
+        this.detiles4 = false;
+        this.detiles6 = false;
+        this.detiles7 = false;
+        this.detiles5 = false;
+        this.detiles9 = false;
+        this.detiles10 = false;
+      } else if (e == 8) {
+        this.detiles9 = true;
+        this.detiles1 = false;
+        this.detiles2 = false;
+        this.detiles3 = false;
+        this.detiles4 = false;
+        this.detiles6 = false;
+        this.detiles7 = false;
+        this.detiles8 = false;
+        this.detiles5 = false;
+        this.detiles10 = false;
+      } else if (e == 9) {
+        this.detiles10 = true;
+        this.detiles1 = false;
+        this.detiles2 = false;
+        this.detiles3 = false;
+        this.detiles4 = false;
+        this.detiles6 = false;
+        this.detiles7 = false;
+        this.detiles8 = false;
+        this.detiles9 = false;
+        this.detiles5 = false;
       }
     },
-
-    navListQ() {
-      this.navIndex = -1;
-      if (this.navData == 0) {
-        this.navList = this.navList3;
-        this.navData = 1;
-      } else {
-        this.navList = this.navList2;
-        this.navData = 0;
-      }
+    showNav() {
+      this.detiles0 = false;
+      this.detiles10 = false;
+      this.detiles1 = true;
+      this.detiles2 = false;
+      this.detiles3 = false;
+      this.detiles4 = false;
+      this.detiles6 = false;
+      this.detiles7 = false;
+      this.detiles8 = false;
+      this.detiles9 = false;
+      this.detiles5 = false;
+      this.navIndex = 0;
+    },
+    fanhuiClick() {
+      this.detiles0 = true;
+      this.detiles10 = false;
+      this.detiles1 = false;
+      this.detiles2 = false;
+      吧;
+      this.detiles3 = false;
+      this.detiles4 = false;
+      this.detiles6 = false;
+      this.detiles7 = false;
+      this.detiles8 = false;
+      this.detiles9 = false;
+      this.detiles5 = false;
     },
   },
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
 
 <style scoped>
 .navs {
-  width: 720px;
+  width: 1460px;
   height: 40px;
   position: fixed;
-  left: 610px;
+  left: 230px;
   bottom: 21px;
   display: flex;
   justify-content: space-between;

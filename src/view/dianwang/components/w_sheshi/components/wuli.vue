@@ -198,7 +198,7 @@ export default {
       ],
       fbzt: "",
       dy_show: "",
-
+      sscc: "",
       sbbm: "", //设备编码
       zjrl: "", //装机容量
       edgl: "", //额定功率
@@ -219,6 +219,7 @@ export default {
       that.cfObj = e;
       that.titles = e.wwsblx;
       that.sbbm = e.sbbm;
+      that.sscc = e.sscc;
       that.sbmc = e.sbmc;
       that.zjrl = e.zjrl;
       that.edgl = e.edgl;

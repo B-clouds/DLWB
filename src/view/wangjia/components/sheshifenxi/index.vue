@@ -56,6 +56,7 @@
     <transition name="transitionLeft">
       <wuli v-if="show && showItem && detiles1 && showXX && types == 0"></wuli>
       <xianluLeft v-if="show && showItem && detiles1 && showXX && types == 1" />
+      <byqLeft v-if="show && showItem && detiles1 && showXX && types == 2" />
     </transition>
     <transition name="transitionRight">
       <kongjian
@@ -64,6 +65,7 @@
       <xianluRight
         v-if="show && showItem && detiles1 && showXX && types == 1"
       />
+      <byqRight v-if="show && showItem && detiles1 && showXX && types == 2" />
     </transition>
 
     <!-- ------------------------------实景照片--------------------------------------- -->
@@ -155,6 +157,9 @@ import znIndex from "./components/znIndex.vue";
 // 线路基本信息
 import xianluLeft from "./components/xianlujibenLeft.vue";
 import xianluRight from "./components/xianlujibenRight.vue";
+// 变压器基本信息
+import byqLeft from "./components/byqLeft.vue";
+import byqRight from "./components/byqRight.vue";
 // 运营分析小图模块
 import yyfx from "./components/yyfx.vue";
 // 运营分享大图模块
@@ -184,6 +189,8 @@ export default {
     fzfx2,
     xianluLeft,
     xianluRight,
+    byqLeft,
+    byqRight,
   },
   data() {
     return {
@@ -215,14 +222,15 @@ export default {
       showXt: true,
       showDt2: false,
       showXt2: true,
-      types: 0, //存放类型 0：电站 1：线路
+      types: 0, //存放类型 0：电站 1：线路  2：变压器
     };
   },
 
   activated() {
     this.show = true;
     this.showNavList = true;
-    this.types = window.types;
+    this.types = 2;
+    // this.types = window.types;
     console.log(this.types, "--------------1");
   },
   deactivated() {
@@ -388,6 +396,17 @@ export default {
             ],
           },
         };
+        let data = {
+          functionName: "WireFrame",
+          backFunctionName: "",
+          functionParameters: [
+            {
+              key: "WireFrame",
+              value: JSON.stringify(v),
+            },
+          ],
+        };
+        ue.interface.broadcast("PSAPI", JSON.stringify(data));
       } else if (window.ssflIndex == 1) {
         this.$router.push("/wj/xianlu");
         v = {
@@ -402,19 +421,24 @@ export default {
             ],
           },
         };
+        let data = {
+          functionName: "WireFrame",
+          backFunctionName: "",
+          functionParameters: [
+            {
+              key: "WireFrame",
+              value: JSON.stringify(v),
+            },
+          ],
+        };
+        ue.interface.broadcast("PSAPI", JSON.stringify(data));
+      } else if (window.ssflIndex == 2) {
+        this.$router.push("/wj/byq");
+      } else if (window.ssflIndex == 3) {
+        this.$router.push("/wj/ssgt");
+      } else if (window.ssflIndex == 4) {
+        this.$router.push("/wj/ww");
       }
-
-      let data = {
-        functionName: "WireFrame",
-        backFunctionName: "",
-        functionParameters: [
-          {
-            key: "WireFrame",
-            value: JSON.stringify(v),
-          },
-        ],
-      };
-      ue.interface.broadcast("PSAPI", JSON.stringify(data));
     },
     scYr() {
       this.showSC = true;

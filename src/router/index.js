@@ -69,6 +69,9 @@ const DBX2 = () => import('../view/dianwang/components/d_zhongduan2/index2.vue')
 // 电缆孪生-电缆管理
 const DLGL = () =>
     import('../view/dianwang/components/d_zhongduan3/index.vue')
+// 电缆孪生-终端管理
+const DLZD = () =>
+    import('../view/dianwang/components/d_zhongduan4/index.vue')
 // 微网孪生-设施布点
 const WSS = () =>
     import('../view/dianwang/components/w_sheshi/index.vue')
@@ -77,6 +80,15 @@ const WSS2 = () => import('../view/dianwang/components/w_sheshi/index2.vue')
 // 微网孪生-间隔管理
 const WJG = () =>
     import('../view/dianwang/components/w_jiange/index.vue')
+
+// 平面设计-路径规划
+const LJGH = () => import('../view/dianwang/components/lujingguihua/index.vue')
+// 平面设计-路径查询
+const LJCX = () => import('../view/dianwang/components/lujingchaxun/index.vue')
+// 平面设计-路径编辑
+const LJBJ = () => import('../view/dianwang/components/lujingbianji/index.vue')
+// 平面设计-路径删除
+const LJSC = () => import('../view/dianwang/components/lujingshanchu/index.vue')
 //    --------------------------------------------------------------------------------
 // 网架分析
 const WJ = () =>
@@ -280,6 +292,10 @@ const routes = [{
         component: DLGL
     },
     {
+        path: "dlzd",
+        component: DLZD
+    },
+    {
         path: 'wsheshi',
         name: 'w_sheshi',
         component: WSS
@@ -293,6 +309,21 @@ const routes = [{
         path: 'wjiange',
         name: 'w_jiange',
         component: WJG
+    },
+    {
+        path: "ljgh",
+        component: LJGH
+    },
+    {
+        path: "ljcx",
+        component: LJCX
+    }, {
+        path: "ljbj",
+        component: LJBJ
+    },
+    {
+        path: "ljsc",
+        component: LJSC
     }
     ]
 },

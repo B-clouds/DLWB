@@ -238,7 +238,7 @@ export default {
   background: url("img/td2.png") no-repeat !important;
   background-size: 100% 100% !important;
 }
-::v-deep.el-table__body tr.current-row > td.el-table__cel {
+::v-deep .el-table__body tr.current-row > td.el-table__cel {
   background-color: transparent !important;
 }
 

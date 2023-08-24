@@ -11,73 +11,75 @@
       <div class="j_titles">
         <span class="span1">基本信息</span>
       </div>
-      <div class="jbBlock">
-        <div class="jbLeft">
-          <span>村庄类型</span>
+      <div class="gundong">
+        <div class="jbBlock">
+          <div class="jbLeft">
+            <span>村庄类型</span>
+          </div>
+          <div class="jbRight">
+            <span>{{ jbData.czlx }}</span>
+          </div>
         </div>
-        <div class="jbRight">
-          <span>综合型</span>
-        </div>
-      </div>
 
-      <div class="jbBlock">
-        <div class="jbLeft">
-          <span>供电面积（k㎡）</span>
+        <div class="jbBlock">
+          <div class="jbLeft">
+            <span>供电面积</span>
+          </div>
+          <div class="jbRight">
+            <span>{{ jbData.gdmj }}</span>
+          </div>
         </div>
-        <div class="jbRight">
-          <span>4（k㎡）</span>
-        </div>
-      </div>
 
-      <div class="jbBlock">
-        <div class="jbLeft">
-          <span>平均供电半径（m）</span>
+        <div class="jbBlock">
+          <div class="jbLeft">
+            <span>平均供电半径</span>
+          </div>
+          <div class="jbRight">
+            <span>{{ jbData.pjgdbj }}</span>
+          </div>
         </div>
-        <div class="jbRight">
-          <span>450</span>
-        </div>
-      </div>
 
-      <div class="jbBlock">
-        <div class="jbLeft">
-          <span>是否贫困村</span>
+        <div class="jbBlock">
+          <div class="jbLeft">
+            <span>是否贫困村</span>
+          </div>
+          <div class="jbRight">
+            <span>{{ jbData.sfpkc }}</span>
+          </div>
         </div>
-        <div class="jbRight">
-          <span>否</span>
-        </div>
-      </div>
-      <div class="jbBlock">
-        <div class="jbLeft">
-          <span>低压线损率（%）</span>
-        </div>
-        <div class="jbRight">
-          <span>4.8</span>
+        <div class="jbBlock">
+          <div class="jbLeft">
+            <span>低压线损率</span>
+          </div>
+          <div class="jbRight">
+            <span>{{ jbData.dyxsl }}</span>
+          </div>
         </div>
       </div>
     </div>
     <div class="jr_block jr_block2">
       <div class="j_titles">
-        <span class="span1">人员信息</span>
+        <span class="span1">用户概况</span>
       </div>
       <div class="jbBlock">
         <div class="jbLeft jbLeft2">
-          <span>常驻人口</span>
+          <span>村内户数</span>
         </div>
         <div class="jbRight">
-          <span>1380人</span>
+          <span>{{ yh_num }}</span>
         </div>
       </div>
       <div class="jr_two">
-        <xl_two />
+        <xl_three :yh_xList="yh_xList" :yh_value="yh_value" />
       </div>
     </div>
 
     <div class="jr_block jr_block3">
       <div class="j_titles">
-        <span class="span1">配变设备数量统计</span>
+        <span class="span1">年龄架构</span>
       </div>
       <div class="jr_three">
-        <xl_three />
+        <xl_two :nlData="nlData" />
       </div>
     </div>
   </div>
@@ -92,9 +94,102 @@ export default {
     xl_two,
     xl_three,
   },
+  data() {
+    return {
+      jbData: {},
+      yh_xList: [],
+      yh_value: [],
+      yh_num: 0,
+      nlData: [],
+    };
+  },
+  created() {
+    this.getJB();
+    this.getYH();
+    this.getNL();
+  },
   methods: {
     fanhui() {
       this.$emit("geshihua");
+    },
+    getJB() {
+      this.$axios
+        .get(window.wgApiUrl + "/gridding/basic", {
+          params: {
+            areaId: 10000,
+          },
+        })
+        .then((res) => {
+          this.jbData = res.data.data[0];
+        })
+        .catch((error) => {});
+    },
+    getYH() {
+      this.$axios
+        .get(window.wgApiUrl + "/gridding/userProfile", {
+          params: {
+            areaId: 10000,
+          },
+        })
+        .then((res) => {
+          let yhData = res.data.data[0];
+          this.yh_xList = [];
+          this.yh_value = [];
+
+          this.yh_xList.push("居民");
+          this.yh_xList.push("工商业");
+
+          this.yh_xList.push("单相户");
+          this.yh_xList.push("动力户");
+
+          // this.yh_xList.push("村内户数");
+          this.yh_xList.push("常住户");
+          this.yh_xList.push("低电量户");
+
+          let d = yhData.jm;
+          let g = yhData.gsy;
+
+          let e = yhData.dxh;
+          let f = yhData.cnhs;
+          let b = yhData.dlh;
+
+          let a = yhData.czh;
+          let c = yhData.ddlh;
+          this.yh_value.push(a);
+          this.yh_value.push(b);
+          this.yh_value.push(c);
+          this.yh_value.push(d);
+          this.yh_value.push(e);
+          // this.yh_value.push(f);
+          this.yh_num = f;
+          this.yh_value.push(g);
+        })
+        .catch((error) => {});
+    },
+    getNL() {
+      this.$axios
+        .get(window.wgApiUrl + "/gridding/ageStructure", {
+          params: {
+            areaId: 10000,
+          },
+        })
+        .then((res) => {
+          let data = res.data.data[0];
+          this.nlData = [];
+          let obj1 = { name: "0-20", value: data.over0 };
+          let obj2 = { name: "20-40", value: data.over20 };
+          let obj3 = { name: "40-60", value: data.over40 };
+          let obj4 = { name: "60-80", value: data.over60 };
+          let obj5 = { name: "80-100", value: data.over80 };
+          let obj6 = { name: "100以上", value: data.over100 };
+          this.nlData.push(obj1);
+          this.nlData.push(obj2);
+          this.nlData.push(obj3);
+          this.nlData.push(obj4);
+          this.nlData.push(obj5);
+          this.nlData.push(obj6);
+        })
+        .catch((error) => {});
     },
   },
 };
@@ -152,6 +247,14 @@ export default {
   background: url("img/bg4.png") no-repeat !important;
   background-size: 100% 100% !important;
   margin-bottom: 15px;
+}
+.gundong {
+  width: 100%;
+  height: 260px;
+  overflow: scroll;
+}
+.gundong::-webkit-scrollbar {
+  display: none;
 }
 .jr_block2 {
   height: 303px !important;

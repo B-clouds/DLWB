@@ -258,7 +258,7 @@
         <!-- 开关 -->
         <div class="rkg" @click="kgClick" :class="showRZK ? 'rkg2' : ''"></div>
         <div class="mxTT">
-          <span>站房明细</span>
+          <span>设备明细</span>
         </div>
         <div class="t_bg">
           <el-table
@@ -329,7 +329,7 @@
         <!-- 开关 -->
         <div class="rkg rkg2" @click="kgClick"></div>
         <div class="mxTT">
-          <span>站房明细</span>
+          <span>设备明细</span>
         </div>
         <div class="t_bg">
           <el-table
@@ -542,8 +542,8 @@ export default {
     this.zf_oam_value = "";
     this.zf_dy_value = "";
     this.zf_cj_value = "";
-    this.page = 1;
-    this.page1 = 1;
+    // this.page = 1;
+    // this.page1 = 1;
     this.xlIndex = -1;
     this.xlIndex1 = -1;
     this.xlIndex2 = -1;
@@ -853,7 +853,18 @@ export default {
     getxlTh(e) {
       let data2 = JSON.parse(e).data;
       this.tableColumnList = data2.data;
-      this.dataList = [];
+      let datas = [];
+      for (let i = 0; i < 3; i++) {
+        datas.push(this.tableColumnList[i]);
+      }
+      this.tableColumnList4 = datas;
+      this.tableColumnList5 = this.tableColumnList;
+      if (this.showRZK) {
+        this.tableColumnList = this.tableColumnList5;
+      } else {
+        this.tableColumnList = this.tableColumnList4;
+      }
+      console.log("--------------", "重新发送请求", e);
     },
     // 双击单行
     hangClick(e) {

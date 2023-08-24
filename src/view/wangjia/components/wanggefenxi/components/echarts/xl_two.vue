@@ -8,14 +8,20 @@ export default {
   data() {
     return {
       pieData: [],
+      nlDatas: [],
     };
   },
   mounted() {
     this.myecharts();
     this.WidthAdaptive();
   },
+  props: ["nlData"],
   watch: {
     echartsData(n, o) {
+      this.myecharts();
+    },
+    nlData(e, f) {
+      this.nlDatas = e;
       this.myecharts();
     },
   },
@@ -31,16 +37,7 @@ export default {
       myChart.clear();
 
       // mock 数据
-      const dataArray = [
-        {
-          name: "居民（户）",
-          value: 40,
-        },
-        {
-          name: "工商业（户）",
-          value: 35,
-        },
-      ];
+      const dataArray = this.nlDatas;
 
       // 计算总数
       const list = [];
@@ -49,7 +46,14 @@ export default {
         return p + v.value;
       }, 0);
 
-      const color = ["#05CFF7", "#1978E5"];
+      const color = [
+        "rgb(0,157,255)",
+        "rgb(34,228,255)",
+        "rgb(59,255,208)",
+        "rgb(4,227,138)",
+        "rgb(157,255,134)",
+        "rgb(254,229,136)",
+      ];
 
       var labelshow = true;
       var centerimg = true;
@@ -100,6 +104,7 @@ export default {
 
       //title
       const title = {
+        show: false,
         text: "{a|" + total + "}\n{b|总数}",
         top: "44%",
         left: "30%",
@@ -167,17 +172,18 @@ export default {
           hoverAnimation: false,
           itemStyle: items,
           label: {
-            show: false,
+            show: true,
+            formatter: "{d}%",
           },
           data: data1,
         },
       ];
       const legend = {
         show: true,
-        top: "37%",
+        top: "14%",
         right: "7%",
         orient: "horizontal",
-        itemGap: 30,
+        itemGap: 15,
         icon: "rect",
         itemWidth: 10,
         itemHeight: 10,

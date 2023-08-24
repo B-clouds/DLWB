@@ -266,7 +266,7 @@
         <!-- 开关 -->
         <div class="rkg" @click="kgClick" :class="showRZK ? 'rkg2' : ''"></div>
         <div class="mxTT">
-          <span>线路明细</span>
+          <span>设备明细</span>
         </div>
         <div class="t_bg">
           <el-table
@@ -347,7 +347,7 @@
         <!-- 开关 -->
         <div class="rkg rkg2" @click="kgClick"></div>
         <div class="mxTT">
-          <span>线路明细</span>
+          <span>设备明细</span>
         </div>
         <div class="t_bg">
           <el-table
@@ -592,7 +592,7 @@ export default {
     window.ue.interface.BackGetSelectKv = this.BackGetSelectKv;
     // 获取表头
     let v = {
-      URL: "data/tableColumnInfo/" + 1001 + "/" + 0 + "/" + 1000 + "/" + 1,
+      URL: "data/tableColumnInfo/" + 1001 + "/" + 0 + "/" + 1001 + "/" + 1,
       StructName: "获取线路表头",
       verbType: "GET",
     };
@@ -618,8 +618,8 @@ export default {
     this.xl_oam_value = "";
     this.xl_dy_value = "";
     this.zf_cj_value = "";
-    this.page = 1;
-    this.page1 = 1;
+    // this.page = 1;
+    // this.page1 = 1;
     this.show = false;
   },
   mounted() {
@@ -938,7 +938,7 @@ export default {
 
         // 获取表头
         let v = {
-          URL: "data/tableColumnInfo/" + 1001 + "/" + 0 + "/" + 1000 + "/" + 1,
+          URL: "data/tableColumnInfo/" + 1001 + "/" + 0 + "/" + 1001 + "/" + 1,
           StructName: "获取线路表头",
           verbType: "GET",
         };
