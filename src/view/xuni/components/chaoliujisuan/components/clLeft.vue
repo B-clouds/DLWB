@@ -1,57 +1,57 @@
 <template>
   <div
-    class="cleft"
+    class="fhLeft"
     :class="[
       showMB ? 'dengji' : '',
       showMB2 ? 'dengji' : '',
       showMB3 ? 'showMB3' : '',
     ]"
   >
-    <div class="gl_top">
-      <span class="span1">网格</span>
-      <div class="names">
-        <span>供电网格下拉+搜索框</span>
+    <!-- title -->
+    <!-- <div class="w_title"> 
+      <span>模型资产导航树</span>
+    </div> -->
+    <div class="j_titles">
+      <span>网格架构树</span>
+    </div>
+    <div class="j_ss">
+      <input class="ddd" placeholder="搜索" />
+    </div>
+    <div class="block">
+      <div class="blockItem">
+        <el-tree
+          show-checkbox
+          :props="defaultProps"
+          @node-click="handleNodeClick"
+          @check-change="handleCheckChange"
+          :check-strictly="true"
+          check-on-click-node
+          :filter-node-method="filterNode"
+          @check="selectTree"
+          node-key="oid"
+          lazy
+          :load="loadNode"
+          :key="tree_key"
+          :accordion="true"
+          :indent="20"
+          :default-expanded-keys="defaultExpand"
+          :default-checked-keys="defaultExpand"
+          ref="treeForm_mx"
+        ></el-tree>
       </div>
     </div>
-    <div class="clList">
-      <div class="j_ss">
-        <input class="ddd" placeholder="搜索" />
-      </div>
-      <div class="block">
-        <div class="blockItem">
-          <el-tree
-            show-checkbox
-            :props="defaultProps"
-            @node-click="handleNodeClick"
-            @check-change="handleCheckChange"
-            :check-strictly="true"
-            check-on-click-node
-            :filter-node-method="filterNode"
-            @check="selectTree"
-            node-key="oid"
-            lazy
-            :load="loadNode"
-            :key="tree_key"
-            :accordion="true"
-            :indent="20"
-            :default-expanded-keys="defaultExpand"
-            :default-checked-keys="defaultExpand"
-            ref="treeForm_mx"
-          ></el-tree>
-        </div>
-      </div>
-      <div class="qr" @click="okClick"></div>
-    </div>
+    <!-- <div class="qr" v-show="showQr" @click="okClick"></div> -->
   </div>
 </template>
 
 <script>
 export default {
-  name: "cleft",
+  name: "fhLeft",
   data() {
     return {
       // 是否显示编辑弹框
       showMB: false,
+      showQr: false, //是否显示确认按钮
       updaValue: "",
       // 是否显示新增弹框
       showMB2: false,
@@ -179,9 +179,12 @@ export default {
         // 展示右侧，并发送消息
         this.$emit("showRight", true);
         showLefts = true;
+        this.showQr = true;
       } else {
         // 取消展示右侧
         this.$emit("showRight", false);
+        this.showQr = false;
+
         showLefts = false;
         //当前是取消选中,将所有子节点都取消选中
         this.setChildenNode(node);
@@ -236,12 +239,12 @@ export default {
         //   ],
         // };
         // ue.interface.broadcast("PSAPI", JSON.stringify(data));
-        // this.$emit("showRight", true);
-        // let that = this;
-        // setTimeout(() => {
-        //   // that.$bus.$emit("getTables", e.towerType);
-        //   that.$bus.$emit("getTZlist", e);
-        // }, 50);
+        this.$emit("showRight", true);
+        let that = this;
+        setTimeout(() => {
+          // that.$bus.$emit("getTables", e.towerType);
+          that.$bus.$emit("getTZlist", e);
+        }, 50);
       } else {
         // let data = {
         //   functionName: "ModelManage",
@@ -254,7 +257,7 @@ export default {
         //   ],
         // };
         // ue.interface.broadcast("PSAPI", JSON.stringify(data));
-        // this.$emit("showRight", false);
+        this.$emit("showRight", false);
       }
     },
     handleCheckChange(data, checked, indeterminate) {
@@ -308,7 +311,9 @@ export default {
     },
     BackModifyTableData() {},
     // 确认
-    okClick() {},
+    okClick() {
+      this.$bus.$emit("initSubpage", true);
+    },
   },
 };
 </script>
@@ -403,24 +408,17 @@ export default {
 }
 </style>
 <style scoped>
-.cleft {
+.fhLeft {
   width: 379px;
-  height: 980px;
+  height: 943px;
   position: absolute;
-  top: 92px;
+  top: 125px;
   left: 10px;
+  background: url("img/bg4.png") no-repeat !important;
+  background-size: 100% 100% !important;
 }
 .dengji {
   z-index: 100;
-}
-.clList {
-  width: 379px;
-  height: 909px;
-  position: absolute;
-  top: 71px;
-  left: 0;
-  background: url("img/bg4.png") no-repeat !important;
-  background-size: 100% 100% !important;
 }
 </style>
 <style scoped>
@@ -648,39 +646,5 @@ export default {
   background: url(img/ok.png) no-repeat;
   background-size: 100% 100%;
   cursor: pointer;
-}
-</style>
-<style scoped>
-.gl_top {
-  width: 351px;
-  height: 50px;
-  margin-bottom: 21px;
-  display: flex;
-  align-items: center;
-  background: url("img/gl_bg.png") no-repeat !important;
-  background-size: 100% 100% !important;
-}
-.gl_top > .span1 {
-  font-family: Source Han Sans SC;
-  font-size: 18px;
-  font-weight: normal;
-  line-height: 26px;
-  letter-spacing: 0.04em;
-  color: #bebebe;
-  margin-left: 37px;
-  margin-right: 26px;
-}
-.gl_top > .names {
-  width: 173px;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  margin-right: 24px;
-}
-.gl_top > .names > span {
-  font-family: Source Han Sans CN;
-  font-size: 18px;
-  font-weight: bold;
-  color: #ffffff;
 }
 </style>

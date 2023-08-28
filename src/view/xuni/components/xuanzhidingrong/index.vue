@@ -44,6 +44,8 @@
     <transition name="transitionLeft">
       <drfx @geshihua="geshihua" v-if="show && detiles5" />
     </transition>
+    <!-- 网架电站 -->
+    <wjdz v-if="show && !showNavs" />
   </div>
 </template>
 
@@ -55,6 +57,7 @@ import byxfx from "./components/byxfx.vue";
 import xzfx from "./components/xzfx.vue";
 import dyxz from "./components/dyxz.vue";
 import drfx from "./components/drfx.vue";
+import wjdz from "@/components/wjdz/index.vue";
 
 export default {
   name: "zonghepinggu",
@@ -66,6 +69,7 @@ export default {
     xzfx,
     dyxz,
     drfx,
+    wjdz,
   },
   data() {
     return {

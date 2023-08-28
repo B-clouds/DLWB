@@ -12,7 +12,7 @@
       <span>模型资产导航树</span>
     </div> -->
     <div class="j_titles">
-      <span>区域选择</span>
+      <span>网格架构树</span>
     </div>
     <div class="j_ss">
       <input class="ddd" placeholder="搜索" />
@@ -40,7 +40,7 @@
         ></el-tree>
       </div>
     </div>
-    <div class="qr" @click="okClick"></div>
+    <div class="qr" v-show="showQr" @click="okClick"></div>
   </div>
 </template>
 
@@ -51,6 +51,7 @@ export default {
     return {
       // 是否显示编辑弹框
       showMB: false,
+      showQr: false, //是否显示确认按钮
       updaValue: "",
       // 是否显示新增弹框
       showMB2: false,
@@ -178,9 +179,12 @@ export default {
         // 展示右侧，并发送消息
         this.$emit("showRight", true);
         showLefts = true;
+        this.showQr = true;
       } else {
         // 取消展示右侧
         this.$emit("showRight", false);
+        this.showQr = false;
+
         showLefts = false;
         //当前是取消选中,将所有子节点都取消选中
         this.setChildenNode(node);

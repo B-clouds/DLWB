@@ -151,6 +151,17 @@ const KKXJS = () => import('../view/xuni/components/kekaoxingjisuan/index.vue')
 // 规划报告
 const GHBG = () => import('../view/xuni/components/guihuabaogao/index.vue')
 
+// 行政区划
+const XZQH = () => import('../view/dianwang/components/xzqh/index.vue')
+// 供电单位
+const GDDW = () => import('../view/dianwang/components/gddw/index.vue')
+// 规划网格
+const GHWG = () => import('../view/dianwang/components/ghwg/index.vue')
+// 公里网格
+const GLWG = () => import('../view/dianwang/components/glwg/index.vue')
+// 自定义网格
+const ZDYWG = () => import('../view/dianwang/components/zdywg/index.vue')
+
 // 模型管理
 const MX = () =>
     import('../view/moxing/moxing.vue')
@@ -324,6 +335,24 @@ const routes = [{
     {
         path: "ljsc",
         component: LJSC
+    },
+    {
+        path: "xzqh",
+        component: XZQH
+    },
+    {
+        path: 'gddw',
+        component: GDDW
+    },
+    {
+        path: 'ghwg',
+        component: GHWG
+    }, {
+        path: "glwg",
+        component: GLWG
+    }, {
+        path: 'zdywg',
+        component: ZDYWG
     }
     ]
 },

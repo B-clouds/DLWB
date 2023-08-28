@@ -45,6 +45,8 @@
     <transition name="transitionLeft">
       <dlph v-if="show && detiles4" />
     </transition>
+    <!-- 网架电站 -->
+    <wjdz v-if="show && !showNavs" />
   </div>
 </template>
 
@@ -57,6 +59,7 @@ import ppfxLeft from "./components/ppfxLeft.vue";
 import ppfxRight from "./components/ppfxRight.vue";
 import dyghLeft from "./components/dyghLeft.vue";
 import dlph from "./components/dlph.vue";
+import wjdz from "@/components/wjdz/index.vue";
 
 export default {
   name: "zonghepinggu",
@@ -68,6 +71,7 @@ export default {
     ppfxLeft,
     ppfxRight,
     dyghLeft,
+    wjdz,
     dlph,
   },
   data() {

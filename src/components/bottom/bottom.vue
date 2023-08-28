@@ -99,76 +99,8 @@ export default {
       value: ["电网孪生"],
       options: [
         {
-          value: "zhanfangluansheng",
-          label: "站房孪生",
-          children: [
-            {
-              value: "zhanfangxuanzhi",
-              label: "站房选址",
-            },
-            {
-              value: "jiangeguanli1",
-              label: "间隔查询",
-            },
-          ],
-        },
-        {
-          value: "jiakongluansheng",
-          label: "架空孪生",
-          children: [
-            {
-              value: "gantabudian",
-              label: "杆塔布点",
-            },
-            {
-              value: "jiangeguanli2",
-              label: "间隔展示",
-            },
-            {
-              value: "buxianguanli1",
-              label: "布线管理",
-            },
-          ],
-        },
-        {
-          value: "dianlanluansheng",
-          label: "电缆孪生",
-          children: [
-            // {
-            //   value: "zhongduanguanli",
-            //   label: "终端管理",
-            // },
-            // {
-            //   value: "buxianguanli2",
-            //   label: "布线管理",
-            // },
-            {
-              value: "jiedianguanli",
-              label: "节点管理",
-            },
-            {
-              value: "guanlangguanli",
-              label: "管廊管理",
-            },
-            {
-              value: "dianlanguanli",
-              label: "电缆管理",
-            },
-          ],
-        },
-        {
-          value: "weiwangluansheng",
-          label: "微网孪生",
-          children: [
-            {
-              value: "sheshibudian",
-              label: "设施布点",
-            },
-          ],
-        },
-        {
           value: "pingmiansheji",
-          label: "平面设计",
+          label: "平面规划",
           children: [
             {
               value: "lujingguihua",
@@ -196,28 +128,103 @@ export default {
             },
           ],
         },
-      ],
-      value2: ["电网分析"],
-      options2: [
         {
-          value: "wanggefenxi",
-          label: "网格维护",
-        },
-        {
-          value: "sheshifenxi",
-          label: "设施分析",
+          value: "sanweiluansheng",
+          label: "三维孪生",
           children: [
             {
-              value: "shebeifenxi",
-              label: "设备分析",
+              value: "zhanfangluansheng",
+              label: "站房孪生",
+              children: [
+                {
+                  value: "zhanfangxuanzhi",
+                  label: "站房选址",
+                },
+                {
+                  value: "jiangeguanli1",
+                  label: "间隔查询",
+                },
+              ],
             },
             {
-              value: "yonghufenxi",
-              label: "用户分析",
+              value: "jiakongluansheng",
+              label: "架空孪生",
+              children: [
+                {
+                  value: "gantabudian",
+                  label: "杆塔布点",
+                },
+                {
+                  value: "jiangeguanli2",
+                  label: "间隔展示",
+                },
+                {
+                  value: "buxianguanli1",
+                  label: "布线管理",
+                },
+              ],
             },
             {
-              value: "tingdianfenxi",
-              label: "停电分析",
+              value: "dianlanluansheng",
+              label: "电缆孪生",
+              children: [
+                // {
+                //   value: "zhongduanguanli",
+                //   label: "终端管理",
+                // },
+                // {
+                //   value: "buxianguanli2",
+                //   label: "布线管理",
+                // },
+                {
+                  value: "jiedianguanli",
+                  label: "节点管理",
+                },
+                {
+                  value: "guanlangguanli",
+                  label: "管廊管理",
+                },
+                {
+                  value: "dianlanguanli",
+                  label: "电缆管理",
+                },
+              ],
+            },
+            {
+              value: "weiwangluansheng",
+              label: "微网孪生",
+              children: [
+                {
+                  value: "sheshibudian",
+                  label: "设施布点",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          value: "wanggeguanli",
+          label: "网格管理",
+          children: [
+            {
+              value: "xingzhengquhua",
+              label: "行政区划",
+            },
+            {
+              value: "gongdiandanwei",
+              label: "供电单位",
+            },
+            {
+              value: "guihuawangge",
+              label: "规划网格",
+            },
+            {
+              value: "gongliwangge",
+              label: "公里网格",
+            },
+            {
+              value: "zidingyiwangge",
+              label: "自定义网格",
             },
           ],
         },
@@ -225,65 +232,122 @@ export default {
           value: "quanjingjiance",
           label: "全景监测",
         },
+      ],
+      value2: ["电网分析"],
+      options2: [
         {
           value: "wangjiafenxi",
           label: "网架分析",
+        },
+        {
+          value: "yonghufenxi",
+          label: "用户分析",
+        },
+        {
+          value: "duoyuanfuhe",
+          label: "多元负荷",
+        },
+        {
+          value: "tingdianfenxi",
+          label: "停电分析",
+        },
+        {
+          value: "cunjidianwangguanli",
+          label: "村级电网管理",
+        },
+        // {
+        //   value: "wanggefenxi",
+        //   label: "网格维护",
+        // },
+
+        // {
+        //   value: "sheshifenxi",
+        //   label: "设施分析",
+        //   children: [
+        //     {
+        //       value: "shebeifenxi",
+        //       label: "设备分析",
+        //     },
+        //     {
+        //       value: "yonghufenxi",
+        //       label: "用户分析",
+        //     },
+        //   ],
+        // },
+
+        // // {
+        // //   value: "wangjiafenxi",
+        // //   label: "网架分析",
+        // // },
+        // {
+        //   value: "zonghepinggu",
+        //   label: "综合评估",
+        // },
+        // {
+        //   value: "fenxibaogao",
+        //   label: "分析报告",
+        // },
+      ],
+
+      value3: ["虚拟规划"],
+      options3: [
+        {
+          value: "xuniyunxing",
+          label: "虚拟运行",
+          children: [
+            {
+              value: "fuheyuce",
+              label: "负荷预测",
+            },
+            {
+              value: "rongliangpeiping",
+              label: "容量配平",
+            },
+            {
+              value: "xuanzhidingrong",
+              label: "选址定容",
+            },
+            {
+              value: "zhinengxuanxian",
+              label: "智能选线",
+            },
+            {
+              value: "dianqibaogao",
+              label: "电气计算",
+              children: [
+                {
+                  value: "chaoliujisuan",
+                  label: "潮流计算",
+                },
+                {
+                  value: "duanlujisuan",
+                  label: "短路计算",
+                },
+                {
+                  value: "kekaoxingjisuan",
+                  label: "可靠性计算",
+                },
+              ],
+            },
+          ],
         },
         {
           value: "zonghepinggu",
           label: "综合评估",
         },
         {
-          value: "fenxibaogao",
-          label: "分析报告",
-        },
-      ],
-
-      value3: ["虚拟规划"],
-      options3: [
-        {
-          value: "fuheyuce",
-          label: "负荷预测",
-        },
-        {
-          value: "rongliangpeiping",
-          label: "容量配平",
-        },
-        {
-          value: "xuanzhidingrong",
-          label: "选址定容",
-        },
-        {
-          value: "zhinengxuanxian",
-          label: "智能选线",
-        },
-        {
-          value: "xinnengyuanjieru",
-          label: "新能源接入",
-        },
-        {
-          value: "dianqibaogao",
-          label: "电气报告",
-          children: [
-            {
-              value: "chaoliujisuan",
-              label: "潮流计算",
-            },
-            {
-              value: "duanlujisuan",
-              label: "短路计算",
-            },
-            {
-              value: "kekaoxingjisuan",
-              label: "可靠性计算",
-            },
-          ],
-        },
-
-        {
           value: "guihuabaogao",
-          label: "规划报告",
+          label: "报告编制",
         },
+        // {
+        //   value: "xinnengyuanjieru",
+        //   label: "新能源接入",
+        // },
+
+        // {
+        //   value: "guihuabaogao",
+        //   label: "规划报告",
+        // },
       ],
       value4: ["数据管理"],
       options4: [
@@ -451,7 +515,13 @@ export default {
         data != "lujingguihua" ||
         data != "lujingchaxun" ||
         data != "lujingbianji" ||
-        data != "lujingshanchu"
+        data != "lujingshanchu" ||
+        data != "quanjingjiance" ||
+        data != "xingzhengquhua" ||
+        data != "gongdiandanwei" ||
+        data != "guihuawangge" ||
+        data != "zidingyiwangge" ||
+        data != "gongliwangge"
       ) {
         this.$router.push({
           path: "/mr",
@@ -671,6 +741,78 @@ export default {
         this.$router.push({
           path: "/dw/ljsc",
         });
+      } else if (data == "quanjingjiance") {
+        this.$router.push({
+          path: "/wj/qjjc",
+        });
+        let e = {
+          one: "电网分析",
+          two: "",
+          three: "全景检测",
+          right1: ">",
+          right2: "",
+        };
+        this.$bus.$emit("setCrumbs", e);
+      } else if (data == "xingzhengquhua") {
+        this.$router.push({
+          path: "/dw/xzqh",
+        });
+        let e = {
+          one: "电网分析",
+          two: "网格管理",
+          three: "行政区划",
+          right1: ">",
+          right2: "",
+        };
+        this.$bus.$emit("setCrumbs", e);
+      } else if (data == "gongdiandanwei") {
+        this.$router.push({
+          path: "/dw/gddw",
+        });
+        let e = {
+          one: "电网分析",
+          two: "网格管理",
+          three: "供电单位",
+          right1: ">",
+          right2: "",
+        };
+        this.$bus.$emit("setCrumbs", e);
+      } else if (data == "guihuawangge") {
+        this.$router.push({
+          path: "/dw/ghwg",
+        });
+        let e = {
+          one: "电网分析",
+          two: "网格管理",
+          three: "规划网格",
+          right1: ">",
+          right2: "",
+        };
+        this.$bus.$emit("setCrumbs", e);
+      } else if (data == "gongliwangge") {
+        this.$router.push({
+          path: "/dw/glwg",
+        });
+        let e = {
+          one: "电网分析",
+          two: "网格管理",
+          three: "公里网格",
+          right1: ">",
+          right2: "",
+        };
+        this.$bus.$emit("setCrumbs", e);
+      } else if (data == "zidingyiwangge") {
+        this.$router.push({
+          path: "/dw/zdywg",
+        });
+        let e = {
+          one: "电网分析",
+          two: "网格管理",
+          three: "自定义网格",
+          right1: ">",
+          right2: "",
+        };
+        this.$bus.$emit("setCrumbs", e);
       }
 
       this.value = "电网孪生";
@@ -772,18 +914,6 @@ export default {
           right2: "",
         };
         this.$bus.$emit("setCrumbs", e);
-      } else if (data == "quanjingjiance") {
-        this.$router.push({
-          path: "/wj/qjjc",
-        });
-        let e = {
-          one: "电网分析",
-          two: "",
-          three: "全景检测",
-          right1: ">",
-          right2: "",
-        };
-        this.$bus.$emit("setCrumbs", e);
       } else if (data == "wangjiafenxi") {
         this.$router.push({
           path: "/wj/wjfx",
@@ -796,19 +926,6 @@ export default {
           right2: "",
         };
         this.$bus.$emit("setCrumbs", e);
-      } else if (data == "zonghepinggu") {
-        this.$router.push({
-          path: "/wj/zhpg",
-        });
-        let e = {
-          one: "电网分析",
-          two: "",
-          three: "综合评估",
-          right1: ">",
-          right2: "",
-        };
-        this.$bus.$emit("setShiJiao", 1);
-        this.$bus.$emit("setCrumbs", e);
       } else if (data == "fenxibaogao") {
         this.$router.push({
           path: "/wj/fxbg",
@@ -817,6 +934,18 @@ export default {
           one: "电网分析",
           two: "",
           three: "分析报告",
+          right1: ">",
+          right2: "",
+        };
+        this.$bus.$emit("setCrumbs", e);
+      } else if (data == "duoyuanfuhe") {
+        this.$router.push({
+          path: "/xn/xnyjr",
+        });
+        let e = {
+          one: "电网分析",
+          two: "",
+          three: "多元负荷",
           right1: ">",
           right2: "",
         };
@@ -962,6 +1091,19 @@ export default {
           right1: ">",
           right2: "",
         };
+        this.$bus.$emit("setCrumbs", e);
+      } else if (data == "zonghepinggu") {
+        this.$router.push({
+          path: "/wj/zhpg",
+        });
+        let e = {
+          one: "电网分析",
+          two: "",
+          three: "综合评估",
+          right1: ">",
+          right2: "",
+        };
+        this.$bus.$emit("setShiJiao", 1);
         this.$bus.$emit("setCrumbs", e);
       }
       // this.$router.push({

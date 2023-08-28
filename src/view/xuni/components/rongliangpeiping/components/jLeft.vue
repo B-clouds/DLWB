@@ -12,7 +12,7 @@
       <span>模型资产导航树</span>
     </div> -->
     <div class="j_titles">
-      <span>区域选择</span>
+      <span>网格架构树</span>
     </div>
     <div class="j_ss">
       <input class="ddd" placeholder="搜索" />
@@ -21,20 +21,6 @@
       <span>确认</span>
     </div>
     <div class="block">
-      <div class="b_left_nav">
-        <div
-          class="b_items"
-          :class="l_index == index ? 'b_items2' : ''"
-          @click="l_navClick(item, index)"
-          v-for="(item, index) in l_navList"
-          :key="index"
-        >
-          <span :class="index == l_navList.length - 1 ? 'l_span' : ''">{{
-            item
-          }}</span>
-        </div>
-      </div>
-
       <div class="blockItem">
         <el-tree
           show-checkbox
@@ -551,7 +537,7 @@ export default {
 }
 
 .blockItem {
-  width: 304px;
+  width: 360px;
   height: 625px;
   border-radius: 2px;
   overflow-y: scroll;

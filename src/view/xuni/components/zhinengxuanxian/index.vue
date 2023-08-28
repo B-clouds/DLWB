@@ -2,18 +2,21 @@
   <div class="znxx">
     <znxxLeft />
     <znxxRight />
-    <div class="zwf"></div>
+    <!-- 网架电站 -->
+    <wjdz />
   </div>
 </template>
 
 <script>
 import znxxLeft from "./components/znxxLeft.vue";
 import znxxRight from "./components/znxxRight.vue";
+import wjdz from "@/components/wjdz/index.vue";
 export default {
   name: "zhinengxuanxian",
   components: {
     znxxLeft,
     znxxRight,
+    wjdz,
   },
 };
 </script>

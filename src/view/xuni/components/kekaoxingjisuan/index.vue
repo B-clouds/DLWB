@@ -7,7 +7,7 @@
     <transition name="transitionRight">
       <div v-show="show" class="wr"></div>
     </transition>
-    <div class="zwf"></div>
+    <!-- <div class="zwf"></div> -->
     <!-- 基本管理 -->
     <kkxLeft
       @showRight="showRight"
@@ -16,6 +16,8 @@
       v-if="show && detiles1"
     />
     <kkxRight v-if="show && showRights && detiles1" />
+    <!-- 网架电站 -->
+    <wjdz v-if="show && detiles1" />
   </div>
 </template>
 
@@ -23,11 +25,13 @@
 // 基本信息
 import kkxLeft from "./components/kkxLeft.vue";
 import kkxRight from "./components/kkxRight.vue";
+import wjdz from "@/components/wjdz/index.vue";
 export default {
   name: "kekaoxingjisuan",
   components: {
     kkxLeft,
     kkxRight,
+    wjdz,
   },
   data() {
     return {

@@ -14,7 +14,10 @@
       @getIds="getIds"
       v-if="show && detiles1"
     />
-    <clRight v-if="show && showRights && detiles1"/>
+    <clRight v-if="show && showRights && detiles1" />
+
+    <!-- 网架电站 -->
+    <wjdz v-if="show && detiles1" />
   </div>
 </template>
 
@@ -22,11 +25,13 @@
 // 基本信息
 import clLeft from "./components/clLeft.vue";
 import clRight from "./components/clRight.vue";
+import wjdz from "@/components/wjdz/index.vue";
 export default {
   name: "chaoliujisuan",
   components: {
     clLeft,
     clRight,
+    wjdz,
   },
   data() {
     return {
@@ -37,11 +42,9 @@ export default {
       detiles1: true,
     };
   },
-  mounted() {
-   
-  },
+  mounted() {},
   activated() {
-    this.show = true; 
+    this.show = true;
   },
   deactivated() {
     this.showRights = false;
