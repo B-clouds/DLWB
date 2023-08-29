@@ -25,7 +25,8 @@
       </div>
       <div class="jr_xiala">
         <el-select
-          v-model="hlsl_value"
+            @change="handelChanged1"
+          v-model="hlsl_value1"
           @visible-change="hlslClick"
           placeholder=""
         >
@@ -51,7 +52,8 @@
       </div>
       <div class="jr_xiala">
         <el-select
-          v-model="hlsl_value"
+            @change="handelChanged2"
+          v-model="hlsl_value2"
           @visible-change="hlslClick"
           placeholder=""
         >
@@ -90,31 +92,43 @@ export default {
     return {
       hlsl: [
         {
-          value: "220kv",
+          value: "0",
           label: "220kv",
         },
         {
-          value: "110kv",
+          value: "1",
           label: "110kv",
         },
         {
-          value: "35kv",
+          value: "2",
           label: "35kv",
         },
         {
-          value: "10kv",
+          value: "3",
           label: "10kv",
         },
         {
-          value: "0.4kv",
+          value: "4",
           label: "0.4kv",
         },
       ],
-      hlsl_value: "",
+      hlsl_value1: "0",
+      hlsl_value2: "0",
       hlsl_show: "",
     };
   },
   methods: {
+    handelChanged1(value){
+      setTimeout(()=>{
+        this.$bus.$emit("selectId1", value);
+      },50)
+    },
+    handelChanged2(value){
+      setTimeout(()=>{
+        this.$bus.$emit("selectId2", value);
+      },50)
+    },
+
     hlslClick(e) {
       this.hlsl_show = e;
     },

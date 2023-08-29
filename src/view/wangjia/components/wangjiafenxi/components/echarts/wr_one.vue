@@ -7,16 +7,23 @@ export default {
   props: ["echartsData"],
   data() {
     return {
+      date:[],
+      zuida:[],
+      zuixiao:[],
+      pingjun:[],
+      // dataScource:{zuida:[],zuixiao:[],pingjun:[]},
       pieData: [],
+      id:''
     };
   },
   mounted() {
+    this.getAllData()
     this.myecharts();
     this.WidthAdaptive();
   },
   watch: {
     echartsData(n, o) {
-      this.myecharts();
+      // this.myecharts();
     },
   },
   methods: {
@@ -25,6 +32,50 @@ export default {
 
       let fontSize = windth / 1920;
       return fontSize * res;
+    },
+     getAllData() {
+      let that = this
+      // this.$bus.$off('leftOid')
+      that.$bus.$on("leftOid", (e) => {
+        that.id = e;
+        console.log('=========')
+        console.log(that.id)
+        this.getChartData(e)
+      })
+    },
+        // [
+        //   [
+        //     {}
+        //   ]
+        // ]
+    async getChartData (pid){
+       await this.$axios
+          .get(window.wgApiUrl + "/rackAnalysis/rackAnalysisLoadAnalysis", {
+            params: {
+              id:pid
+            },
+          })
+          .then((res) => {
+            this.date=[]
+            this.zuida = []
+            this.zuixiao = []
+            this.pingjun = []
+            res.data.data.forEach(item=>{
+              if (item.type==='0'){
+                this.date.push(item.sj)
+                this.zuida.push(item.fzl)
+
+              }else if(item.type==='1'){
+                this.zuixiao.push(item.fzl)
+              }else if(item.type==='2'){
+                this.pingjun.push(item.fzl)
+              }
+            })
+            // console.log('7777777777')
+            // console.log(this.zuixiao)
+          })
+          .catch((error) => {});
+      this.myecharts()
     },
     myecharts() {
       let myChart = this.$echarts.init(document.getElementById("wr_one"));
@@ -74,7 +125,7 @@ export default {
             lineStyle: { color: "#cccccc", type: "solid" },
           },
 
-          data: ["一月", "二月", "三月", "四月", "五月", "六月"],
+          data: this.date,
           //   data: ["2018年", "2019年", "2020年", "2021年", "2022年", "2023年"],
         },
         yAxis: {
@@ -101,7 +152,7 @@ export default {
             type: "line",
             symbolSize: this.WidthAdaptive(6),
             symbol: "circle",
-            data: [61, 65, 96, 59, 54, 69],
+            data: this.zuida,
             areaStyle: {
               //区域填充样式
               normal: {
@@ -133,7 +184,7 @@ export default {
             type: "line",
             symbolSize: this.WidthAdaptive(6),
             symbol: "circle",
-            data: [21, 45, 36, 19, 44, 59],
+            data: this.zuixiao,
             areaStyle: {
               //区域填充样式
               normal: {
@@ -165,7 +216,7 @@ export default {
             type: "line",
             symbolSize: this.WidthAdaptive(6),
             symbol: "circle",
-            data: [1, 15, 32, 9, 34, 19],
+            data: this.pingjun,
             areaStyle: {
               //区域填充样式
               normal: {

@@ -7,11 +7,16 @@ export default {
   props: ["echartsData"],
   data() {
     return {
+      id:'',
+      selectId:'',
+      date:[],
+      value:[],
       pieData: [],
     };
   },
   mounted() {
-    this.myecharts();
+    this.getAllData()
+    // this.myecharts();
     this.WidthAdaptive();
   },
   watch: {
@@ -20,6 +25,43 @@ export default {
     },
   },
   methods: {
+    getAllData() {
+      let that = this
+      that.$bus.$on("leftOid", (e) => {
+        that.id = e;
+        // console.log('=========')
+        this.getChartData()
+        // console.log(that.id)
+      })
+      that.$bus.$on("selectId1", (e) => {
+        that.selectId=e
+        this.getChartData()
+      })
+    },
+    async getChartData (){
+      await this.$axios
+          // .get(window.wgApiUrl + "/rackAnalysis/rackAnalysisContactAnalysis", {
+          .get("http://192.168.2.21:8025/rackAnalysis/rackAnalysisContactAnalysis", {
+            params: {
+              id:this.id,
+              type:this.selectId?this.selectId:0
+            },
+          })
+          .then((res) => {
+            this.date=[]
+            this.value=[]
+            this.chartsData={}
+            res.data.data.map(item=>{
+              this.date.push(item.sl)
+              this.value.push(item.sj)
+            })
+            // console.log('[[[[[[[')
+            // console.log(this.chartsData)
+            // console.log(this.chartsData)
+          })
+          .catch((error) => {});
+      this.myecharts()
+    },
     WidthAdaptive(res) {
       var windth = window.screen.width;
 
@@ -107,7 +149,7 @@ export default {
             axisTick: {
               show: false,
             },
-            data: xLabel,
+            data: this.date,
           },
         ],
         yAxis: [
@@ -189,7 +231,7 @@ export default {
                 shadowBlur: this.WidthAdaptive(20), //shadowBlur设图形阴影的模糊大小。配合shadowColor,shadowOffsetX/Y, 设置图形的阴影效果。
               },
             },
-            data: goOutSchool,
+            data: this.value,
           },
         ],
       };

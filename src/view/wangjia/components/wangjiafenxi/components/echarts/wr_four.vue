@@ -7,11 +7,16 @@ export default {
   props: ["echartsData"],
   data() {
     return {
+      id:'',
+      selectId:'',
+      type:[],
+      value:[],
       pieData: [],
     };
   },
   mounted() {
-    this.myecharts();
+    this.getAllData()
+    // this.myecharts();
     this.WidthAdaptive();
   },
   watch: {
@@ -20,6 +25,44 @@ export default {
     },
   },
   methods: {
+    getAllData() {
+      let that = this
+      that.$bus.$on("leftOid", (e) => {
+        that.id = e;
+        // console.log('=========')
+        this.getChartData()
+        // console.log(that.id)
+      })
+      that.$bus.$on("selectId2", (e) => {
+        that.selectId=e
+        this.getChartData()
+      })
+    },
+    async getChartData (){
+      await this.$axios
+          // .get(window.wgApiUrl + "/rackAnalysis/rackAnalysisGridStructure", {
+          .get("http://192.168.2.21:8025/rackAnalysis/rackAnalysisGridStructure", {
+            params: {
+              id:this.id,
+              type:this.selectId?this.selectId:0
+            },
+          })
+          .then((res) => {
+            this.type=[]
+            this.value=[]
+            this.chartsData={}
+
+            res.data.data.map(item=>{
+              this.type.push(item.lx)
+              this.value.push(item.sl)
+            })
+            // console.log('[[[[[[[')
+            // console.log(res.data.data)
+            // console.log(this.chartsData)
+          })
+          .catch((error) => {});
+      this.myecharts()
+    },
     WidthAdaptive(res) {
       var windth = window.screen.width;
 
@@ -47,14 +90,7 @@ export default {
         xAxis: [
           {
             type: "category",
-            data: [
-              "单链式结构",
-              "双链式结构",
-              "单环网",
-              "双环网",
-              "单辐射",
-              "双辐射",
-            ],
+            data: this.type,
             axisLine: {
               lineStyle: {
                 color: "rgba(255,255,255,.5)",
@@ -105,7 +141,7 @@ export default {
           {
             name: "网架结构",
             type: "bar",
-            data: [68, 50, 69, 75, 59, 62],
+            data: this.value,
             barWidth: this.WidthAdaptive(8),
             itemStyle: {
               normal: {

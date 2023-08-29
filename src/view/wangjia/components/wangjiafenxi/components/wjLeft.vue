@@ -28,7 +28,7 @@
           check-on-click-node
           :filter-node-method="filterNode"
           @check="selectTree"
-          node-key="oid"
+          node-key="pid"
           lazy
           :load="loadNode"
           :key="tree_key"
@@ -83,7 +83,7 @@ export default {
       newID: 371,
       defaultProps: {
         children: "children",
-        label: "label",
+        label: "mc",
       },
       // 用于存放选中的树结构点
       selectData: {},
@@ -106,13 +106,18 @@ export default {
       if (node.level === 0) {
         // return this.getList(resolve)
         this.$axios
-          .get(window.wanggeUrl, {
+            .get(window.wgApiUrl+'/rackAnalysis/rackAnalysisTree', {
+          // .get(window.wanggeUrl, {
             params: {
-              oid: 0,
+              // oid: 0,
+              id:0,
+              type:1
             },
           })
           .then((res) => {
+            console.log(res.data)
             return resolve(res.data.data);
+            // return resolve(res.data);
           })
           .catch((error) => {});
       }
@@ -137,7 +142,7 @@ export default {
     },
     filterNode(value, data) {
       if (!value) return true;
-      return data.label.indexOf(value) !== -1;
+      return data.mc.indexOf(value) !== -1;
     },
     // 查询按钮
     chaxunClick() {
@@ -155,8 +160,11 @@ export default {
 
     // 复选框被选中时
     selectTree(node, list) {
-      const node2 = this.$refs.treeForm_mx.getNode(node.oid);
-      this.setNode(node2);
+      console.log(node)
+      const node2 = this.$refs.treeForm_mx.getNode(node.pid);
+
+      // console.log(node2)
+      // this.setNode(node2);
       if (list.checkedKeys.length == 2) {
         this.$refs.treeForm_mx.setCheckedKeys([node.oid]);
       }
@@ -171,7 +179,8 @@ export default {
     setNode(node) {
       let ids = [];
       let showLefts = false;
-      ids.push(node.data.oid);
+      console.log(node)
+      ids.push(node.data.pid);
       if (node.checked) {
         // 展示右侧，并发送消息
         this.$emit("showRight", true);
@@ -187,7 +196,7 @@ export default {
       this.$emit("getOid", node.data.oid);
       let that = this;
       setTimeout(() => {
-        that.$bus.$emit("leftOid", node.data.oid);
+        that.$bus.$emit("leftOid", node.data.pid);
       }, 50);
     },
 
@@ -231,7 +240,7 @@ export default {
     },
     handleCheckChange(data, checked, indeterminate) {
       if (checked) {
-        let node2 = this.$refs.treeForm_mx.getNode(data.oid);
+        let node2 = this.$refs.treeForm_mx.getNode(data.pid);
         this.setNode(node2);
         this.$refs.treeForm_mx.setCheckedKeys([data.oid]);
       }

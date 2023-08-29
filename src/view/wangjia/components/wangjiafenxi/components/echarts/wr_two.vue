@@ -7,19 +7,52 @@ export default {
   props: ["echartsData"],
   data() {
     return {
+      chartsData:[],
       pieData: [],
     };
   },
   mounted() {
-    this.myecharts();
+    this.getAllData()
+    // this.myecharts();
     this.WidthAdaptive();
   },
   watch: {
-    echartsData(n, o) {
-      this.myecharts();
-    },
+    // echartsData(n, o) {
+    //   this.myecharts();
+    // },
   },
   methods: {
+    getAllData() {
+      let that = this
+      that.$bus.$on("leftOid", (e) => {
+        that.id = e;
+        // console.log('=========')
+        this.getChartData(e)
+        console.log(that.id)
+      })
+
+    },
+    async getChartData (pid){
+      await this.$axios
+          .get(window.wgApiUrl + "/rackAnalysis/rackAnalysisLossAnalysis", {
+            params: {
+              id:pid
+            },
+          })
+          .then((res) => {
+            this.chartsData.length=0
+            res.data.data.map(item=>{
+              this.chartsData.push({
+                name:item.type==0?'220kV':item.type==1?'110kV':item.type==2?'35kV':item.type==3?'10kV':item.type==4?'0.4kV':'',
+                value:parseInt(item.sl)
+              })
+            })
+            // console.log(this.chartsData)
+          })
+          .catch((error) => {});
+      this.myecharts()
+    },
+
     WidthAdaptive(res) {
       var windth = window.screen.width;
 
@@ -31,29 +64,31 @@ export default {
       myChart.clear();
 
       // mock 数据
-      const dataArray = [
-        {
-          name: "220kV",
-          value: 10,
-        },
-        {
-          name: "110kV",
-          value: 15,
-        },
-        {
-          name: "35kV",
-          value: 20,
-        },
-        {
-          name: "10kV",
-          value: 25,
-        },
-        {
-          name: "0.4kV",
-          value: 30,
-        },
-      ];
-
+      // let dataArray = [
+      //   {
+      //     name: "220kV",
+      //     value: 10,
+      //   },
+      //   {
+      //     name: "110kV",
+      //     value: 15,
+      //   },
+      //   {
+      //     name: "35kV",
+      //     value: 20,
+      //   },
+      //   {
+      //     name: "10kV",
+      //     value: 25,
+      //   },
+      //   {
+      //     name: "0.4kV",
+      //     value: 30,
+      //   },
+      // ];
+      const dataArray = this.chartsData
+      console.log('///////')
+console.log(dataArray)
       // 计算总数
       const list = [];
       let total = dataArray.reduce((p, v) => {
