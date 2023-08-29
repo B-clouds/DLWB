@@ -1,6 +1,6 @@
 <template>
   <div class="qjRight">
-    <div class="qjRights">
+    <!-- <div class="qjRights">
       <div class="k"></div>
       <div class="qr_block" @click="index1Click()">
         <img v-show="index1 != 0" src="./img/wxz.png" />
@@ -26,9 +26,9 @@
         <div class="kuai" style="background: #ff4e4e"></div>
         <span>电流</span>
       </div>
-    </div>
+    </div> -->
 
-    <div class="qjRights qjRights2">
+    <!-- <div class="qjRights qjRights2">
       <div class="k"></div>
       <div class="qr_block" @click="index5Click()">
         <img v-show="index5 != 0" src="./img/wxz.png" />
@@ -48,6 +48,88 @@
         <div class="kuai" style="background: #ffa79d"></div>
         <span>微网</span>
       </div>
+    </div> -->
+    <!-- 监测数据 -->
+    <div class="jiance">
+      <div class="tjs">
+        <span>监测数据</span>
+      </div>
+      <div
+        class="jcblock"
+        @click="index1Click()"
+        :class="index1 == 0 ? 'jcblock2' : ''"
+      >
+        <img src="./img/img1.png" />
+        <span>功率</span>
+      </div>
+      <div
+        class="jcblock"
+        @click="index2Click()"
+        :class="index2 == 0 ? 'jcblock2' : ''"
+      >
+        <img src="./img/img2.png" />
+        <span>电量</span>
+      </div>
+      <div
+        class="jcblock"
+        @click="index3Click()"
+        :class="index3 == 0 ? 'jcblock2' : ''"
+      >
+        <img src="./img/img3.png" />
+        <span>电压</span>
+      </div>
+      <div
+        class="jcblock"
+        @click="index4Click()"
+        :class="index4 == 0 ? 'jcblock2' : ''"
+      >
+        <img src="./img/img4.png" />
+        <span>电流</span>
+      </div>
+      <div
+        class="jcblock"
+        @click="index8Click()"
+        :class="index8 == 0 ? 'jcblock2' : ''"
+      >
+        <img src="./img/img5.png" />
+        <span>负载率</span>
+      </div>
+      <div
+        class="jcblock"
+        @click="index9Click()"
+        :class="index9 == 0 ? 'jcblock2' : ''"
+      >
+        <img src="./img/img6.png" />
+        <span>利用小时</span>
+      </div>
+    </div>
+
+    <!-- 监测对象 -->
+    <div class="jiance2">
+      <div class="tjs">
+        <span>监测对象</span>
+      </div>
+      <div
+        class="jcblock jcblocks"
+        @click="index5Click()"
+        :class="index5 == 0 ? 'jcblock2' : ''"
+      >
+        <span>变电站</span>
+      </div>
+      <div
+        class="jcblock jcblocks"
+        @click="index6Click()"
+        :class="index6 == 0 ? 'jcblock2' : ''"
+      >
+        <span>线路</span>
+      </div>
+      <div
+        class="jcblock jcblocks"
+        @click="index7Click()"
+        :class="index7 == 0 ? 'jcblock2' : ''"
+      >
+        <span>微网</span>
+      </div>
     </div>
   </div>
 </template>
@@ -64,6 +146,9 @@ export default {
       index5: -1,
       index6: -1,
       index7: -1,
+
+      index8: -1,
+      index9: -1,
       objecttype: [],
       datatype: [],
     };
@@ -111,6 +196,27 @@ export default {
       }
       this.panoramicMonitoring();
     },
+    index8Click() {
+      if (this.index8 == -1) {
+        this.index8 = 0;
+        this.datatype.push("load");
+      } else {
+        this.index8 = -1;
+        this.datatype = this.datatype.filter((item) => item !== "load");
+      }
+      this.panoramicMonitoring();
+    },
+    index9Click() {
+      if (this.index9 == -1) {
+        this.index9 = 0;
+        this.datatype.push("servicetime");
+      } else {
+        this.index9 = -1;
+        this.datatype = this.datatype.filter((item) => item !== "servicetime");
+      }
+      this.panoramicMonitoring();
+    },
+
     index5Click() {
       if (this.index5 == -1) {
         this.index5 = 0;
@@ -205,6 +311,73 @@ export default {
   font-family: Source Han Sans CN;
   font-size: 20px;
   font-weight: bold;
+  color: #ffffff;
+}
+</style>
+<style scoped>
+.jiance {
+  width: 202px;
+  height: 345px;
+  position: absolute;
+  bottom: 19px;
+  right: 20px;
+  background: url("img/bjs.png") no-repeat !important;
+  background-size: 100% 100% !important;
+}
+.jiance2 {
+  width: 202px;
+  height: 201px;
+  position: absolute;
+  bottom: 19px;
+  right: 234px;
+  background: url("img/bjs.png") no-repeat !important;
+  background-size: 100% 100% !important;
+}
+.tjs {
+  width: 100%;
+  height: 40px;
+  background: url("img/tjs.png") no-repeat !important;
+  background-size: 100% 100% !important;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.tjs > span {
+  font-family: Source Han Sans CN;
+  font-size: 20px;
+  font-weight: normal;
+  color: #ffffff;
+  margin-left: 38px;
+}
+.jcblock {
+  width: 179px;
+  height: 46px;
+  margin-left: 12px;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  background: url("img/bj1.png") no-repeat;
+  background-size: 100% 100%;
+  cursor: pointer;
+}
+.jcblock2 {
+  background: url("img/bj2.png") no-repeat !important;
+  background-size: 100% 100% !important;
+}
+.jcblocks {
+  justify-content: center !important;
+}
+.jcblock > img {
+  width: 14px;
+  height: 12px;
+  margin-left: 40px;
+  margin-bottom: 2px;
+  margin-right: 10px;
+}
+.jcblock > span {
+  font-family: Source Han Sans SC;
+  font-size: 18px;
+  font-weight: 500;
   color: #ffffff;
 }
 </style>

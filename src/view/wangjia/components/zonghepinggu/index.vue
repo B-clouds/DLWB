@@ -1,5 +1,12 @@
 <template>
   <div class="buidan">
+    <transition name="transitionBottom">
+      <div class="z1" v-show="show && showNavs && !d2Item" @click="qhNav"></div>
+    </transition>
+    <transition name="transitionBottom">
+      <div class="y1" v-show="show && showNavs && !d2Item" @click="qhNav"></div>
+    </transition>
+
     <!-- 子级导航 -->
     <transition name="transitionBottom">
       <div v-show="show && showNavs && !d2Item" class="navs">
@@ -23,7 +30,6 @@
       v-if="show && !showNavs"
     />
     <jRight v-if="showRights && !showNavs" />
-
     <!-- 诊断分析 -->
     <transition name="transitionLeft">
       <zdfxLeft @geshihua="geshihua" v-if="show && detiles1" />
@@ -106,14 +112,10 @@ export default {
       detiles4: false,
       detiles5: false,
       detiles6: false,
-      navList: [
-        "诊断分析",
-        "诊断查询",
-        "目标管理",
-        "截面分析",
-        "用电分析",
-        "运行管理",
-      ],
+      navList: ["区域概况", "配变分析", "线路分析", "截面分析", "用电分析"],
+      navList2: ["区域概况", "配变分析", "线路分析", "截面分析", "用电分析"],
+      navList3: ["诊断分析", "诊断查询", "规划分析", "规划成效", "目标管理"],
+      showNav2: true,
       navIndex: 0,
       showRights: false,
       showRights2: false,
@@ -151,6 +153,15 @@ export default {
     ue.interface.broadcast("PSAPI", JSON.stringify(data));
   },
   methods: {
+    qhNav() {
+      if (this.navList[0] == "区域概况") {
+        this.navList = this.navList3;
+        this.showNav2 = false;
+      } else {
+        this.navList = this.navList2;
+        this.showNav2 = true;
+      }
+    },
     fanhuiCX() {
       this.d2Item = false;
 
@@ -335,10 +346,10 @@ export default {
 
 <style scoped>
 .navs {
-  width: 934px;
+  width: 734px;
   height: 40px;
   position: fixed;
-  left: 503px;
+  left: 613px;
   bottom: 21px;
   display: flex;
   justify-content: space-between;
@@ -352,6 +363,34 @@ export default {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+}
+.z1 {
+  width: 42px;
+  height: 34px;
+  position: fixed;
+  bottom: 23px;
+  left: 560px;
+  background: url("img/z1.png") no-repeat;
+  background-size: 100% 100%;
+  cursor: pointer;
+}
+.z1:hover {
+  background: url("img/z1a.png") no-repeat;
+  background-size: 100% 100%;
+}
+.y1 {
+  width: 42px;
+  height: 34px;
+  position: fixed;
+  bottom: 23px;
+  right: 520px;
+  background: url("img/y1.png") no-repeat;
+  background-size: 100% 100%;
+  cursor: pointer;
+}
+.y1:hover {
+  background: url("img/y1a.png") no-repeat;
+  background-size: 100% 100%;
 }
 .navs > .blocks > span {
   font-size: 22px !important;
