@@ -28,7 +28,7 @@
           check-on-click-node
           :filter-node-method="filterNode"
           @check="selectTree"
-          node-key="pid"
+          node-key="id"
           lazy
           :load="loadNode"
           :key="tree_key"
@@ -106,18 +106,16 @@ export default {
       if (node.level === 0) {
         // return this.getList(resolve)
         this.$axios
-            .get(window.wgApiUrl+'/rackAnalysis/rackAnalysisTree', {
-          // .get(window.wanggeUrl, {
+          .get(window.wgApiUrl + "/rackAnalysis/rackAnalysisTree", {
+            // .get(window.wanggeUrl, {
             params: {
               // oid: 0,
-              id:0,
-              type:1
+              id: 0,
+              type: 1,
             },
           })
           .then((res) => {
-            console.log(res.data)
             return resolve(res.data.data);
-            // return resolve(res.data);
           })
           .catch((error) => {});
       }
@@ -125,7 +123,8 @@ export default {
         this.$axios
           .get(window.wanggeUrl, {
             params: {
-              oid: node.data.oid,
+              id: node.data.id,
+              type: 1,
             },
           })
           .then((res) => {
@@ -160,15 +159,15 @@ export default {
 
     // 复选框被选中时
     selectTree(node, list) {
-      console.log(node)
-      const node2 = this.$refs.treeForm_mx.getNode(node.pid);
+      console.log(node);
+      const node2 = this.$refs.treeForm_mx.getNode(node.id);
 
       // console.log(node2)
-      // this.setNode(node2);
+      this.setNode(node2);
       if (list.checkedKeys.length == 2) {
-        this.$refs.treeForm_mx.setCheckedKeys([node.oid]);
+        this.$refs.treeForm_mx.setCheckedKeys([node.id]);
       }
-      if (this.selectData.id != node.oid) {
+      if (this.selectData.id != node.id) {
         this.selectData = node;
         this.selectNode = node2;
       } else {
@@ -179,24 +178,27 @@ export default {
     setNode(node) {
       let ids = [];
       let showLefts = false;
-      console.log(node)
-      ids.push(node.data.pid);
+      console.log(node, "------------------------");
+      ids.push(node.data.id);
       if (node.checked) {
         // 展示右侧，并发送消息
         this.$emit("showRight", true);
+        this.$bus.$emit("showZuo", true);
         showLefts = true;
       } else {
         // 取消展示右侧
         this.$emit("showRight", false);
+        this.$bus.$emit("showZuo", false);
+
         showLefts = false;
         //当前是取消选中,将所有子节点都取消选中
         this.setChildenNode(node);
       }
       this.$emit("getIds", ids);
-      this.$emit("getOid", node.data.oid);
+      this.$emit("getOid", node.data.id);
       let that = this;
       setTimeout(() => {
-        that.$bus.$emit("leftOid", node.data.pid);
+        that.$bus.$emit("leftOid", node.data.id);
       }, 50);
     },
 
@@ -220,29 +222,29 @@ export default {
 
     handleNodeClick(e) {
       this.$emit("chongzhi");
-      if (e.ShowKSH !== undefined) {
-        this.$emit("showKSH", true);
-      } else {
-        this.$emit("showKSH", false);
-      }
-      if (e.towerType !== undefined) {
-        let obj = e.towerType;
+      // if (e.ShowKSH !== undefined) {
+      //   this.$emit("showKSH", true);
+      // } else {
+      //   this.$emit("showKSH", false);
+      // }
+      // if (e.towerType !== undefined) {
+      //   let obj = e.towerType;
 
-        this.$emit("showRight", true);
-        let that = this;
-        setTimeout(() => {
-          // that.$bus.$emit("getTables", e.towerType);
-          that.$bus.$emit("getTZlist", e);
-        }, 50);
-      } else {
-        this.$emit("showRight", false);
-      }
+      //   this.$emit("showRight", true);
+      //   let that = this;
+      //   setTimeout(() => {
+      //     // that.$bus.$emit("getTables", e.towerType);
+      //     that.$bus.$emit("getTZlist", e);
+      //   }, 50);
+      // } else {
+      //   this.$emit("showRight", false);
+      // }
     },
     handleCheckChange(data, checked, indeterminate) {
       if (checked) {
-        let node2 = this.$refs.treeForm_mx.getNode(data.pid);
+        let node2 = this.$refs.treeForm_mx.getNode(data.id);
         this.setNode(node2);
-        this.$refs.treeForm_mx.setCheckedKeys([data.oid]);
+        this.$refs.treeForm_mx.setCheckedKeys([data.id]);
       }
     },
     // 获取树状图

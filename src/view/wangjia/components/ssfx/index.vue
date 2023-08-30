@@ -1,5 +1,5 @@
 <template>
-  <div class="ssfx" v-if="show">
+  <div class="ssfx">
     <div class="leftBtn">
       <div
         class="leftBlock"
@@ -8,14 +8,14 @@
       >
         <span>设施分类</span>
       </div>
-      <div class="btnImg"></div>
-      <div
+      <!-- <div class="btnImg"></div> -->
+      <!-- <div
         class="rightBlock"
         @click="rbtnClick(1)"
         :class="currentIndex2 == 1 ? 'rightBlock2' : ''"
       >
         <span>行政区划</span>
-      </div>
+      </div> -->
     </div>
     <!-- 显示设施分类弹框 -->
     <div class="xlBlock xlBlock2" v-show="showSS">
@@ -62,7 +62,7 @@
       </div>
     </div>
     <!-- 行政区划弹框 -->
-    <div class="qhTK" v-show="showQH">
+    <!-- <div class="qhTK" v-show="showQH">
       <div
         class="dkBlocks"
         @click="qhClick(0)"
@@ -84,7 +84,7 @@
       >
         <span>安新县</span>
       </div>
-    </div>
+    </div> -->
     <div class="rightBtn">
       <div
         class="leftBlock"
@@ -1058,7 +1058,7 @@ export default {
 </script>
 
 <style scoped>
-.ssfx {
+/* .ssfx {
   width: 100%;
   height: 100%;
   position: absolute;
@@ -1066,7 +1066,7 @@ export default {
   top: 0;
   background: url("img/bg.png") no-repeat !important;
   background-size: 100% 100% !important;
-}
+} */
 </style>
 <style scoped>
 .btnImg {
@@ -1093,7 +1093,7 @@ export default {
   display: flex;
   justify-content: space-between;
   position: fixed;
-  right: 20px !important;
+  right: 720px !important;
   bottom: 20px !important;
 }
 .leftBtn > .leftBlock,
@@ -1166,7 +1166,7 @@ export default {
   width: 279px;
   height: 156px;
   position: fixed;
-  right: 65px;
+  right: 764px;
   bottom: 78px;
   display: flex;
   flex-direction: column;
