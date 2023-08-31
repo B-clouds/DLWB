@@ -18,7 +18,7 @@ export default {
   },
   mounted() {
     this.getAllData()
-    this.myecharts();
+    // this.myecharts();
     this.WidthAdaptive();
   },
   watch: {

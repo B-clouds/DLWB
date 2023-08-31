@@ -12,7 +12,7 @@
       <span>模型资产导航树</span>
     </div> -->
     <div class="j_titles">
-      <span>网格架构树</span>
+      <span>网格架构树qqqq</span>
     </div>
     <div class="j_ss">
       <input class="ddd" placeholder="搜索" />
@@ -28,7 +28,7 @@
           check-on-click-node
           :filter-node-method="filterNode"
           @check="selectTree"
-          node-key="oid"
+          node-key="id"
           lazy
           :load="loadNode"
           :key="tree_key"
@@ -85,7 +85,7 @@ export default {
       newID: 371,
       defaultProps: {
         children: "children",
-        label: "label",
+        label: "mc",
       },
       // 用于存放选中的树结构点
       selectData: {},
@@ -106,24 +106,29 @@ export default {
   },
   methods: {
     loadNode(node, resolve) {
+      // alert(111)
       if (node.level === 0) {
+        // alert(111)
         // return this.getList(resolve)
         this.$axios
-          .get(window.wanggeUrl, {
+          .get(window.wgApiUrl+'/loadForecast/loadForecastTree', {
             params: {
-              oid: 0,
+              id: 0,
+              type:1
             },
           })
           .then((res) => {
+
             return resolve(res.data.data);
           })
           .catch((error) => {});
       }
       if (node.level >= 1) {
         this.$axios
-          .get(window.wanggeUrl, {
+          .get(window.wgApiUrl+'/loadForecast/loadForecastTree', {
             params: {
-              oid: node.data.oid,
+              id: node.data.id,
+              type:1
             },
           })
           .then((res) => {
@@ -158,12 +163,12 @@ export default {
 
     // 复选框被选中时
     selectTree(node, list) {
-      const node2 = this.$refs.treeForm_mx.getNode(node.oid);
+      const node2 = this.$refs.treeForm_mx.getNode(node.id);
       this.setNode(node2);
       if (list.checkedKeys.length == 2) {
-        this.$refs.treeForm_mx.setCheckedKeys([node.oid]);
+        this.$refs.treeForm_mx.setCheckedKeys([node.id]);
       }
-      if (this.selectData.id != node.oid) {
+      if (this.selectData.id != node.id) {
         this.selectData = node;
         this.selectNode = node2;
       } else {
@@ -174,13 +179,15 @@ export default {
     setNode(node) {
       let ids = [];
       let showLefts = false;
-      ids.push(node.data.oid);
+      ids.push(node.data.id);
       if (node.checked) {
+        // alert(11)
         // 展示右侧，并发送消息
         this.$emit("showRight", true);
         showLefts = true;
         this.showQr = true;
       } else {
+        // alert(11)
         // 取消展示右侧
         this.$emit("showRight", false);
         this.showQr = false;
@@ -190,10 +197,10 @@ export default {
         this.setChildenNode(node);
       }
       this.$emit("getIds", ids);
-      this.$emit("getOid", node.data.oid);
+      this.$emit("getOid", node.data.id);
       let that = this;
       setTimeout(() => {
-        that.$bus.$emit("leftOid", node.data.oid);
+        that.$bus.$emit("leftOid", node.data.id);
       }, 50);
     },
     backVertices(e) {
@@ -262,9 +269,9 @@ export default {
     },
     handleCheckChange(data, checked, indeterminate) {
       if (checked) {
-        let node2 = this.$refs.treeForm_mx.getNode(data.oid);
+        let node2 = this.$refs.treeForm_mx.getNode(data.id);
         this.setNode(node2);
-        this.$refs.treeForm_mx.setCheckedKeys([data.oid]);
+        this.$refs.treeForm_mx.setCheckedKeys([data.id]);
       }
     },
     // 获取树状图

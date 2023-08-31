@@ -7,13 +7,18 @@ export default {
   props: ["echartsData"],
   data() {
     return {
+      id:'',
+      selectId:'',
+      date:[],
+      value:[],
       pieData: [],
       xData: ["分区数量", "网格数量", "单元数量"],
       yData: [75, 60, 65],
     };
   },
   mounted() {
-    this.myecharts();
+    this.getAllData()
+    // this.myecharts();
     this.WidthAdaptive();
   },
   watch: {
@@ -22,6 +27,44 @@ export default {
     },
   },
   methods: {
+    getAllData() {
+      let that = this
+      that.$bus.$on("leftOid", (e) => {
+        that.id = e;
+        // console.log('=========')
+        this.getChartData()
+        // console.log(that.id)
+      })
+      that.$bus.$on("selectId1", (e) => {
+        that.selectId=e
+        this.getChartData()
+      })
+    },
+    async getChartData (){
+      await this.$axios
+          .get(window.wgApiUrl + "/loadForecast/loadForecastAreaStatistics", {
+          // .get("http://192.168.2.21:8025/rackAnalysis/rackAnalysisContactAnalysis", {
+            params: {
+              areaId:this.id,
+              // type:this.selectId?this.selectId:0
+            },
+          })
+          .then((res) => {
+            this.date=[]
+            this.value=[]
+            this.chartsData={}
+            res.data.data.map(item=>{
+              this.date.push(item.mc)
+              this.value.push(item.gs)
+            })
+            // console.log('[[[[[[[')
+            // console.log(this.chartsData)
+            // console.log(this.chartsData)
+          })
+          .catch((error) => {});
+      this.myecharts()
+    },
+
     WidthAdaptive(res) {
       var windth = window.screen.width;
 
@@ -79,7 +122,7 @@ export default {
           axisTick: {
             show: false,
           },
-          data: this.xData,
+          data: this.date,
         },
         yAxis: {
           type: "value",
@@ -148,7 +191,7 @@ export default {
             emphasis: {
               focus: "series",
             },
-            data: this.yData,
+            data: this.value,
           },
         ],
       };
