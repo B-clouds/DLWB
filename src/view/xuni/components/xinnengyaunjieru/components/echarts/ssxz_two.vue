@@ -8,6 +8,8 @@ export default {
   data() {
     return {
       pieData: [],
+      sj_data: [],
+      sl_data: [],
     };
   },
   mounted() {
@@ -16,6 +18,11 @@ export default {
   },
   watch: {
     echartsData(n, o) {
+      this.pieData = n;
+      this.pieData.forEach((item) => {
+        this.sj_data.push(item.sj);
+        this.sl_data.push(item.sl);
+      });
       this.myecharts();
     },
   },
@@ -59,7 +66,8 @@ export default {
             lineStyle: { color: "#cccccc", type: "solid" },
           },
 
-          data: ["1月", "2月", "3月", "4月", "5月", "6月"],
+          // data: ["1月", "2月", "3月", "4月", "5月", "6月"],
+          data: this.sj_data,
         },
         yAxis: {
           nameTextStyle: {
@@ -85,7 +93,8 @@ export default {
           {
             type: "line",
             symbolSize: this.WidthAdaptive(6),
-            data: [61, 35, 96, 169, 54, 69],
+            // data: [61, 35, 96, 169, 54, 69],
+            data: this.sl_data,
           },
         ],
       };

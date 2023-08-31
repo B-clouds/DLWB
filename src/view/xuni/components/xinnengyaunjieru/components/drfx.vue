@@ -3,7 +3,7 @@
     <div class="gl_top">
       <span class="span1">当前区域：</span>
       <div class="names">
-        <span>xxxxx区域名称</span>
+        <span>{{ areaName }}</span>
       </div>
       <div class="fanhui" @click="fanhuiClick"></div>
     </div>
@@ -101,29 +101,29 @@
         <div
           class="j_t_tr"
           :class="index % 2 == 0 ? 'j_t_bg' : ''"
-          v-for="(item, index) in 24"
+          v-for="(item, index) in dataList.result"
           :key="index"
         >
           <div class="blocks">
-            <span class="span2">xxxxx</span>
+            <span class="span2">{{ item.sj }}</span>
           </div>
           <div class="blocks">
-            <span class="span2">xxxxx</span>
+            <span class="span2">{{ item.rlxq }}</span>
           </div>
           <div class="blocks">
-            <span class="span2">xxxxx</span>
+            <span class="span2">{{ item.xzsl }}</span>
           </div>
           <div class="blocks">
-            <span class="span2">xxxxx</span>
+            <span class="span2">{{ item.rzb }}</span>
           </div>
           <div class="blocks">
-            <span class="span2">xxxxx</span>
+            <span class="span2">{{ item.dgrl }}</span>
           </div>
         </div>
       </div>
       <div class="drbottom">
         <span class="span1">推荐容量</span>
-        <span class="span3">166</span>
+        <span class="span3">{{ dataList.count }}</span>
         <span class="span2">xxx</span>
       </div>
     </div>
@@ -132,10 +132,13 @@
 
 <script>
 export default {
+  props: ["id"],
   name: "zdfxLeft",
   components: {},
   data() {
     return {
+      areaName: "",
+      dataList: [],
       jidu: [
         {
           value: "",
@@ -155,6 +158,12 @@ export default {
       dydj_show: "",
     };
   },
+
+  mounted() {
+    console.log(this.id, "------");
+    this.areaName = sessionStorage.getItem("areaName");
+    this.CapacityInfoFn();
+  },
   methods: {
     gjlxClick(e) {
       this.gjlx_show = e;
@@ -170,6 +179,27 @@ export default {
     },
     dydjClick(e) {
       this.dydj_show = e;
+    },
+    async CapacityInfoFn() {
+      this.$axios
+        .get(window.wgApiUrl + "/multipleLoad/siteSelectionCapacityInfo", {
+          params: {
+            areaId: "10000",
+            dgrl: "2",
+            dydj: "1",
+            nd: "1",
+            rzb: "1",
+          },
+        })
+        .then((res) => {
+          if (res.status == 200) {
+            if (res.data.msg == "query success") {
+              console.log(res, "res234");
+              this.dataList = res.data.data;
+            }
+          }
+        })
+        .catch((error) => {});
     },
   },
 };
