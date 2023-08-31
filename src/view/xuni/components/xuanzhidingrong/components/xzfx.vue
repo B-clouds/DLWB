@@ -3,7 +3,7 @@
     <div class="gl_top">
       <span class="span1">当前区域：</span>
       <div class="names">
-        <span>xxxxx区域名称</span>
+        <span>{{ areaName }}</span>
       </div>
       <div class="fanhui" @click="fanhuiClick"></div>
     </div>
@@ -13,7 +13,7 @@
       </div>
       <div class="qybg">
         <span class="span1">区域名称：</span>
-        <span class="span2">XXXXX区域名称</span>
+        <span class="span2">{{ dataInfo.name }}</span>
       </div>
       <div class="j_t_tr jt1">
         <div class="blocks">
@@ -41,10 +41,18 @@
           </div>
           <div class="blocks">
             <div>
-              <img v-for="item in item.tjs" src="./img/xx2.png" />
+              <img
+                v-for="(item, index) in item.tjzs"
+                :key="index"
+                src="./img/xx2.png"
+              />
             </div>
             <div>
-              <img v-for="item in 5 - item.tjs" src="./img/xx1.png" />
+              <img
+                v-for="(item, index) in 5 - item.tjzs"
+                :key="index"
+                src="./img/xx1.png"
+              />
             </div>
           </div>
         </div>
@@ -55,35 +63,43 @@
 
 <script>
 export default {
+  props: ["id"],
   name: "zdfxLeft",
   components: {},
   data() {
     return {
+      areaName: "",
+      dataInfo: {},
       dataList: [
-        { dybh: "xxxx", rlj: "xxxx", tjs: 5 },
-        { dybh: "xxxx", rlj: "xxxx", tjs: 2 },
-        { dybh: "xxxx", rlj: "xxxx", tjs: 3 },
-        { dybh: "xxxx", rlj: "xxxx", tjs: 3 },
-        { dybh: "xxxx", rlj: "xxxx", tjs: 2 },
-        { dybh: "xxxx", rlj: "xxxx", tjs: 2 },
-        { dybh: "xxxx", rlj: "xxxx", tjs: 1 },
-        { dybh: "xxxx", rlj: "xxxx", tjs: 3 },
-        { dybh: "xxxx", rlj: "xxxx", tjs: 4 },
-        { dybh: "xxxx", rlj: "xxxx", tjs: 1 },
-        { dybh: "xxxx", rlj: "xxxx", tjs: 3 },
-        { dybh: "xxxx", rlj: "xxxx", tjs: 2 },
-        { dybh: "xxxx", rlj: "xxxx", tjs: 1 },
-        { dybh: "xxxx", rlj: "xxxx", tjs: 4 },
-        { dybh: "xxxx", rlj: "xxxx", tjs: 1 },
-        { dybh: "xxxx", rlj: "xxxx", tjs: 3 },
-        { dybh: "xxxx", rlj: "xxxx", tjs: 1 },
-        { dybh: "xxxx", rlj: "xxxx", tjs: 2 },
-        { dybh: "xxxx", rlj: "xxxx", tjs: 1 },
-        { dybh: "xxxx", rlj: "xxxx", tjs: 3 },
-        { dybh: "xxxx", rlj: "xxxx", tjs: 1 },
-        { dybh: "xxxx", rlj: "xxxx", tjs: 2 },
+        { dybh: "xxxx", rlj: "xxxx", tjzs: 5 },
+        { dybh: "xxxx", rlj: "xxxx", tjzs: 2 },
+        { dybh: "xxxx", rlj: "xxxx", tjzs: 3 },
+        { dybh: "xxxx", rlj: "xxxx", tjzs: 3 },
+        { dybh: "xxxx", rlj: "xxxx", tjzs: 2 },
+        { dybh: "xxxx", rlj: "xxxx", tjzs: 2 },
+        { dybh: "xxxx", rlj: "xxxx", tjzs: 1 },
+        { dybh: "xxxx", rlj: "xxxx", tjzs: 3 },
+        { dybh: "xxxx", rlj: "xxxx", tjzs: 4 },
+        { dybh: "xxxx", rlj: "xxxx", tjzs: 1 },
+        { dybh: "xxxx", rlj: "xxxx", tjzs: 3 },
+        { dybh: "xxxx", rlj: "xxxx", tjzs: 2 },
+        { dybh: "xxxx", rlj: "xxxx", tjzs: 1 },
+        { dybh: "xxxx", rlj: "xxxx", tjzs: 4 },
+        { dybh: "xxxx", rlj: "xxxx", tjzs: 1 },
+        { dybh: "xxxx", rlj: "xxxx", tjzs: 3 },
+        { dybh: "xxxx", rlj: "xxxx", tjzs: 1 },
+        { dybh: "xxxx", rlj: "xxxx", tjzs: 2 },
+        { dybh: "xxxx", rlj: "xxxx", tjzs: 1 },
+        { dybh: "xxxx", rlj: "xxxx", tjzs: 3 },
+        { dybh: "xxxx", rlj: "xxxx", tjzs: 1 },
+        { dybh: "xxxx", rlj: "xxxx", tjzs: 2 },
       ],
     };
+  },
+  mounted() {
+    console.log(this.id, "======");
+    this.areaName = sessionStorage.getItem("xzdr_areaName");
+    this.SiteSelectionRecommendationFn();
   },
   methods: {
     gjlxClick(e) {
@@ -94,6 +110,37 @@ export default {
     },
     fanhuiClick() {
       this.$emit("geshihua");
+    },
+    async SiteSelectionRecommendationFn() {
+      this.$axios
+        .get(
+          window.wgApiUrl +
+            "/siteSelection/siteSelectionSiteSelectionRecommendation",
+          {
+            params: {
+              areaId: "10000",
+            },
+          }
+        )
+        .then((res) => {
+          if (res.status == 200) {
+            if (res.data.msg == "query success") {
+              console.log(res, "res12325S");
+              this.dataInfo = res.data.data;
+              this.dataList = res.data.data.result.map((item) => {
+                return Object.assign(
+                  {},
+                  {
+                    dybh: item.dybh,
+                    rlj: item.rlj,
+                    tjzs: Number(item.tjzs),
+                  }
+                );
+              });
+            }
+          }
+        })
+        .catch((error) => {});
     },
   },
 };

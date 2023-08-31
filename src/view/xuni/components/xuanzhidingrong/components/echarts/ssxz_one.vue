@@ -8,6 +8,9 @@ export default {
   data() {
     return {
       pieData: [],
+      sl_arr: [],
+      zl_arr: [],
+      type_arr: [],
     };
   },
   mounted() {
@@ -16,6 +19,12 @@ export default {
   },
   watch: {
     echartsData(n, o) {
+      this.pieData = n;
+      this.pieData.forEach((item) => {
+        this.sl_arr.push(item.sl);
+        this.zl_arr.push(item.zl);
+        this.type_arr.push(item.type);
+      });
       this.myecharts();
     },
   },
@@ -60,7 +69,8 @@ export default {
         xAxis: [
           {
             type: "category",
-            data: ["2018", "2019", "2020", "2021", "2022", "2023"],
+            data: this.zl_arr,
+            // data: ["2018", "2019", "2020", "2021", "2022", "2023"],
             axisLine: {
               lineStyle: {
                 color: "rgba(255,255,255,.5)",
@@ -111,7 +121,8 @@ export default {
           {
             name: "数量",
             type: "bar",
-            data: [68, 50, 69, 75, 59, 62, 47],
+            data: this.sl_arr,
+            // data: [68, 50, 69, 75, 59, 62, 47],
             barWidth: this.WidthAdaptive(8),
             itemStyle: {
               normal: {
@@ -138,7 +149,8 @@ export default {
           {
             name: "容量",
             type: "bar",
-            data: [68, 50, 69, 75, 59, 62, 47],
+            data: this.type_arr,
+            // data: [68, 50, 69, 75, 59, 62, 47],
             barWidth: this.WidthAdaptive(8),
             itemStyle: {
               normal: {

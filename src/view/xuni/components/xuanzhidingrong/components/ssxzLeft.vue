@@ -3,7 +3,7 @@
     <div class="gl_top">
       <span class="span1">当前区域：</span>
       <div class="names">
-        <span>xxxxx区域名称</span>
+        <span>{{ areaName }}</span>
       </div>
       <div class="fanhui" @click="fanhuiClick"></div>
     </div>
@@ -19,7 +19,7 @@
           <div class="rights">
             <div class="tops">用电户数</div>
             <div class="bottoms">
-              <span class="span1">965</span>
+              <span class="span1">{{ BasicFacilitiesInfo.ydhs }}</span>
               <span class="span2">人</span>
             </div>
           </div>
@@ -31,18 +31,18 @@
           <div class="rights">
             <div class="tops">设备情况</div>
             <div class="bottoms">
-              <span class="span1">使用中</span>
+              <span class="span1">{{ BasicFacilitiesInfo.sbqk }}</span>
             </div>
           </div>
         </div>
       </div>
-      <ssxz_one />
+      <ssxz_one :echartsData="BasicFacilitiesaData" />
     </div>
     <div class="jr_block jr_block2">
       <div class="j_titles">
         <span>负载情况</span>
       </div>
-      <ssxz_two />
+      <ssxz_two :echartsData="LoadInfoData" />
     </div>
   </div>
 </template>
@@ -51,13 +51,28 @@
 import ssxz_one from "./echarts/ssxz_one.vue";
 import ssxz_two from "./echarts/ssxz_two.vue";
 export default {
+  props: ["id"],
   name: "zdfxLeft",
   components: {
     ssxz_one,
     ssxz_two,
   },
   data() {
-    return {};
+    return {
+      ararName: "",
+      BasicFacilitiesInfo: {},
+      BasicFacilitiesaData: [], //基本情况数据
+      LoadInfoData: [], //负载情况数据
+    };
+  },
+  beforeMount() {
+    this.areaName = sessionStorage.getItem("xzdr_areaName");
+  },
+  mounted() {
+    console.log("1243", this.id);
+
+    this.BasicFacilitiesInfoFn();
+    this.LoadInfoFn();
   },
   methods: {
     gjlxClick(e) {
@@ -68,6 +83,48 @@ export default {
     },
     fanhuiClick() {
       this.$emit("geshihua");
+    },
+    //虚拟规划-选址定容-设施现状-基本情况
+    async BasicFacilitiesInfoFn() {
+      this.$axios
+        .get(
+          window.wgApiUrl + "/siteSelection/siteSelectionBasicFacilitiesInfo",
+          {
+            params: {
+              areaId: "10000",
+            },
+          }
+        )
+        .then((res) => {
+          if (res.status == 200) {
+            if (res.data.msg == "query success") {
+              this.BasicFacilitiesInfo = res.data.data.count;
+              this.BasicFacilitiesaData = res.data.data.result;
+            }
+          }
+          // return resolve(res.data.data);
+        })
+        .catch((error) => {});
+    },
+
+    //虚拟规划-选址定容-设施现状-负载情况
+    async LoadInfoFn() {
+      this.$axios
+        .get(window.wgApiUrl + "/siteSelection/siteSelectionLoadInfo", {
+          params: {
+            areaId: "10000",
+          },
+        })
+        .then((res) => {
+          if (res.status == 200) {
+            if (res.data.msg == "query success") {
+              console.log("res", res);
+              this.LoadInfoData = res.data.data;
+            }
+          }
+          // return resolve(res.data.data);
+        })
+        .catch((error) => {});
     },
   },
 };

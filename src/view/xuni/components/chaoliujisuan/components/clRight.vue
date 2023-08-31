@@ -17,6 +17,8 @@
               range-separator="-"
               start-placeholder="开始日期"
               end-placeholder="结束日期"
+              value-format="yyyy-MM-dd HH:mm:ss"
+              @change="changeFn"
             >
             </el-date-picker>
           </div>
@@ -41,20 +43,20 @@
           <div
             class="j_t_tr"
             :class="index % 2 == 0 ? 'j_t_bg' : ''"
-            v-for="(item, index) in 5"
+            v-for="(item, index) in dataList"
             :key="index"
           >
             <div class="blocks">
-              <span class="span2">xxxx</span>
+              <span class="span2">{{ item.sj }}</span>
             </div>
             <div class="blocks">
-              <span class="span2">xxxx</span>
+              <span class="span2">{{ item.dx }}</span>
             </div>
             <div class="blocks">
-              <span class="span2">xxxx</span>
+              <span class="span2">{{ item.pjz }}</span>
             </div>
             <div class="blocks">
-              <span class="span2">xxxx</span>
+              <span class="span2">{{ item.yj }}</span>
             </div>
           </div>
         </div>
@@ -65,21 +67,75 @@
 
 <script>
 export default {
-  components: {
-    
-  },
+  components: {},
   name: "clRight",
   data() {
     return {
       value1: "",
+      id: "",
+      dataList: [],
     };
   },
   filters: {},
   watch: {
     colors(e) {},
   },
-  mounted() {},
-  methods: {},
+  mounted() {
+    this.$bus.$on("leftOid", (e) => {
+      this.id = e;
+      console.log(e);
+      let param = {
+        areaId: "10000",
+        // startTIme: "",
+        // endTime: "",
+      };
+      this.load_flow_calculation(param);
+    });
+  },
+  methods: {
+    changeFn() {
+      console.log(this.id, "-----=======-------");
+      console.log("---时间-----", this.value1);
+
+      if (this.value1) {
+        let param = {
+          areaId: "10000",
+          // startTIme: this.value1[0],
+          // endTime: this.value1[1],
+        };
+        this.load_flow_calculation(param);
+      } else {
+        let param = {
+          areaId: "10000",
+        };
+        this.load_flow_calculation(param);
+      }
+    },
+    async load_flow_calculation(param) {
+      this.$axios
+        .get(
+          window.wgApiUrl +
+            "/electricalCalculation/electricalCalculationHistoricalCurrent",
+          {
+            params: param,
+          }
+        )
+        .then((res) => {
+          if (res.status == 200) {
+            if (res.data.msg == "query success") {
+              console.log(res, "rse---------");
+
+              this.dataList = res.data.data;
+            }
+          }
+          // return resolve(res.data.data);
+        })
+        .catch((error) => {});
+    },
+  },
+  beforeDestroy() {
+    this.$bus.$off("leftOid");
+  },
 };
 </script>
 

@@ -190,7 +190,7 @@ export default {
         this.$axios
           .get(window.wanggeUrl, {
             params: {
-              id: 0,
+              id: node.data.id,
               name: "",
               type: "1",
             },

@@ -3,7 +3,7 @@
     <div class="gl_top">
       <span class="span1">当前区域：</span>
       <div class="names">
-        <span>xxxxx区域名称</span>
+        <span>{{ areaName }}</span>
       </div>
       <div class="fanhui" @click="fanhuiClick"></div>
     </div>
@@ -13,7 +13,7 @@
       </div>
       <div class="tjdy">
         <span class="span1">推荐电源</span>
-        <span class="span2">293</span>
+        <span class="span2">{{ PowerInfoData.name }}</span>
         <span class="span3">kwh</span>
       </div>
 
@@ -35,20 +35,20 @@
         <div
           class="j_t_tr"
           :class="index % 2 == 0 ? 'j_t_bg' : ''"
-          v-for="(item, index) in 24"
+          v-for="(item, index) in PowerInfoData.result"
           :key="index"
         >
           <div class="blocks">
-            <span class="span2">xxxxx</span>
+            <span class="span2">{{ item.dydj }}</span>
           </div>
           <div class="blocks">
-            <span class="span2">xxxxx</span>
+            <span class="span2">{{ item.sslx }}</span>
           </div>
           <div class="blocks">
-            <span class="span2">xxxxx</span>
+            <span class="span2">{{ item.dglzj }}</span>
           </div>
           <div class="blocks">
-            <span class="span2">xxxxx</span>
+            <span class="span2">{{ item.yjtz }}</span>
           </div>
         </div>
       </div>
@@ -58,10 +58,19 @@
 
 <script>
 export default {
+  props: ["id"],
   name: "zdfxLeft",
   components: {},
   data() {
-    return {};
+    return {
+      areaName: "",
+      PowerInfoData: {},
+    };
+  },
+  mounted() {
+    console.log(this.id, "======");
+    this.areaName = sessionStorage.getItem("xzdr_areaName");
+    this.PowerInfoFn();
   },
   methods: {
     gjlxClick(e) {
@@ -72,6 +81,22 @@ export default {
     },
     fanhuiClick() {
       this.$emit("geshihua");
+    },
+    async PowerInfoFn() {
+      this.$axios
+        .get(window.wgApiUrl + "/siteSelection/siteSelectionPowerInfo", {
+          params: {
+            areaId: "10000",
+          },
+        })
+        .then((res) => {
+          if (res.status == 200) {
+            if (res.data.msg == "query success") {
+              this.PowerInfoData = res.data.data;
+            }
+          }
+        })
+        .catch((error) => {});
     },
   },
 };

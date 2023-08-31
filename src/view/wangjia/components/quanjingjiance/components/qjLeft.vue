@@ -16,10 +16,10 @@
           <span>监测对象</span>
         </div>
         <div class="jbRight2">
-          <input placeholder="最大输入不超过10个字" />
+          <input v-model="searchName" placeholder="最大输入不超过10个字" />
         </div>
       </div>
-      <div class="d_btn">
+      <div class="d_btn" @click="searchFn">
         <span>查询</span>
       </div>
     </div>
@@ -32,8 +32,8 @@
       </div>
       <div class="blockItem">
         <el-tree
-          show-checkbox
           :data="datas"
+          show-checkbox
           :props="defaultProps"
           @node-click="handleNodeClick"
           @check-change="handleCheckChange"
@@ -41,6 +41,8 @@
           :filter-node-method="filterNode"
           @check="selectTree"
           node-key="oid"
+          lazy
+          :load="loadNode"
           :key="tree_key"
           :indent="20"
           :default-expanded-keys="defaultExpand"
@@ -167,6 +169,7 @@ export default {
   name: "mxLeft",
   data() {
     return {
+      searchName: "",
       // 是否显示编辑弹框
       showMB: false,
       updaValue: "",
@@ -182,22 +185,22 @@ export default {
       currentIndex: -1,
       filterText: "",
       datas: [
-        {
-          label: "站房",
-          oid: 1,
-          children: [
-            {
-              label: "1",
-              oid: 2,
-              children: [
-                {
-                  label: "2",
-                  oid: 3,
-                },
-              ],
-            },
-          ],
-        },
+        // {
+        //   label: "站房",
+        //   oid: 1,
+        //   children: [
+        //     {
+        //       label: "1",
+        //       oid: 2,
+        //       children: [
+        //         {
+        //           label: "2",
+        //           oid: 3,
+        //         },
+        //       ],
+        //     },
+        //   ],
+        // },
       ],
       newID: 371,
       defaultProps: {
@@ -221,6 +224,37 @@ export default {
     // this.getThree();
   },
   methods: {
+    //查询条件的点击查询
+    searchFn() {
+      console.log(this.searchName);
+      this.searchValFn(this.searchName);
+    },
+
+    async searchValFn(val) {
+      this.$axios
+        .get(
+          window.wgApiUrl + "/powerNetworkAnalysis/panoramicPredictionTree",
+          {
+            params: {
+              id: 0,
+              name: val,
+            },
+          }
+        )
+        .then((res) => {
+          this.datas = res.data.data.map((item) => {
+            return Object.assign(
+              {},
+              {
+                oid: item.oid,
+                label: item.name,
+                pid: item.pid,
+              }
+            );
+          });
+        })
+        .catch((error) => {});
+    },
     // 全部选中
     qxClick() {
       this.isQx = !this.isQx;
@@ -318,6 +352,67 @@ export default {
         this.showMB2 = false;
         this.addValue = "";
         this.baocun();
+      }
+    },
+    loadNode(node, resolve) {
+      console.log("window.wanggeUrl", window.wanggeUrl);
+      if (node.level === 0) {
+        this.$axios
+          .get(
+            window.wgApiUrl + "/powerNetworkAnalysis/panoramicPredictionTree",
+            {
+              params: {
+                id: 0,
+              },
+            }
+          )
+          .then((res) => {
+            console.log("res", res);
+            let newData = res.data.data.map((item) => {
+              return Object.assign(
+                {},
+                {
+                  oid: item.oid,
+                  label: item.name,
+                  pid: item.pid,
+                }
+              );
+            });
+            return resolve(newData);
+          })
+          .catch((error) => {});
+      }
+      if (node.level >= 1) {
+        console.log("nodenodenodenode", node);
+        this.$axios
+          .get(
+            window.wgApiUrl + "/powerNetworkAnalysis/panoramicPredictionTree",
+            {
+              params: {
+                id: node.data.oid,
+              },
+            }
+          )
+          .then((res) => {
+            if (res.data.data == null || undefined || "") {
+              return resolve([]);
+            } else {
+              let newData = res.data.data.map((item) => {
+                return Object.assign(
+                  {},
+                  {
+                    oid: item.oid,
+                    label: item.name,
+                    pid: item.pid,
+                  }
+                );
+              });
+              return resolve(newData);
+            }
+          })
+          .catch((error) => {});
+      } else {
+        return resolve([]);
       }
     },
     unAddClicks() {

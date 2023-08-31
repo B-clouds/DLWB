@@ -7,14 +7,14 @@
       </div>
       <div class="jr_t_t">
         <span class="span1">区域名称:</span>
-        <span class="span2">xxxxx区域名称</span>
+        <span class="span2">{{ areaInfo.qymc }}</span>
       </div>
       <div class="jr_t_b">
         <div class="blocks">
           <img src="./img/jr1.png" />
           <div class="rights">
             <div class="tops">
-              <span class="span1">6274</span>
+              <span class="span1">{{ areaInfo.qymj }}</span>
               <span class="span2">㎡</span>
             </div>
             <div class="bottoms">
@@ -26,7 +26,7 @@
           <img src="./img/jr2.png" />
           <div class="rights">
             <div class="tops">
-              <span class="span1">xxxx</span>
+              <span class="span1">{{ areaInfo.qyfl }}</span>
             </div>
             <div class="bottoms">
               <span>区域分类</span>
@@ -39,7 +39,7 @@
           <img src="./img/jr1.png" />
           <div class="rights">
             <div class="tops">
-              <span class="span1">274</span>
+              <span class="span1">{{ areaInfo.fhmd }}</span>
               <span class="span2">kg/m³</span>
             </div>
             <div class="bottoms">
@@ -51,7 +51,7 @@
           <img src="./img/jr2.png" />
           <div class="rights">
             <div class="tops">
-              <span class="span1">741</span>
+              <span class="span1">{{ areaInfo.yjmd }}</span>
               <span class="span2">kg/m³</span>
             </div>
             <div class="bottoms">
@@ -85,20 +85,20 @@
         <div
           class="j_t_tr"
           :class="index % 2 == 0 ? 'j_t_bg' : ''"
-          v-for="(item, index) in 13"
+          v-for="(item, index) in unitInfo.result"
           :key="index"
         >
           <div class="blocks">
-            <span class="span2">xxxx</span>
+            <span class="span2">{{ item.dxk }}</span>
           </div>
           <div class="blocks">
-            <span class="span2">xxxx</span>
+            <span class="span2">{{ item.bh }}</span>
           </div>
           <div class="blocks">
-            <span class="span2">xxxx</span>
+            <span class="span2">{{ item.zt }}</span>
           </div>
           <div class="blocks">
-            <span class="span2">xxxx</span>
+            <span class="span2">{{ item.bz }}</span>
           </div>
         </div>
       </div>
@@ -111,14 +111,69 @@ export default {
   components: {},
   name: "mxRight",
   data() {
-    return {};
+    return {
+      areaId: "",
+      areaInfo: {},
+      unitInfo: {},
+    };
   },
   filters: {},
   watch: {
     colors(e) {},
   },
-  mounted() {},
-  methods: {},
+  mounted() {
+    let that = this;
+    that.$bus.$on("leftOid", (e) => {
+      that.areaId = e;
+      that.areaInfoFn();
+      that.UnitInfoFn();
+    });
+  },
+  methods: {
+    async areaInfoFn() {
+      this.$axios
+        .get(window.wgApiUrl + "/siteSelection/siteSelectionBasicInfo", {
+          params: {
+            areaId: "10000",
+          },
+        })
+        .then((res) => {
+          if (res.status == 200) {
+            if (res.data.msg == "query success") {
+              this.areaInfo = res.data.data[0];
+              sessionStorage.setItem("xzdr_areaName", this.areaInfo.qymc);
+            }
+          }
+          // return resolve(res.data.data);
+        })
+        .catch((error) => {});
+    },
+
+    async UnitInfoFn() {
+      this.$axios
+        .get(
+          window.wgApiUrl +
+            "/multipleLoad/siteSelectionOverwritesSpatialUnitInfo",
+          {
+            params: {
+              areaId: "10000",
+            },
+          }
+        )
+        .then((res) => {
+          if (res.status == 200) {
+            if (res.data.msg == "query success") {
+              this.unitInfo = res.data.data;
+            }
+          }
+          // return resolve(res.data.data);
+        })
+        .catch((error) => {});
+    },
+  },
+  beforeDestroy() {
+    this.$bus.$off("leftOid");
+  },
 };
 </script>
 

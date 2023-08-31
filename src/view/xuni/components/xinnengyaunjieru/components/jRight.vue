@@ -130,7 +130,6 @@ export default {
   },
   methods: {
     async areaInfoFn() {
-      console.log("---------", 111);
       this.$axios
         .get(window.wgApiUrl + "/multipleLoad/siteSelectionBasicInfo", {
           params: {

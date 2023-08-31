@@ -26,23 +26,23 @@
 
     <!-- 设施现状 -->
     <transition name="transitionLeft">
-      <ssxzLeft @geshihua="geshihua" v-if="show && detiles1" />
+      <ssxzLeft @geshihua="geshihua" v-if="show && detiles1" :id="oids" />
     </transition>
     <!-- 必要性分析 -->
     <transition name="transitionLeft">
-      <byxfx @geshihua="geshihua" v-if="show && detiles2" />
+      <byxfx @geshihua="geshihua" v-if="show && detiles2" :id="oids" />
     </transition>
     <!-- 选址分析 -->
     <transition name="transitionLeft">
-      <xzfx @geshihua="geshihua" v-if="show && detiles3" />
+      <xzfx @geshihua="geshihua" v-if="show && detiles3" :id="oids" />
     </transition>
     <!-- 电源选择 -->
     <transition name="transitionLeft">
-      <dyxz @geshihua="geshihua" v-if="show && detiles4" />
+      <dyxz @geshihua="geshihua" v-if="show && detiles4" :id="oids" />
     </transition>
     <!-- 定容分析 -->
     <transition name="transitionLeft">
-      <drfx @geshihua="geshihua" v-if="show && detiles5" />
+      <drfx @geshihua="geshihua" v-if="show && detiles5" :id="oids" />
     </transition>
     <!-- 网架电站 -->
     <wjdz v-if="show && !showNavs" />
@@ -107,6 +107,8 @@ export default {
       this.d2Item = false;
     },
     geshihua() {
+      this.navIndex = 0; //格式化底部导航进去始终为第一个
+      this.showRights = false; //格式化 返回时区域基本信息不显示
       this.showNavs = false;
       this.detiles1 = false;
       this.detiles2 = false;

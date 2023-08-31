@@ -28,7 +28,7 @@
           check-on-click-node
           :filter-node-method="filterNode"
           @check="selectTree"
-          node-key="oid"
+          node-key="id"
           lazy
           :load="loadNode"
           :key="tree_key"
@@ -106,16 +106,29 @@ export default {
   },
   methods: {
     loadNode(node, resolve) {
+      // console.log("window.wanggeUrl", window.wanggeUrl);
       if (node.level === 0) {
-        // return this.getList(resolve)
         this.$axios
-          .get(window.wanggeUrl, {
+          .get(window.wgApiUrl + "/synthesize/synthesizeTree", {
             params: {
-              oid: 0,
+              id: 0,
+              name: "",
+              type: "1",
             },
           })
           .then((res) => {
-            return resolve(res.data.data);
+            console.log("res", res);
+            let newData = res.data.data.map((item) => {
+              return Object.assign(
+                {},
+                {
+                  id: item.id,
+                  label: item.mc,
+                  pid: item.pid,
+                }
+              );
+            });
+            return resolve(newData);
           })
           .catch((error) => {});
       }
@@ -123,14 +136,26 @@ export default {
         this.$axios
           .get(window.wanggeUrl, {
             params: {
-              oid: node.data.oid,
+              id: node.data.id,
+              name: "",
+              type: "1",
             },
           })
           .then((res) => {
             if (res.data.data == null || undefined || "") {
               return resolve([]);
             } else {
-              return resolve(res.data.data);
+              let newData = res.data.data.map((item) => {
+                return Object.assign(
+                  {},
+                  {
+                    id: item.id,
+                    label: item.mc,
+                    pid: item.pid,
+                  }
+                );
+              });
+              return resolve(newData);
             }
           })
           .catch((error) => {});
@@ -138,6 +163,39 @@ export default {
         return resolve([]);
       }
     },
+    // loadNode(node, resolve) {
+    //   if (node.level === 0) {
+    //     // return this.getList(resolve)
+    //     this.$axios
+    //       .get(window.wanggeUrl, {
+    //         params: {
+    //           oid: 0,
+    //         },
+    //       })
+    //       .then((res) => {
+    //         return resolve(res.data.data);
+    //       })
+    //       .catch((error) => {});
+    //   }
+    //   if (node.level >= 1) {
+    //     this.$axios
+    //       .get(window.wanggeUrl, {
+    //         params: {
+    //           oid: node.data.oid,
+    //         },
+    //       })
+    //       .then((res) => {
+    //         if (res.data.data == null || undefined || "") {
+    //           return resolve([]);
+    //         } else {
+    //           return resolve(res.data.data);
+    //         }
+    //       })
+    //       .catch((error) => {});
+    //   } else {
+    //     return resolve([]);
+    //   }
+    // },
     filterNode(value, data) {
       if (!value) return true;
       return data.label.indexOf(value) !== -1;
@@ -158,12 +216,12 @@ export default {
 
     // 复选框被选中时
     selectTree(node, list) {
-      const node2 = this.$refs.treeForm_mx.getNode(node.oid);
+      const node2 = this.$refs.treeForm_mx.getNode(node.id);
       this.setNode(node2);
       if (list.checkedKeys.length == 2) {
-        this.$refs.treeForm_mx.setCheckedKeys([node.oid]);
+        this.$refs.treeForm_mx.setCheckedKeys([node.id]);
       }
-      if (this.selectData.id != node.oid) {
+      if (this.selectData.id != node.id) {
         this.selectData = node;
         this.selectNode = node2;
       } else {
@@ -174,7 +232,7 @@ export default {
     setNode(node) {
       let ids = [];
       let showLefts = false;
-      ids.push(node.data.oid);
+      ids.push(node.data.id);
       if (node.checked) {
         // 展示右侧，并发送消息
         this.$emit("showRight", true);
@@ -190,10 +248,10 @@ export default {
         this.setChildenNode(node);
       }
       this.$emit("getIds", ids);
-      this.$emit("getOid", node.data.oid);
+      this.$emit("getOid", node.data.id);
       let that = this;
       setTimeout(() => {
-        that.$bus.$emit("leftOid", node.data.oid);
+        that.$bus.$emit("leftOid", node.data.id);
       }, 50);
     },
     backVertices(e) {
@@ -262,9 +320,9 @@ export default {
     },
     handleCheckChange(data, checked, indeterminate) {
       if (checked) {
-        let node2 = this.$refs.treeForm_mx.getNode(data.oid);
+        let node2 = this.$refs.treeForm_mx.getNode(data.id);
         this.setNode(node2);
-        this.$refs.treeForm_mx.setCheckedKeys([data.oid]);
+        this.$refs.treeForm_mx.setCheckedKeys([data.id]);
       }
     },
     // 获取树状图
