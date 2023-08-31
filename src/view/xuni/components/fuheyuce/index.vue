@@ -75,6 +75,7 @@ export default {
   },
   data() {
     return {
+      baseData:{},
       show: false,
       showRights: false,
       ids: [],
@@ -95,7 +96,13 @@ export default {
       that.navIndex = 0;
       that.detiles2 = true;
     });
-
+    that.$bus.$on("areaId", (data) => {
+      // alert(id)
+      that.baseData=data
+      setTimeout(()=>{
+        that.$bus.$emit("sendId", data);
+      },50)
+    });
     that.$bus.$on("returnMain", () => {
       that.detiles1 = true;
       that.showNavs = false;
@@ -125,6 +132,10 @@ export default {
       this.showRights = e;
     },
     navClick(e) {
+      let that = this
+      setTimeout(()=>{
+        that.$bus.$emit("sendId", this.baseData);
+      },50)
       this.navIndex = e;
       if (e == 2 || e == 4) {
         this.isShowRight = false;

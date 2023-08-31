@@ -12,7 +12,7 @@
       <span>模型资产导航树</span>
     </div> -->
     <div class="j_titles">
-      <span>网格架构树qqqq</span>
+      <span>网格架构树</span>
     </div>
     <div class="j_ss">
       <input class="ddd" placeholder="搜索" />
@@ -49,6 +49,7 @@ export default {
   name: "fhLeft",
   data() {
     return {
+      checkData:{},
       // 是否显示编辑弹框
       showMB: false,
       showQr: false, //是否显示确认按钮
@@ -200,6 +201,11 @@ export default {
       this.$emit("getOid", node.data.id);
       let that = this;
       setTimeout(() => {
+        that.checkData.id=node.data.id
+        that.checkData.name=node.data.mc
+
+        // console.log(node.data)
+        // that.name = node.data.id
         that.$bus.$emit("leftOid", node.data.id);
       }, 50);
     },
@@ -320,6 +326,7 @@ export default {
     // 确认
     okClick() {
       this.$bus.$emit("initSubpage", true);
+      this.$bus.$emit("areaId", this.checkData);
     },
   },
 };

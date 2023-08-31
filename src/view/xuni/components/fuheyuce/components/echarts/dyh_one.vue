@@ -7,13 +7,17 @@ export default {
   props: ["echartsData"],
   data() {
     return {
+      origData:{},
+      date:[],
+      value:[],
       pieData: [],
       xData: ["2017", "2018", "2019", "2020", "2021", "2022", "2023"],
       yData: [1900, 2000, 2800, 4000, 3900, 2000, 3000],
     };
   },
   mounted() {
-    this.myecharts();
+    this.watchId()
+    // this.myecharts();
     this.WidthAdaptive();
   },
   watch: {
@@ -22,6 +26,33 @@ export default {
     },
   },
   methods: {
+    watchId(){
+      let that = this
+      that.$bus.$on("sendId", (e) => {
+        that.origData = e;
+        that.baseData={}
+        this.getBaseData()
+      })
+    },
+    async getBaseData(){
+      await this.$axios
+          .get(window.wgApiUrl + "/loadForecast/loadForecastUserChangeTrend", {
+            // .get("http://192.168.2.21:8025/rackAnalysis/rackAnalysisContactAnalysis", {
+            params: {
+              areaId:this.origData.id,
+              // type:this.selectId?this.selectId:0
+            },
+          }).then(res=>{
+            this.date=[]
+            this.value=[]
+            res.data.data.map(item=>{
+              this.date.push(item.sj)
+              this.value.push(item.sl)
+            })
+            // this.baseData=res.data.data
+          })
+      this.myecharts()
+    },
     WidthAdaptive(res) {
       var windth = window.screen.width;
 
@@ -80,7 +111,7 @@ export default {
           axisTick: {
             show: false,
           },
-          data: this.xData,
+          data: this.date,
         },
         yAxis: {
           type: "value",
@@ -185,7 +216,7 @@ export default {
             emphasis: {
               focus: "series",
             },
-            data: this.yData,
+            data: this.value,
           },
         ],
       };

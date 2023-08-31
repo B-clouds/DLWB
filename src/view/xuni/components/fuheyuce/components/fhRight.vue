@@ -7,14 +7,14 @@
       </div>
       <div class="qy_info">
         <span class="qy_name1">区域名称：</span>
-        <span class="qy_name2">XXXXX区域名称</span>
+        <span class="qy_name2">{{ baseData.qymc }}</span>
       </div>
       <div class="qy_content">
         <div class="qy_item">
           <img src="./img/qymj.png" class="qy_icon" />
           <div class="qy_data">
             <div class="qy_value">
-              <span class="qy_num">6274</span>
+              <span class="qy_num">{{ baseData.qymj }}</span>
               <span class="qy_unit">㎡</span>
             </div>
             <span class="qy_name">区域面积</span>
@@ -24,7 +24,7 @@
           <img src="./img/qyfl.png" class="qy_icon" />
           <div class="qy_data">
             <div class="qy_value">
-              <span class="qy_num">xxxx</span>
+              <span class="qy_num">{{ baseData.qyfl }}</span>
               <span class="qy_unit"></span>
             </div>
             <span class="qy_name">区域分类</span>
@@ -34,7 +34,7 @@
           <img src="./img/fhmd.png" class="qy_icon" />
           <div class="qy_data">
             <div class="qy_value">
-              <span class="qy_num">274</span>
+              <span class="qy_num">{{ baseData.fhmd }}</span>
               <span class="qy_unit">kg/m³</span>
             </div>
             <span class="qy_name">负荷密度</span>
@@ -44,7 +44,7 @@
           <img src="./img/yjmd.png" class="qy_icon" />
           <div class="qy_data">
             <div class="qy_value">
-              <span class="qy_num">741</span>
+              <span class="qy_num">{{ baseData.yjmd }}</span>
               <span class="qy_unit">kg/m³</span>
             </div>
             <span class="qy_name">远景密度</span>
@@ -81,12 +81,15 @@ export default {
   watch: {
     colors(e) {},
   },
-  mounted() {},
+  mounted() {
+    this.watchId()
+  },
   methods: {
     watchId(){
       let that = this
       that.$bus.$on("leftOid", (e) => {
         that.id = e;
+        that.baseData={}
         // console.log('=========')
         this.getBaseData()
         // console.log(that.id)
@@ -101,7 +104,8 @@ export default {
               // type:this.selectId?this.selectId:0
             },
           }).then(res=>{
-            // this.
+
+            this.baseData=res.data.data[0]
           })
     }
   },

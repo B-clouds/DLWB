@@ -3,7 +3,7 @@
     <div class="gl_top">
       <span class="span1">当前区域：</span>
       <div class="names">
-        <span>xxxxx区域名称</span>
+        <span>{{ origData.name }}</span>
       </div>
       <div class="fanhui" @click="returnMain"></div>
     </div>
@@ -16,7 +16,35 @@ export default {
   components: {
     
   },
+  data() {
+    return{
+      origData:{},
+      baseData:{},
+    }
+  },
+  mounted() {
+    this.watchId()
+  },
   methods: {
+    watchId(){
+      let that = this
+      that.$bus.$on("sendId", (e) => {
+        that.origData = e;
+        that.baseData={}
+        // alert(e)
+        that.getBaseData()
+      })
+    },
+    async getBaseData(){
+      await this.$axios
+          .get(window.wgApiUrl + "/loadForecast/loadForecastUserStatus", { //改路径对参数就行
+            params: {
+              areaId:this.origData.id,
+            },
+          }).then(res=>{
+            this.baseData=res.data.data[0]
+          })
+    },
     returnMain() {
       this.$bus.$emit("returnMain", true);
     },

@@ -7,6 +7,9 @@ export default {
   props: ["echartsData"],
   data() {
     return {
+      origData:{},
+      date:[],
+      value: {xmsl:[],zrl:[]},
       pieData: [],
       xData: ["12.01", "12.02", "12.04", "12.05", "12.06", "12.07"],
       yData: [19, 20, 28, 40, 49, 70],
@@ -14,7 +17,8 @@ export default {
     };
   },
   mounted() {
-    this.myecharts();
+    // this.myecharts();
+    this.watchId()
     this.WidthAdaptive();
   },
   watch: {
@@ -23,6 +27,39 @@ export default {
     },
   },
   methods: {
+    watchId(){
+      let that = this
+      that.$bus.$on("sendId", (e) => {
+        that.origData = e;
+        that.baseData={}
+        this.getBaseData()
+      })
+    },
+    async getBaseData(){
+      await this.$axios
+          .get(window.wgApiUrl + "/loadForecast/loadForecastPlanningProject", {
+            // .get("http://192.168.2.21:8025/rackAnalysis/rackAnalysisContactAnalysis", {
+            params: {
+              areaId:this.origData.id,
+              // type:this.selectId?this.selectId:0
+            },
+          }).then(res=>{
+            this.date=[]
+            this.value={xmsl:[],zrl:[]},
+            res.data.data.map(item=>{
+              if(item.type=='0'){
+                this.date.push(item.sj)
+                this.value.xmsl.push(item.sl)
+              }else if(item.type=='1'){
+                this.value.zrl.push(item.sl)
+              }
+            })
+            // this.baseData=res.data.data
+          })
+      console.log('898989')
+      console.log(this.value)
+      this.myecharts()
+    },
     WidthAdaptive(res) {
       var windth = window.screen.width;
 
@@ -89,7 +126,7 @@ export default {
           axisTick: {
             show: false,
           },
-          data: this.xData,
+          data: this.date,
         },
         yAxis: [
           {
@@ -202,7 +239,7 @@ export default {
             emphasis: {
               focus: "series",
             },
-            data: this.yData,
+            data: this.value.xmsl,
           },
           {
             name: "总容量",
@@ -234,7 +271,7 @@ export default {
             emphasis: {
               focus: "series",
             },
-            data: this.yData1,
+            data: this.value.zrl,
             yAxisIndex: 1,
             barGap: "60%",
           },

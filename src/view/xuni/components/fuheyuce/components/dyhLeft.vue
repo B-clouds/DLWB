@@ -3,7 +3,7 @@
     <div class="gl_top">
       <span class="span1">当前区域：</span>
       <div class="names">
-        <span>xxxxx区域名称</span>
+        <span>{{ origData.name }}</span>
       </div>
       <div class="fanhui" @click="returnMain"></div>
     </div>
@@ -17,7 +17,7 @@
           <div class="yh_data">
             <span class="yh_name">用户总数</span>
             <div class="yh_value">
-              <span>122</span>
+              <span>{{ baseData.yhzs }}</span>
             </div>
           </div>
         </div>
@@ -26,7 +26,7 @@
           <div class="yh_data">
             <span class="yh_name">总负荷</span>
             <div class="yh_value">
-              <span>122</span>
+              <span>{{ baseData.zfh }}</span>
             </div>
           </div>
         </div>
@@ -35,7 +35,7 @@
           <div class="yh_data">
             <span class="yh_name">已接用户</span>
             <div class="yh_value yh_value2">
-              <span>122</span>
+              <span>{{ baseData.yjyh }}</span>
             </div>
           </div>
         </div>
@@ -44,7 +44,7 @@
           <div class="yh_data">
             <span class="yh_name">已接负荷</span>
             <div class="yh_value yh_value2">
-              <span>122</span>
+              <span>{{ baseData.yjfh }}</span>
             </div>
           </div>
         </div>
@@ -53,7 +53,7 @@
           <div class="yh_data">
             <span class="yh_name">在途用户</span>
             <div class="yh_value yh_value3">
-              <span>122</span>
+              <span>{{ baseData.ztyh }}</span>
             </div>
           </div>
         </div>
@@ -62,7 +62,7 @@
           <div class="yh_data">
             <span class="yh_name">在途负荷</span>
             <div class="yh_value yh_value3">
-              <span>122</span>
+              <span>{{ baseData.ztfh }}</span>
             </div>
           </div>
         </div>
@@ -86,7 +86,37 @@ export default {
   components: {
     dyh_one,
   },
+  data() {
+    return {
+      // baseData:'',
+      origData:{},
+      baseData:{}
+    };
+  },
+  mounted() {
+    this.watchId()
+  },
   methods: {
+    watchId(){
+      let that = this
+      that.$bus.$on("sendId", (e) => {
+        that.origData = e;
+        that.baseData={}
+        that.getBaseData()
+      })
+    },
+    async getBaseData(){
+      await this.$axios
+          .get(window.wgApiUrl + "/loadForecast/loadForecastUserStatus", {
+            // .get("http://192.168.2.21:8025/rackAnalysis/rackAnalysisContactAnalysis", {
+            params: {
+              areaId:this.origData.id,
+              // type:this.selectId?this.selectId:0
+            },
+          }).then(res=>{
+              this.baseData=res.data.data[0]
+          })
+    },
     returnMain() {
       this.$bus.$emit("returnMain", true);
     },

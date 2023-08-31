@@ -3,7 +3,7 @@
     <div class="gl_top">
       <span class="span1">当前区域：</span>
       <div class="names">
-        <span>xxxxx区域名称</span>
+        <span>{{ origData.name }}</span>
       </div>
       <div class="fanhui" @click="returnMain"></div>
     </div>
@@ -15,42 +15,42 @@
         <div class="gk_item">
           <span class="gk_name">最大负荷</span>
           <div class="gk_data">
-            <span class="gk_value">xxxx</span>
+            <span class="gk_value">{{ baseData.zdfh }}</span>
             <span class="gk_unit">kWh</span>
           </div>
         </div>
         <div class="gk_item">
           <span class="gk_name">最小负荷</span>
           <div class="gk_data">
-            <span class="gk_value">xxxx</span>
+            <span class="gk_value">{{ baseData.zxfh }}</span>
             <span class="gk_unit">kWh</span>
           </div>
         </div>
         <div class="gk_item">
           <span class="gk_name">平均负荷</span>
           <div class="gk_data">
-            <span class="gk_value">xxxx</span>
+            <span class="gk_value">{{ baseData.pjfh }}</span>
             <span class="gk_unit">kWh</span>
           </div>
         </div>
         <div class="gk_item">
           <span class="gk_name">当前负荷</span>
           <div class="gk_data">
-            <span class="gk_value">xxxx</span>
+            <span class="gk_value">{{ baseData.dqfh }}</span>
             <span class="gk_unit">kWh</span>
           </div>
         </div>
         <div class="gk_item">
           <span class="gk_name">去年最大负荷</span>
           <div class="gk_data">
-            <span class="gk_value">xxxx</span>
+            <span class="gk_value">{{ baseData.qnzdfh }}</span>
             <span class="gk_unit">kWh</span>
           </div>
         </div>
         <div class="gk_item">
           <span class="gk_name">负荷自然增长率</span>
           <div class="gk_data">
-            <span class="gk_value">50</span>
+            <span class="gk_value">{{ baseData.fhzrzcl }}</span>
             <span class="gk_unit">%</span>
           </div>
         </div>
@@ -63,7 +63,37 @@
 export default {
   name: "fhgkLeft",
   components: {},
+  data() {
+    return {
+      // baseData:'',
+      origData:{},
+      baseData:{}
+    };
+  },
+  mounted() {
+    this.watchId()
+  },
   methods: {
+    watchId(){
+      let that = this
+      that.$bus.$on("sendId", (e) => {
+        that.origData = e;
+        that.baseData={}
+        this.getBaseData()
+      })
+    },
+    async getBaseData(){
+      await this.$axios
+          .get(window.wgApiUrl + "/loadForecast/loadForecastLoadGeneralize", {
+            // .get("http://192.168.2.21:8025/rackAnalysis/rackAnalysisContactAnalysis", {
+            params: {
+              areaId:this.origData.id,
+              // type:this.selectId?this.selectId:0
+            },
+          }).then(res=>{
+            this.baseData=res.data.data[0]
+          })
+    },
     returnMain() {
       this.$bus.$emit("returnMain", true);
     },
