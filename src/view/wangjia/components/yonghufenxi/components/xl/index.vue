@@ -1,29 +1,25 @@
 <template>
-  <div class="dz">
+  <div class="dz" v-if="show">
     <transition name="transitionLeft">
-      <newLieBiao @isShowItem="isShowItem"></newLieBiao>
+      <newLieBiao @isShowItem="isShowItem" v-show="show"></newLieBiao>
     </transition>
     <!-- 返回按钮 -->
-    <transition name="transitionRight">
-      <!-- <div class="fh" @click="fhSs"></div> -->
-    </transition>
+    <!-- <div class="fh" @click="fhSs"></div> -->
     <!-- 信息缩放按钮 -->
-    <transition name="transitionRight">
-      <!-- <div class="xxsf" :class="showXX ? 'xxsf2' : ''" @click="sfxxClick"></div> -->
-    </transition>
+    <!-- <div class="xxsf" :class="showXX ? 'xxsf2' : ''" @click="sfxxClick"></div> -->
   </div>
 </template>
 
 <script>
 import newLieBiao from "./components/newLieBiao.vue";
 export default {
-  name: "dz",
+  name: "xl",
   components: {
     newLieBiao,
   },
   data() {
     return {
-      show: false,
+      show: true,
       showXX: true,
     };
   },

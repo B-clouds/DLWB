@@ -40,6 +40,7 @@
       <!-- 箭头 -->
       <div @click="jtClick" class="jianTou"></div>
     </div>
+
     <!-- 左侧搜索时展示 -->
     <div class="leftBtns" v-show="showZDtb && !showRZK">
       <div class="btnImg"></div>
@@ -48,7 +49,7 @@
         @click="showWjDz()"
         :class="showwjdz ? 'rightBlock2s' : ''"
       >
-        <span>网架电站</span>
+        <span>网架线路</span>
       </div>
     </div>
     <!-- 显示的线路 -->
@@ -104,6 +105,7 @@
         </div>
       </div>
     </div>
+
     <!-- 左侧模块按钮展开 -->
     <transition name="transitionLeft">
       <div class="leftBtn leftBtn2" v-show="showZDtb && showTJ">
@@ -146,101 +148,95 @@
         <div class="tjTT">
           <span>条件选择</span>
         </div>
-        <div class="tjBlock">
-          <div class="tops">站房类型</div>
-          <div class="bottoms">
-            <div class="inputs">
-              <el-select
-                v-model="zfType_value"
-                @visible-change="zfTypeClick"
-                placeholder=""
-              >
-                <el-option
-                  v-for="item in zfType"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                >
-                </el-option>
-              </el-select>
-              <img v-show="!zfType_show" src="./img/xia.png" />
-              <img v-show="zfType_show" src="./img/shang.png" />
-            </div>
-          </div>
-        </div>
-        <div class="tjBlock">
-          <div class="tops">站房名称</div>
-          <div class="bottoms">
-            <div class="inputs">
+        <div class="tj_bck">
+          <!-- 线路名称 -->
+          <div class="tjBlock">
+            <div class="tops">设备类型</div>
+            <div class="bottoms">
               <div class="inputs">
-                <input placeholder="" v-model="zf_search" />
+                <div class="inputs">
+                  <input placeholder="" v-model="sblx" />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="tjBlock">
-          <div class="tops">运维单位</div>
-          <div class="bottoms">
-            <div class="inputs">
-              <el-select
-                v-model="zf_oam_value"
-                @visible-change="oamClick"
-                placeholder=""
-              >
-                <el-option
-                  v-for="item in oam"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                >
-                </el-option>
-              </el-select>
-              <img v-show="!oam_show" src="./img/xia.png" />
-              <img v-show="oam_show" src="./img/shang.png" />
+          <!-- 起点名称 -->
+          <div class="tjBlock">
+            <div class="tops">设备名称</div>
+            <div class="bottoms">
+              <div class="inputs">
+                <div class="inputs">
+                  <input placeholder="" v-model="sbmc" />
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="tjBlock">
-          <div class="tops">电压等级</div>
-          <div class="bottoms">
-            <div class="inputs">
-              <el-select
-                v-model="zf_dy_value"
-                @visible-change="dyClick"
-                placeholder=""
-              >
-                <el-option
-                  v-for="item in dianya"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
+          <div class="tjBlock">
+            <div class="tops">运维单位</div>
+            <div class="bottoms">
+              <div class="inputs">
+                <el-select
+                  v-model="ywdw"
+                  @visible-change="oamClick"
+                  placeholder=""
                 >
-                </el-option>
-              </el-select>
-              <img v-show="!dy_show" src="./img/xia.png" />
-              <img v-show="dy_show" src="./img/shang.png" />
+                  <el-option
+                    v-for="item in oam"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  >
+                  </el-option>
+                </el-select>
+                <img v-show="!oam_show" src="./img/xia.png" />
+                <img v-show="oam_show" src="./img/shang.png" />
+              </div>
             </div>
           </div>
-        </div>
-        <div class="tjBlock">
-          <div class="tops">模型状态</div>
-          <div class="bottoms">
-            <div class="inputs">
-              <el-select
-                v-model="zf_cj_value"
-                @visible-change="cjClick"
-                placeholder=""
-              >
-                <el-option
-                  v-for="item in chuangjian"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
+          <!-- 电压等级 -->
+          <div class="tjBlock">
+            <div class="tops">电压等级</div>
+            <div class="bottoms">
+              <div class="inputs">
+                <el-select
+                  v-model="dydj"
+                  @visible-change="dyClick"
+                  placeholder=""
                 >
-                </el-option>
-              </el-select>
-              <img v-show="!cj_show" src="./img/xia.png" />
-              <img v-show="cj_show" src="./img/shang.png" />
+                  <el-option
+                    v-for="item in dianya"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  >
+                  </el-option>
+                </el-select>
+                <img v-show="!dy_show" src="./img/xia.png" />
+                <img v-show="dy_show" src="./img/shang.png" />
+              </div>
+            </div>
+          </div>
+          <!-- 所属地市 -->
+          <div class="tjBlock">
+            <div class="tops">模型状态</div>
+            <div class="bottoms">
+              <div class="inputs">
+                <el-select
+                  v-model="fbzt"
+                  @visible-change="xl_dsClick"
+                  placeholder=""
+                >
+                  <el-option
+                    v-for="item in xl_ds_suoshu"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  >
+                  </el-option>
+                </el-select>
+                <img v-show="!xl_ds_show" src="./img/xia.png" />
+                <img v-show="xl_ds_show" src="./img/shang.png" />
+              </div>
             </div>
           </div>
         </div>
@@ -262,18 +258,28 @@
         </div>
         <div class="t_bg">
           <el-table
+            v-if="dataList.length < 1"
+            :data="dataList"
+            tooltip-effect="dark"
+            class="e_tables"
+            highlight-current-row
+            @select="s_Click"
+            @select-all="s_all_Click"
+            key="geng40"
+          >
+          </el-table>
+          <el-table
             v-if="dataList.length > 0"
-            ref="mug27"
+            ref="mug29"
             :data="dataList"
             tooltip-effect="dark"
             class="e_tables"
             highlight-current-row
             @row-dblclick="hangClick"
-            @row-click="hang2s"
             @row-contextmenu="unHangClicks"
             @select="s_Click"
             @select-all="s_all_Click"
-            key="geng38"
+            key="geng41"
           >
             <el-table-column
               v-if="showSelect"
@@ -333,18 +339,28 @@
         </div>
         <div class="t_bg">
           <el-table
+            v-if="dataList.length < 1"
+            :data="dataList"
+            tooltip-effect="dark"
+            class="e_tables"
+            highlight-current-row
+            @select="s_Click"
+            @select-all="s_all_Click"
+            key="geng42"
+          >
+          </el-table>
+          <el-table
             v-if="dataList.length > 0"
-            ref="mug26"
+            ref="mug28"
             :data="dataList"
             tooltip-effect="dark"
             class="e_tables"
             highlight-current-row
             @row-dblclick="hangClick"
-            @row-click="hangs"
             @row-contextmenu="unHangClick"
             @select="s_Click"
             @select-all="s_all_Click"
-            key="geng39"
+            key="geng43"
           >
             <el-table-column
               v-if="showSelect"
@@ -360,7 +376,7 @@
               v-for="item in tableColumnList"
               :key="item.prop"
               fixed="left"
-              min-width="20"
+              min-width="140"
               show-overflow-tooltip
             >
               <template slot-scope="scope">
@@ -400,16 +416,25 @@ export default {
     zfType_value(e, f) {
       this.getDateLists();
     },
-    zf_oam_value(e, f) {
+    ywdw(e, f) {
       this.getDateLists();
     },
-    zf_dy_value(e, f) {
+    dydj(e, f) {
       this.getDateLists();
     },
     zf_cj_value(e, f) {
       this.getDateLists();
     },
-    zf_search(e, f) {
+    sblx(e, f) {
+      this.getDateLists();
+    },
+    sbmc(e, f) {
+      this.getDateLists();
+    },
+    xl_zdname(e, f) {
+      this.getDateLists();
+    },
+    fbzt(e, f) {
       this.getDateLists();
     },
     showTJ(e, f) {
@@ -418,25 +443,16 @@ export default {
   },
   data() {
     return {
-      showwjdz: false,
       showDemo: true,
       showTJ: true,
       btnIndex: -1, //是否选中按钮
-      // ------------------------站房类型------------------
-      zfType: [
-        {
-          value: "变电站",
-          label: "变电站",
-        },
-        {
-          value: "",
-          label: "全部",
-        },
-      ],
-      zfType_value: "",
-      zfType_show: false,
-      //名称
-      zf_search: "",
+
+      //线路名称
+      sblx: "",
+      // 起点名称
+      sbmc: "",
+      // 终点名称
+      xl_zdname: "",
       // ----------------------------模型----------------------------------
       oam: [
         {
@@ -448,7 +464,7 @@ export default {
           label: "全部",
         },
       ],
-      zf_oam_value: "",
+      ywdw: "",
       oam_show: false,
       // ------------------------------电压--------------------------
       dianya: [
@@ -485,8 +501,21 @@ export default {
           label: "全部",
         },
       ],
-      zf_dy_value: "",
+      dydj: "",
       dy_show: "",
+      // 线路所属地市
+      xl_ds_suoshu: [
+        {
+          value: "已发布",
+          label: "已发布",
+        },
+        {
+          value: "未发布",
+          label: "未发布",
+        },
+      ],
+      fbzt: "",
+      xl_ds_show: "",
       // --------------------------模型状态---------------------------
       chuangjian: [
         {
@@ -509,8 +538,8 @@ export default {
       zf_cj_value: "",
       cj_show: false,
       // -------------------------------列表数据-----------------------------
-      dataList: [{}],
-      tableColumnList: [{ propName: "1111" }],
+      dataList: [],
+      tableColumnList: [],
       tableColumnList2: [],
       tableColumnList3: [],
       tableColumnList4: [], //存放接口数据 收缩表头
@@ -523,6 +552,7 @@ export default {
       page: 1,
       page1: 1,
       total: 0,
+      showXL: false,
       xlKV: [], //接口获取线路kv
       xlIndex: -1,
       xlIndex1: -1,
@@ -537,42 +567,26 @@ export default {
       showkv5: false,
       showkv6: false,
       showZDtb: true,
+      showwjdz: false,
     };
   },
-  deactivated() {
-    this.zfType_value = "";
-    this.zf_search = "";
-    this.zf_oam_value = "";
-    this.zf_dy_value = "";
-    this.zf_cj_value = "";
-    // this.page = 1;
-    // this.page1 = 1;
-    this.xlIndex = -1;
-    this.xlIndex1 = -1;
-    this.xlIndex2 = -1;
-    this.xlIndex3 = -1;
-    this.xlIndex4 = -1;
-    this.xlIndex5 = -1;
-  },
   activated() {
-    console.log("------------1111111111-------------");
     let data = {
-      functionName: "GetSelectHStationKv",
-      backFunctionName: "BackGetSelectKvs",
+      functionName: "GetSelectKv",
+      backFunctionName: "BackGetSelectKv",
       functionParameters: [
         {
-          key: "GetSelectHStationKv",
+          key: "GetSelectKv",
           value: "",
         },
       ],
     };
     ue.interface.broadcast("PSAPI", JSON.stringify(data));
-    window.ue.interface.BackGetSelectKvs = this.BackGetSelectKvs;
-    console.log(data, "调用-------------");
+    window.ue.interface.BackGetSelectKv = this.BackGetSelectKv;
     // 获取表头
     let v = {
-      URL: "data/tableColumnInfo/" + 1000 + "/" + 0 + "/" + 1000 + "/" + 1,
-      StructName: "获取电站表头",
+      URL: "data/tableColumnInfo/" + 1002 + "/" + 0 + "/" + 1002 + "/" + 1,
+      StructName: "获取变压器表头",
       verbType: "GET",
     };
     let data2 = {
@@ -588,6 +602,18 @@ export default {
     ue.interface.broadcast("PSAPI", JSON.stringify(data2));
     window.ue.interface.getxlTh = this.getxlTh;
   },
+  deactivated() {
+    this.zfType_value = "";
+    this.fbzt = "";
+    this.sblx = "";
+    this.sbmc = "";
+    this.xl_zdname = "";
+    this.ywdw = "";
+    this.dydj = "";
+    this.zf_cj_value = "";
+    // this.page = 1;
+    // this.page1 = 1;
+  },
   mounted() {
     let that = this;
     that.$bus.$on("leixChaXun", () => {
@@ -598,52 +624,6 @@ export default {
     });
   },
   methods: {
-    hang2s(row, column, event) {
-      if (this.showSelect) {
-        this.$refs.mug27.toggleRowSelection(row);
-        let arr = [];
-        arr.push(row);
-        let data = arr;
-        let id = arr[0].oid;
-        if (this.selectList.includes(id)) {
-          for (let j = 0; j < this.selectList.length; j++) {
-            if (this.selectList[j] == id) {
-              this.selectList.splice(j, 1);
-            }
-          }
-        } else {
-          for (let i = 0; i < data.length; i++) {
-            this.selectList.push(data[i].oid);
-          }
-        }
-
-        this.selectList = Array.from(new Set(this.selectList));
-      } else {
-      }
-    },
-    hangs(row, column, event) {
-      if (this.showSelect) {
-        this.$refs.mug26.toggleRowSelection(row);
-        let arr = [];
-        arr.push(row);
-        let data = arr;
-        let id = arr[0].oid;
-        if (this.selectList.includes(id)) {
-          for (let j = 0; j < this.selectList.length; j++) {
-            if (this.selectList[j] == id) {
-              this.selectList.splice(j, 1);
-            }
-          }
-        } else {
-          for (let i = 0; i < data.length; i++) {
-            this.selectList.push(data[i].oid);
-          }
-        }
-
-        this.selectList = Array.from(new Set(this.selectList));
-      } else {
-      }
-    },
     // 是否显示网架电站
     showWjDz() {
       if (this.showwjdz) {
@@ -716,12 +696,11 @@ export default {
       }
       this.getDateLists();
     },
-    BackGetSelectKvs(e) {
+    xl_dsClick(e) {
+      this.xl_ds_show = e;
+    },
+    BackGetSelectKv(e) {
       let data = JSON.parse(e).value;
-      console.log(
-        "------------------------------------------11111111111111111",
-        e
-      );
       this.xlKV = data;
       for (let i = 0; i < this.xlKV.length; i++) {
         if (this.xlKV[i] == "交流500kV") {
@@ -867,28 +846,32 @@ export default {
       } else {
         this.tableColumnList = this.tableColumnList4;
       }
-      console.log("--------------", "重新发送请求", e);
     },
     // 双击单行
     hangClick(e) {
       let v = {
-        type: "SelectHStation",
-        selectType: "true",
-        value: e.oid,
+        FocusTarget: {
+          target: "Tower",
+          ID: e.oid,
+          FocusType: true,
+          IDType: "Tower",
+          EditMode: false,
+        },
       };
       let data = {
-        functionName: "WireFrame",
+        functionName: "FocusTower",
         backFunctionName: "",
         functionParameters: [
           {
-            key: "WireFrame",
+            key: "FocusTarget",
             value: JSON.stringify(v),
           },
         ],
       };
+
       ue.interface.broadcast("PSAPI", JSON.stringify(data));
       window.yhOid = e.oid;
-      window.yhTypes = 0;
+      window.yhTypes = 2;
       this.$router.push({
         path: "/wj/yhxq",
       });
@@ -896,12 +879,12 @@ export default {
 
     // 右键清除选中
     unHangClick() {
-      this.$refs.mug26.setCurrentRow();
+      this.$refs.mug28.setCurrentRow();
     },
 
     // 右键清除选中
     unHangClicks() {
-      this.$refs.mug27.setCurrentRow();
+      this.$refs.mug29.setCurrentRow();
     },
     // 点击单选
     s_Click(e) {
@@ -935,6 +918,24 @@ export default {
           this.showTJ = true;
         }
         this.getDateLists(0);
+        // 获取表头
+        let v = {
+          URL: "data/tableColumnInfo/" + 1002 + "/" + 0 + "/" + 1002 + "/" + 1,
+          StructName: "获取线路表头",
+          verbType: "GET",
+        };
+        let data2 = {
+          functionName: "WebServerMsg",
+          backFunctionName: "getxlTh",
+          functionParameters: [
+            {
+              key: "WebServerMsg",
+              value: JSON.stringify(v),
+            },
+          ],
+        };
+        ue.interface.broadcast("PSAPI", JSON.stringify(data2));
+        window.ue.interface.getxlTh = this.getxlTh;
       }
     },
     getDateLists(e) {
@@ -953,6 +954,7 @@ export default {
         newPage = this.page1;
       }
       let v;
+      // 线路
       if (window.isXZ == 1) {
         v = {
           URL: "xa/getCustomData",
@@ -962,35 +964,31 @@ export default {
             field: "dydj",
             queryData: [
               {
-                key: "dzlx",
-                value: this.zfType_value,
+                key: "sblx",
+                value: this.sblx,
               },
               {
-                key: "bdzmc",
-                value: this.zf_search,
-              },
-              {
-                key: "ywdw",
-                value: this.zf_oam_value,
+                key: "sbmc",
+                value: this.sbmc,
               },
               {
                 key: "dydj",
-                value: this.zf_dy_value,
+                value: this.dydj,
               },
               {
                 key: "fbzt",
-                value: this.zf_cj_value,
-              },
-              {
-                key: "sfxzdw",
-                value: window.isXZ,
+                value: this.fbzt,
               },
               {
                 key: "ssdt",
                 value: window.xianMing,
               },
+              {
+                key: "Str_TowerType",
+                value: "byq",
+              },
             ],
-            name: "Data_HStationInfo",
+            name: "Data_TowerInfo",
             pageNo: newPage,
             pageSize: 14,
             expansionData:
@@ -999,7 +997,7 @@ export default {
               "' and  tyrq <='" +
               window.xzRiQi +
               "'",
-            tbName: "LineFileInfo",
+            tbName: "TowerInfo",
           },
           verbType: "POST",
         };
@@ -1012,38 +1010,34 @@ export default {
             field: "dydj",
             queryData: [
               {
-                key: "dzlx",
-                value: this.zfType_value,
+                key: "sblx",
+                value: this.sblx,
               },
               {
-                key: "bdzmc",
-                value: this.zf_search,
-              },
-              {
-                key: "ywdw",
-                value: this.zf_oam_value,
+                key: "sbmc",
+                value: this.sbmc,
               },
               {
                 key: "dydj",
-                value: this.zf_dy_value,
+                value: this.dydj,
               },
               {
                 key: "fbzt",
-                value: this.zf_cj_value,
-              },
-              {
-                key: "sfxzdw",
-                value: window.isXZ,
+                value: this.fbzt,
               },
               {
                 key: "ssdt",
                 value: window.xianMing,
               },
+              {
+                key: "Str_TowerType",
+                value: "byq",
+              },
             ],
-            name: "Data_HStationInfo",
+            name: "Data_TowerInfo",
             pageNo: newPage,
             pageSize: 14,
-            tbName: "LineFileInfo",
+            tbName: "TowerInfo",
           },
           verbType: "POST",
         };
@@ -1071,8 +1065,9 @@ export default {
       // this.total = parseInt(data2.total);
       // this.dataList = data2.dataList;
       let data2 = JSON.parse(e);
+      console.log(e, "-----------------------------");
       this.total = parseInt(data2.data.total);
-      this.dataList = data2.data.LineFileInfo;
+      this.dataList = data2.data.TowerInfo;
       if (this.dataList.length > 0) {
         let datas = [];
         for (let i = 0; i < 3; i++) {
@@ -1088,6 +1083,7 @@ export default {
       } else {
         this.dataList = [];
       }
+
       this.$forceUpdate();
     },
     // ----------------------------------------------创建方法---------------
@@ -1120,6 +1116,7 @@ export default {
     },
     zx_create(e) {
       this.dataList = [];
+      this.tableColumnList = [];
       this.selectList = [];
       let that = this;
       setTimeout(() => {
@@ -1138,6 +1135,7 @@ export default {
     },
     zx_publish() {
       this.dataList = [];
+      this.tableColumnList = [];
       this.selectList = [];
 
       let that = this;
@@ -1175,6 +1173,7 @@ export default {
     },
     zx_delete(e) {
       this.dataList = [];
+      this.tableColumnList = [];
       this.selectList = [];
 
       let that = this;
@@ -1388,11 +1387,24 @@ export default {
   background: url("img/tjBtn.png") no-repeat !important;
   background-size: 100% 100% !important;
 }
+
+.tj_bck {
+  width: 100%;
+  height: 470px;
+  margin-top: 50px;
+  overflow-y: scroll;
+}
+.tj_bck::-webkit-scrollbar {
+  display: none;
+}
 .tjTT {
   width: 100%;
   height: 50px;
   display: flex;
   align-items: flex-end;
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 .tjTT > span {
   margin-left: 46px;
@@ -1417,6 +1429,9 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+.tjBlock2 {
+  margin-top: 50px;
 }
 .tjBlock > .tops {
   font-family: SourceHanSansSC-Regular;
@@ -1568,6 +1583,26 @@ export default {
 }
 </style>
 <style scoped>
+.s_show1 {
+  width: 18px;
+  height: 142px;
+  background: url("img/shou1.png") no-repeat !important;
+  background-size: 100% 100% !important;
+  position: absolute;
+  top: 493px;
+  left: 0px;
+}
+.s_show2 {
+  width: 18px;
+  height: 142px;
+  background: url("img/shou2.png") no-repeat !important;
+  background-size: 100% 100% !important;
+  position: absolute;
+  top: 493px;
+  right: 0px;
+}
+</style>
+<style scoped>
 .btnImg {
   width: 52px;
   height: 47px;
@@ -1655,121 +1690,6 @@ export default {
   letter-spacing: 0em !important;
   color: #6bf0ff !important;
   text-shadow: 0px 0px 10px 0px rgba(17, 153, 168, 0.6) !important;
-}
-</style>
-
-<style scoped>
-.s_show1 {
-  width: 18px;
-  height: 142px;
-  background: url("img/shou1.png") no-repeat !important;
-  background-size: 100% 100% !important;
-  position: absolute;
-  top: 493px;
-  left: 0px;
-}
-.s_show2 {
-  width: 18px;
-  height: 142px;
-  background: url("img/shou2.png") no-repeat !important;
-  background-size: 100% 100% !important;
-  position: absolute;
-  top: 493px;
-  right: 0px;
-}
-.zhezhao {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 999999999;
-  /* background: url("img/bg2.png") no-repeat !important;
-  background-size: 100% 100% !important; */
-  background: rgba(1, 11, 23, 0.6);
-}
-.zhezhao2 {
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 99999999 !important;
-
-  background: rgba(1, 11, 23, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.spans {
-  position: absolute;
-  left: 880px;
-  top: 628px;
-  width: 180px;
-  height: 60px;
-  background: url("img/span.png") no-repeat !important;
-  background-size: 100% 100% !important;
-}
-.iconss {
-  width: 158px;
-  height: 158px;
-  position: absolute;
-  left: 904px;
-  top: 412px;
-  background: url("img/icon.png") no-repeat !important;
-  background-size: 100% 100% !important;
-  animation: myRotate 3s infinite;
-}
-
-.bList {
-  width: 100%;
-  height: 240px;
-  position: absolute;
-  left: 0;
-  top: 622px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-.bListItem {
-  width: 100%;
-  height: 40px;
-  display: flex;
-  align-items: center;
-}
-.blSpan {
-  margin-left: 48% !important;
-}
-.bListItem > span {
-  font-family: SourceHanSansSC-Regular;
-  font-size: 20px;
-  font-weight: normal;
-  color: #ffffff;
-  margin-left: 37%;
-}
-.blocks {
-  width: 100%;
-  height: 25px;
-  display: flex;
-  align-items: center;
-  margin-top: 12px;
-}
-.blocks > .icon {
-  width: 18px;
-  height: 18px;
-  margin-left: 10px;
-  margin-right: 10px;
-  background: url("img/x1.png") no-repeat;
-  background-size: 100% 100%;
-}
-.icon2 {
-  background: url("img/x2.png") no-repeat !important;
-  background-size: 100% 100% !important;
-}
-.blocks > span {
-  font-family: SourceHanSansSC-Bold;
-  font-size: 18px;
-  font-weight: bold;
 }
 </style>
 

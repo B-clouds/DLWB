@@ -229,8 +229,8 @@ export default {
   activated() {
     this.show = true;
     this.showNavList = true;
-    this.types = 2;
-    // this.types = window.types;
+    this.types = 0;
+    this.types = window.types;
     console.log(this.types, "--------------1");
   },
   deactivated() {

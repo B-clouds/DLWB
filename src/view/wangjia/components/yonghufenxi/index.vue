@@ -1,29 +1,68 @@
 <template>
   <div class="buidan">
-    <dz />
+    <!-- 站域 -->
+    <dz v-show="listIndex == 0" />
+    <!-- 线域 -->
+    <xl v-show="listIndex == 1" />
+    <!-- 变压器 -->
+    <byq v-show="listIndex == 2" />
+    <!-- 区域 -->
+    <dz v-show="listIndex == 3" />
+
+    <div class="xuanxiang">
+      <div
+        class="block"
+        v-for="(item, index) in list"
+        :key="index"
+        v-show="showList"
+        @click="indexClick(index)"
+        :class="listIndex == index ? 'block2' : ''"
+      >
+        <span>{{ item }}</span>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import dz from "./components/dz/index.vue";
+import xl from "./components/xl/index.vue";
+import byq from "./components/byq/index.vue";
 export default {
   name: "yonghufenxi",
   components: {
     dz,
+    xl,
+    byq,
   },
   data() {
     return {
       show: false,
+      list: ["站域", "线域", "变域", "区域"],
+      listIndex: 0,
+      showList: true,
     };
   },
-  mounted() {},
+  mounted() {
+    let that = this;
+    that.$bus.$on("isShowList", (e) => {
+      that.showList = e;
+    });
+    that.$bus.$on("types", (e) => {
+      this.listIndex = e;
+    });
+  },
   activated() {
     this.show = true;
   },
   deactivated() {
     this.show = false;
   },
-  methods: {},
+  methods: {
+    indexClick(e) {
+      this.listIndex = e;
+    },
+  },
 };
 </script>
 
@@ -103,5 +142,41 @@ export default {
   background: url("img/wr.png") no-repeat !important;
   background-size: 100% 100% !important;
   z-index: -1;
+}
+</style>
+<style scoped>
+.xuanxiang {
+  width: 181px;
+  height: 82px;
+  position: absolute;
+  top: 190px;
+  left: 31px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: space-between;
+}
+.xuanxiang > .block {
+  width: 69px;
+  height: 31px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: url("img/bj.png") no-repeat;
+  background-size: 100% 100%;
+  cursor: pointer;
+}
+.xuanxiang > .block > span {
+  font-family: Source Han Sans SC;
+  font-size: 14px;
+  font-weight: normal;
+  color: rgba(255, 255, 255, 0.7);
+}
+.block2 {
+  background: url("img/bj2.png") no-repeat !important;
+  background-size: 100% 100% !important;
+}
+.block2 > span {
+  color: rgba(255, 255, 255, 1) !important;
 }
 </style>

@@ -116,6 +116,8 @@ const WGFX = () =>
     import('../view/wangjia/components/wanggefenxi/index.vue')
 //  用户分析
 const YHFX = () => import('../view/wangjia/components/yonghufenxi/index.vue')
+// 用户分析详情页面
+const YHXQ = () => import('../view/wangjia/components/yonghufenxi/components/xiangqing/index.vue')
 // 停电分析 
 const TDFX = () => import('../view/wangjia/components/tingdianfenx/index.vue')
 // 全景监测
@@ -401,6 +403,9 @@ const routes = [{
         path: "yhfx",
         name: "yonghufenxi",
         component: YHFX
+    }, {
+        path: "yhxq",
+        component: YHXQ
     }, {
         path: 'tdfx',
         name: "tingdianfenxi",
