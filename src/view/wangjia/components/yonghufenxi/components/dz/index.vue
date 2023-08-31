@@ -1,15 +1,15 @@
 <template>
-  <div class="dz" v-if="show">
+  <div class="dz">
     <transition name="transitionLeft">
-      <newLieBiao @isShowItem="isShowItem" v-show="show"></newLieBiao>
+      <newLieBiao @isShowItem="isShowItem"></newLieBiao>
     </transition>
     <!-- 返回按钮 -->
     <transition name="transitionRight">
-      <div class="fh" @click="fhSs"></div>
+      <!-- <div class="fh" @click="fhSs"></div> -->
     </transition>
     <!-- 信息缩放按钮 -->
     <transition name="transitionRight">
-      <div class="xxsf" :class="showXX ? 'xxsf2' : ''" @click="sfxxClick"></div>
+      <!-- <div class="xxsf" :class="showXX ? 'xxsf2' : ''" @click="sfxxClick"></div> -->
     </transition>
   </div>
 </template>

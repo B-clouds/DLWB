@@ -3,7 +3,7 @@
     <div class="gl_top">
       <span class="span1">当前区域：</span>
       <div class="names">
-        <span>xxxxx区域名称</span>
+        <span>{{ areaName }}</span>
       </div>
       <div class="fanhui" @click="fanhuiClick"></div>
     </div>
@@ -19,7 +19,7 @@
           <div class="rights">
             <div class="tops">阈值设定</div>
             <div class="bottoms">
-              <span class="span1">965</span>
+              <span class="span1">{{ NecessityAnalysisData.yzsd }}</span>
               <span class="span2">xx</span>
             </div>
           </div>
@@ -31,7 +31,7 @@
           <div class="rights">
             <div class="tops">总容量</div>
             <div class="bottoms">
-              <span class="span1">965</span>
+              <span class="span1">{{ NecessityAnalysisData.zrl }}</span>
               <span class="span2">xx</span>
             </div>
           </div>
@@ -45,7 +45,7 @@
           <div class="rights">
             <div class="tops">最大负荷</div>
             <div class="bottoms">
-              <span class="span1">965</span>
+              <span class="span1">{{ NecessityAnalysisData.zdfh }}</span>
               <span class="span2">xx</span>
             </div>
           </div>
@@ -57,7 +57,7 @@
           <div class="rights">
             <div class="tops">负载率</div>
             <div class="bottoms">
-              <span class="span1">96</span>
+              <span class="span1">{{ NecessityAnalysisData.fzl }}</span>
               <span class="span2">%</span>
             </div>
           </div>
@@ -69,10 +69,19 @@
 
 <script>
 export default {
+  props: ["id"],
   name: "zdfxLeft",
   components: {},
   data() {
-    return {};
+    return {
+      areaName: "",
+      NecessityAnalysisData: {},
+    };
+  },
+  mounted() {
+    console.log("this.id", this.id);
+    this.areaName = sessionStorage.getItem("areaName");
+    this.NecessityAnalysisFn();
   },
   methods: {
     gjlxClick(e) {
@@ -83,6 +92,22 @@ export default {
     },
     fanhuiClick() {
       this.$emit("geshihua");
+    },
+    async NecessityAnalysisFn() {
+      this.$axios
+        .get(window.wgApiUrl + "/multipleLoad/siteSelectionNecessityAnalysis", {
+          params: {
+            areaId: "10000",
+          },
+        })
+        .then((res) => {
+          if (res.status == 200) {
+            if (res.data.msg == "query success") {
+              this.NecessityAnalysisData = res.data.data[0];
+            }
+          }
+        })
+        .catch((error) => {});
     },
   },
 };

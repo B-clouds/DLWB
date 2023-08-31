@@ -412,12 +412,15 @@ export default {
     zf_search(e, f) {
       this.getDateLists();
     },
+    showTJ(e, f) {
+      this.$bus.$emit("isShowList", e);
+    },
   },
   data() {
     return {
       showwjdz: false,
       showDemo: true,
-      showTJ: false,
+      showTJ: true,
       btnIndex: -1, //是否选中按钮
       // ------------------------站房类型------------------
       zfType: [
@@ -884,10 +887,10 @@ export default {
         ],
       };
       ue.interface.broadcast("PSAPI", JSON.stringify(data));
-      window.ccOid = e.oid;
-      window.types = 0;
+      window.yhOid = e.oid;
+      window.yhTypes = 0;
       this.$router.push({
-        path: "/wj/ssfxItem",
+        path: "/wj/yhxq",
       });
     },
 

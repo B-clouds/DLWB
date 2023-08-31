@@ -17,3 +17,8 @@ window.xtName = '能源互联网全景智能系统'
 
 // 网格维护 api 通用域名
 window.wgApiUrl = "http://api.dev.picimos.com:8025"
+
+// 用户分析-聚焦后存放oid
+window.yhOid = ""
+// 用户分析-聚焦后存放选中类型 0:站域 1：线域  2：变域 3：区域
+window.yhTypes = 0
