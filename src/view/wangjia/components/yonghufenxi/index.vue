@@ -1,104 +1,29 @@
 <template>
   <div class="buidan">
-    <!-- 列表页阴影 -->
-    <transition name="transitionLeft">
-      <div v-show="show" class="wl"></div>
-    </transition>
-    <transition name="transitionRight">
-      <div v-show="show && bgRight" class="wr"></div>
-    </transition>
-    <!-- 子级导航 -->
-    <transition name="transitionBottom">
-      <div v-show="show && detiles1" class="navs">
-        <div
-          class="blocks"
-          @click="navClick(index)"
-          :class="navIndex == index ? 'blocks2' : ''"
-          v-for="(item, index) in navList"
-          :key="index"
-        >
-          <span>{{ item }}</span>
-        </div>
-      </div>
-    </transition>
-    <!-- 基本管理 -->
-    <yhLeft
-      @showRight="showRight"
-      @getOid="getOid"
-      @getIds="getIds"
-      v-if="show && detiles1"
-    />
-    <yhRight v-if="show && showRights && detiles1"/>
-    <yhSubLeft v-if="show && detiles2"/>
-    <yhSubRight v-if="show && detiles2"/>
+    <dz />
   </div>
 </template>
 
 <script>
-// 基本信息
-import yhLeft from "./components/yhLeft.vue";
-import yhRight from "./components/yhRight.vue";
-import yhSubLeft from "./components/yhSubLeft.vue";
-import yhSubRight from "./components/yhSubRight.vue";
+import dz from "./components/dz/index.vue";
 export default {
   name: "yonghufenxi",
   components: {
-    yhLeft,
-    yhRight,
-    yhSubLeft,
-    yhSubRight,
+    dz,
   },
   data() {
     return {
       show: false,
-      showRights: false,
-      ids: [],
-      oids: 0,
-      detiles1: true,
-      detiles2: false,
-      bgRight: true,
-      navList: ["区域", "路线", "场站"],
-      navIndex: 0,
     };
   },
-  mounted() {
-    let that = this;
-    that.$bus.$on("initSubpage", () => {
-      that.detiles1 = false;
-      that.detiles2 = true;
-      that.bgRight = false;
-    });
-
-    that.$bus.$on("returnMain", () => {
-      that.detiles1 = true;
-      that.detiles2 = false;
-      that.bgRight = true;
-    });
-  },
+  mounted() {},
   activated() {
     this.show = true;
   },
   deactivated() {
-    this.showRights = false;
     this.show = false;
-    this.detiles1 = true;
-    this.detiles2 = false;
-    this.bgRight = true;
   },
-  methods: {
-    getOid(e) {
-      this.oids = e;
-    },
-    getIds(e) {
-      this.ids = e;
-    },
-    showRight(e) {
-      this.showRights = e;
-    },
-    navClick(e) {
-      this.navIndex = e;
-    },
-  },
+  methods: {},
 };
 </script>
 
