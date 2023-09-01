@@ -15,7 +15,12 @@
       <span>网格架构树</span>
     </div>
     <div class="j_ss">
-      <input class="ddd" placeholder="搜索" />
+      <input
+        class="ddd"
+        v-model="input_val"
+        placeholder="搜索"
+        @input="inputFn"
+      />
     </div>
     <div class="l_btn" @click="btnClick" v-show="showQueRen">
       <span>确认</span>
@@ -47,10 +52,15 @@
 </template>
 
 <script>
+import { debounce } from "@/utils/commonFn.js";
 export default {
   name: "mxLeft",
   data() {
     return {
+      input_val: "",
+      node: null,
+      resolve: null,
+      is_load: true,
       // 是否显示编辑弹框
       showMB: false,
       updaValue: "",
@@ -115,52 +125,220 @@ export default {
     // this.getThree();
   },
   methods: {
+    inputFn(val) {
+      console.log(val, "-----123------");
+      console.log(this.input_val, "-----======-----");
+      // this.loadNode(this.node, this.resolve);
+      debounce(
+        function () {
+          // _this.$axios
+          //   .get(window.wgApiUrl + "/synthesize/synthesizeTree", {
+          //     params: {
+          //       name: _this.input_val,
+          //     },
+          //   })
+          //   .then((res) => {
+          //     if (res.data.data.length != 0) {
+          //       let newData = res.data.data.map((item) => {
+          //         return Object.assign(
+          //           {},
+          //           {
+          //             id: item.id,
+          //             label: item.mc,
+          //             pid: item.pid,
+          //           }
+          //         );
+          //       });
+          //       this.datas = newData;
+          //       console.log("newData搜搜", newData);
+          //     } else {
+          //       this.datas = [];
+          //     }
+          //   })
+          //   .catch((error) => {});
+        },
+        100,
+        true
+      );
+    },
     btnClick() {
       this.$emit("showNav");
     },
     l_navClick(item, index) {
       this.l_index = index;
     },
-    // loadNode(node, resolve) {
-    //   if (node.level === 0) {
-    //     this.$axios
-    //       .get(window.wanggeUrl, {
-    //         params: {
-    //           oid: 0,
-    //         },
-    //       })
-    //       .then((res) => {
-    //         return resolve(res.data.data);
-    //       })
-    //       .catch((error) => {});
-    //   }
-    //   if (node.level >= 1) {
-    //     this.$axios
-    //       .get(window.wanggeUrl, {
-    //         params: {
-    //           oid: node.data.oid,
-    //         },
-    //       })
-    //       .then((res) => {
-    //         if (res.data.data == null || undefined || "") {
-    //           return resolve([]);
-    //         } else {
-    //           return resolve(res.data.data);
-    //         }
-    //       })
-    //       .catch((error) => {});
-    //   } else {
-    //     return resolve([]);
-    //   }
-    // },
+    refreshLoadNode(node, resolve) {
+      console.log("this.input_val", this.input_val);
+      console.log(node.level, "---------10000--------");
+      if (node.level === 0) {
+        this.$axios
+          .get(window.wgApiUrl + "/synthesize/synthesizeTree", {
+            params: {
+              name: this.input_val,
+            },
+          })
+          .then((res) => {
+            console.log(res);
+            if (res.data.data.length != 0) {
+              let newData = res.data.data.map((item) => {
+                return Object.assign(
+                  {},
+                  {
+                    id: item.id,
+                    label: item.mc,
+                    pid: item.pid,
+                  }
+                );
+              });
+              // this.datas = newData;
+              console.log("newData搜搜", newData);
+              return resolve(newData);
+            } else {
+              // this.datas = [];
+              return resolve([]);
+            }
+          })
+          .catch((error) => {});
+      }
+      if (node.level >= 1) {
+        this.$axios
+          .get(window.wgApiUrl + "/synthesize/synthesizeTree", {
+            params: {
+              oid: node.data.oid,
+            },
+          })
+          .then((res) => {
+            if (res.data.data == null || undefined || "") {
+              return resolve([]);
+            } else {
+              return resolve(res.data.data);
+            }
+          })
+          .catch((error) => {});
+      } else {
+        return resolve([]);
+      }
+    },
     loadNode(node, resolve) {
+      this.node = node;
+      this.resolve = resolve;
+      console.log("121212121211211");
       // console.log("window.wanggeUrl", window.wanggeUrl);
+
+      // if (this.input_val) {
+      //   if (node.level === 0) {
+      //     this.$axios
+      //       .get(window.wgApiUrl + "/synthesize/synthesizeTree", {
+      //         params: {
+      //           name: this.input_val,
+      //         },
+      //       })
+      //       .then((res) => {
+      //         console.log(res);
+      //         if (res.data.data.length != 0) {
+      //           let newData = res.data.data.map((item) => {
+      //             return Object.assign(
+      //               {},
+      //               {
+      //                 id: item.id,
+      //                 label: item.mc,
+      //                 pid: item.pid,
+      //               }
+      //             );
+      //           });
+      //           // this.datas = newData;
+      //           console.log("newData搜搜", newData);
+      //           return resolve(newData);
+      //         } else {
+      //           // this.datas = [];
+      //           return resolve([]);
+      //         }
+      //       })
+      //       .catch((error) => {});
+      //   }
+      //   if (node.level >= 1) {
+      //     this.$axios
+      //       .get(window.wgApiUrl + "/synthesize/synthesizeTree", {
+      //         params: {
+      //           oid: node.data.oid,
+      //         },
+      //       })
+      //       .then((res) => {
+      //         if (res.data.data == null || undefined || "") {
+      //           return resolve([]);
+      //         } else {
+      //           return resolve(res.data.data);
+      //         }
+      //       })
+      //       .catch((error) => {});
+      //   } else {
+      //     return resolve([]);
+      //   }
+      // } else {
+      //   if (node.level === 0) {
+      //     this.$axios
+      //       .get(window.wgApiUrl + "/synthesize/synthesizeTree", {
+      //         params: {
+      //           id: 0,
+      //           name: this.input_val,
+      //           type: "1",
+      //         },
+      //       })
+      //       .then((res) => {
+      //         console.log("res", res);
+      //         let newData = res.data.data.map((item) => {
+      //           return Object.assign(
+      //             {},
+      //             {
+      //               id: item.id,
+      //               label: item.mc,
+      //               pid: item.pid,
+      //             }
+      //           );
+      //         });
+      //         return resolve(newData);
+      //       })
+      //       .catch((error) => {});
+      //   }
+      //   if (node.level >= 1) {
+      //     this.$axios
+      //       .get(window.wgApiUrl + "/synthesize/synthesizeTree", {
+      //         params: {
+      //           id: node.data.id,
+      //           name: this.input_val,
+      //           type: "1",
+      //         },
+      //       })
+      //       .then((res) => {
+      //         if (res.data.data == null || undefined || "") {
+      //           return resolve([]);
+      //         } else {
+      //           let newData = res.data.data.map((item) => {
+      //             return Object.assign(
+      //               {},
+      //               {
+      //                 id: item.id,
+      //                 label: item.mc,
+      //                 pid: item.pid,
+      //               }
+      //             );
+      //           });
+      //           return resolve(newData);
+      //         }
+      //       })
+      //       .catch((error) => {});
+      //   } else {
+      //     return resolve([]);
+      //   }
+      // }
+
+      //----------------
       if (node.level === 0) {
         this.$axios
           .get(window.wgApiUrl + "/synthesize/synthesizeTree", {
             params: {
               id: 0,
-              name: "",
+              name: this.input_val,
               type: "1",
             },
           })
@@ -182,10 +360,10 @@ export default {
       }
       if (node.level >= 1) {
         this.$axios
-          .get(window.wanggeUrl, {
+          .get(window.wgApiUrl + "/synthesize/synthesizeTree", {
             params: {
               id: node.data.id,
-              name: "",
+              name: this.input_val,
               type: "1",
             },
           })

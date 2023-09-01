@@ -15,7 +15,12 @@
       <span>网格架构树</span>
     </div>
     <div class="j_ss">
-      <input class="ddd" placeholder="搜索" />
+      <input
+        class="ddd"
+        v-model="input_val"
+        placeholder="搜索"
+        @input="inputFn"
+      />
     </div>
     <div class="l_btn" @click="btnClick" v-show="showQueRen">
       <span>确认</span>
@@ -23,6 +28,7 @@
     <div class="block">
       <div class="blockItem">
         <el-tree
+          :data="datas"
           show-checkbox
           :props="defaultProps"
           @node-click="handleNodeClick"
@@ -47,10 +53,12 @@
 </template>
 
 <script>
+import { debounce } from "@/utils/commonFn.js";
 export default {
   name: "mxLeft",
   data() {
     return {
+      input_val: "", //搜索框的输入内容
       // 是否显示编辑弹框
       showMB: false,
       updaValue: "",
@@ -115,6 +123,45 @@ export default {
     // this.getThree();
   },
   methods: {
+    inputFn(val) {
+      console.log(val, "-----123------");
+      console.log(this.input_val, "-----======-----");
+
+      const _this = this;
+      debounce(
+        function () {
+          _this.$axios
+            .get(window.wgApiUrl + "/synthesize/synthesizeTree", {
+              params: {
+                name: _this.input_val,
+              },
+            })
+            .then((res) => {
+              console.log("res搜搜", res);
+              if (res.data.data.length != 0) {
+                let newData = res.data.data.map((item) => {
+                  return Object.assign(
+                    {},
+                    {
+                      id: item.id,
+                      label: item.mc,
+                      pid: item.pid,
+                    }
+                  );
+                });
+                this.datas = newData;
+                console.log("newData搜搜", newData);
+              } else {
+                this.datas = [];
+              }
+            })
+            .catch((error) => {});
+        },
+        100,
+        true
+      );
+    },
+
     btnClick() {
       // console.log(this.selectData, "selectData");
       // this.$bus.$emit("Oid", this.selectData.oid);
@@ -188,7 +235,7 @@ export default {
       }
       if (node.level >= 1) {
         this.$axios
-          .get(window.wanggeUrl, {
+          .get(window.wgApiUrl + "/synthesize/synthesizeTree", {
             params: {
               id: node.data.id,
               name: "",
@@ -219,6 +266,7 @@ export default {
       }
     },
     filterNode(value, data) {
+      console.log(value, "00000000000");
       if (!value) return true;
       return data.label.indexOf(value) !== -1;
     },

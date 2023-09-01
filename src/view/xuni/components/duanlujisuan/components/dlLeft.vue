@@ -15,7 +15,12 @@
       <span>网格架构树</span>
     </div>
     <div class="j_ss">
-      <input class="ddd" placeholder="搜索" />
+      <input
+        class="ddd"
+        v-model="input_val"
+        @input="inputFn"
+        placeholder="搜索"
+      />
     </div>
     <div class="block">
       <div class="blockItem">
@@ -45,10 +50,12 @@
 </template>
 
 <script>
+import { debounce } from "@/utils/commonFn.js";
 export default {
   name: "fhLeft",
   data() {
     return {
+      input_val: "",
       // 是否显示编辑弹框
       showMB: false,
       showQr: false, //是否显示确认按钮
@@ -105,6 +112,44 @@ export default {
     // this.getThree();
   },
   methods: {
+    inputFn(val) {
+      console.log(val, "-----123------");
+      console.log(this.input_val, "-----======-----");
+
+      const _this = this;
+      debounce(
+        function () {
+          _this.$axios
+            .get(window.wgApiUrl + "/synthesize/synthesizeTree", {
+              params: {
+                name: _this.input_val,
+              },
+            })
+            .then((res) => {
+              console.log("res搜搜", res);
+              if (res.data.data.length != 0) {
+                let newData = res.data.data.map((item) => {
+                  return Object.assign(
+                    {},
+                    {
+                      id: item.id,
+                      label: item.mc,
+                      pid: item.pid,
+                    }
+                  );
+                });
+                this.datas = newData;
+                console.log("newData搜搜", newData);
+              } else {
+                this.datas = [];
+              }
+            })
+            .catch((error) => {});
+        },
+        100,
+        true
+      );
+    },
     // loadNode(node, resolve) {
     //   if (node.level === 0) {
     //     // return this.getList(resolve)
@@ -167,7 +212,7 @@ export default {
       }
       if (node.level >= 1) {
         this.$axios
-          .get(window.wanggeUrl, {
+          .get(window.wgApiUrl + "/synthesize/synthesizeTree", {
             params: {
               id: node.data.id,
               name: "",

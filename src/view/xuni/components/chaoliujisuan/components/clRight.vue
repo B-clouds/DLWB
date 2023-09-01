@@ -47,7 +47,7 @@
             :key="index"
           >
             <div class="blocks">
-              <span class="span2">{{ item.sj }}</span>
+              <span class="span2">{{ item.sj.split(" ")[0] }}</span>
             </div>
             <div class="blocks">
               <span class="span2">{{ item.dx }}</span>

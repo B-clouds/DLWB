@@ -202,6 +202,7 @@ export default {
         //   ],
         // },
       ],
+      note_datas: [],
       newID: 371,
       defaultProps: {
         children: "children",
@@ -261,9 +262,17 @@ export default {
       // 判断按钮的状态
       this.expandAll();
       if (this.isQx) {
-        console.log(this.isQx, "-------------------------------", this.datas);
+        console.log(
+          this.isQx,
+          "-------------------------------",
+          this.note_datas
+        );
+
+        console.log("this.note_datas", this.datas);
+
+        console.log("this.$refs.treeForm_mxs", this.$refs.treeForm_mxs);
         // 设置
-        this.$refs.treeForm_mxs.setCheckedNodes(this.datas);
+        this.$refs.treeForm_mxs.setCheckedNodes(this.note_datas);
         for (
           var i = 0;
           i < this.$refs.treeForm_mxs.getCheckedNodes().length;
@@ -355,7 +364,7 @@ export default {
       }
     },
     loadNode(node, resolve) {
-      console.log("window.wanggeUrl", window.wanggeUrl);
+      // console.log("window.wanggeUrl", window.wanggeUrl);
       if (node.level === 0) {
         this.$axios
           .get(
@@ -378,6 +387,8 @@ export default {
                 }
               );
             });
+            this.note_datas = newData;
+            console.log("this.note_datas", this.note_datas);
             return resolve(newData);
           })
           .catch((error) => {});
@@ -407,6 +418,8 @@ export default {
                   }
                 );
               });
+              // this.note_datas = newData;
+
               return resolve(newData);
             }
           })
@@ -415,6 +428,7 @@ export default {
         return resolve([]);
       }
     },
+
     unAddClicks() {
       this.showMB2 = false;
     },
