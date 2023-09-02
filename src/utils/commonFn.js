@@ -1,7 +1,7 @@
 /* 防抖节流函数 */
 let timeout = null // 创建一个标记用来存放定时器的返回值
 let count = 0;
-export function debounce(fn, wait = 1000, immediate = false) {
+export function debounce(fn, wait = 100, immediate = true) {
   return function () {
     const args = arguments;
     if (immediate) {

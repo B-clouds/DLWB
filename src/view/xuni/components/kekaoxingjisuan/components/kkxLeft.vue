@@ -56,6 +56,8 @@ export default {
   data() {
     return {
       input_val: "",
+      node: null,
+      resolve: null,
       // 是否显示编辑弹框
       showMB: false,
       showQr: false, //是否显示确认按钮
@@ -112,21 +114,30 @@ export default {
     // this.getThree();
   },
   methods: {
-    inputFn(val) {
-      console.log(val, "-----123------");
-      console.log(this.input_val, "-----======-----");
-
+    inputFn() {
       const _this = this;
+      _this.node.childNodes = [];
       debounce(
         function () {
-          _this.$axios
+          _this.loadNode(_this.node, _this.resolve);
+        },
+        200,
+        true
+      );
+    },
+    loadNode(node, resolve) {
+      this.node = node;
+      this.resolve = resolve;
+      if (this.input_val) {
+        if (node.level === 0) {
+          this.$axios
             .get(window.wgApiUrl + "/synthesize/synthesizeTree", {
               params: {
-                name: _this.input_val,
+                name: this.input_val,
               },
             })
             .then((res) => {
-              console.log("res搜搜", res);
+              console.log(res, "res");
               if (res.data.data.length != 0) {
                 let newData = res.data.data.map((item) => {
                   return Object.assign(
@@ -138,58 +149,46 @@ export default {
                     }
                   );
                 });
-                this.datas = newData;
-                console.log("newData搜搜", newData);
+
+                return resolve(newData);
               } else {
-                this.datas = [];
+                return resolve([]);
               }
             })
             .catch((error) => {});
-        },
-        100,
-        true
-      );
-    },
-    loadNode(node, resolve) {
-      // console.log("window.wanggeUrl", window.wanggeUrl);
-      if (node.level === 0) {
-        this.$axios
-          .get(window.wgApiUrl + "/synthesize/synthesizeTree", {
-            params: {
-              id: 0,
-              name: "",
-              type: "1",
-            },
-          })
-          .then((res) => {
-            console.log("res", res);
-            let newData = res.data.data.map((item) => {
-              return Object.assign(
-                {},
-                {
-                  id: item.id,
-                  label: item.mc,
-                  pid: item.pid,
-                }
-              );
-            });
-            return resolve(newData);
-          })
-          .catch((error) => {});
-      }
-      if (node.level >= 1) {
-        this.$axios
-          .get(window.wgApiUrl + "/synthesize/synthesizeTree", {
-            params: {
-              id: node.data.id,
-              name: "",
-              type: "1",
-            },
-          })
-          .then((res) => {
-            if (res.data.data == null || undefined || "") {
-              return resolve([]);
-            } else {
+        }
+        if (node.level >= 1) {
+          this.$axios
+            .get(window.wgApiUrl + "/synthesize/synthesizeTree", {
+              params: {
+                id: node.data.id,
+                name: this.input_val,
+                type: "1",
+              },
+            })
+            .then((res) => {
+              if (res.data.data == null || undefined || "") {
+                return resolve([]);
+              } else {
+                return resolve(res.data.data);
+              }
+            })
+            .catch((error) => {});
+        } else {
+          return resolve([]);
+        }
+      } else {
+        if (node.level === 0) {
+          this.$axios
+            .get(window.wgApiUrl + "/synthesize/synthesizeTree", {
+              params: {
+                id: 0,
+                name: this.input_val,
+                type: "1",
+              },
+            })
+            .then((res) => {
+              console.log("res", res);
               let newData = res.data.data.map((item) => {
                 return Object.assign(
                   {},
@@ -201,11 +200,39 @@ export default {
                 );
               });
               return resolve(newData);
-            }
-          })
-          .catch((error) => {});
-      } else {
-        return resolve([]);
+            })
+            .catch((error) => {});
+        }
+        if (node.level >= 1) {
+          this.$axios
+            .get(window.wgApiUrl + "/synthesize/synthesizeTree", {
+              params: {
+                id: node.data.id,
+                name: this.input_val,
+                type: "1",
+              },
+            })
+            .then((res) => {
+              if (res.data.data == null || undefined || "") {
+                return resolve([]);
+              } else {
+                let newData = res.data.data.map((item) => {
+                  return Object.assign(
+                    {},
+                    {
+                      id: item.id,
+                      label: item.mc,
+                      pid: item.pid,
+                    }
+                  );
+                });
+                return resolve(newData);
+              }
+            })
+            .catch((error) => {});
+        } else {
+          return resolve([]);
+        }
       }
     },
     filterNode(value, data) {
