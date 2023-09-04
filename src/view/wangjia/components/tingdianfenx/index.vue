@@ -35,6 +35,10 @@
     <!-- 原因分析 -->
     <yyfxLeft @geshihua="geshihua" v-if="show && showNavs && detiles2" />
     <yyfxRight v-if="show && showNavs && detiles2" />
+
+    <!-- 措施跟踪 -->
+    <csgzLeft @geshihua="geshihua" v-if="show && showNavs && detiles3" />
+    <csgzRight v-if="show && showNavs && detiles3" />
   </div>
 </template>
 
@@ -47,6 +51,9 @@ import tdjcRight from "./components/tdjcRight.vue";
 // 原因分析
 import yyfxLeft from "./components/yyfxLeft.vue";
 import yyfxRight from "./components/yyfxRight.vue";
+// 措施跟踪
+import csgzLeft from "./components/csgzLeft.vue";
+import csgzRight from "./components/csgzRight.vue";
 export default {
   name: "tingdianfenx",
   components: {
@@ -55,6 +62,8 @@ export default {
     tdjcRight,
     yyfxLeft,
     yyfxRight,
+    csgzLeft,
+    csgzRight,
   },
   data() {
     return {
@@ -109,7 +118,7 @@ export default {
         this.detiles1 = false;
         this.detiles2 = true;
         this.detiles3 = false;
-      } else if (e == 3) {
+      } else if (e == 2) {
         this.detiles1 = false;
         this.detiles2 = false;
         this.detiles3 = true;
