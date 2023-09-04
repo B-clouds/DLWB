@@ -9,7 +9,7 @@
     </transition>
     <!-- 子级导航 -->
     <transition name="transitionBottom">
-      <div v-show="show && detiles1" class="navs">
+      <div v-show="show && showNavs" class="navs">
         <div
           class="blocks"
           @click="navClick(index)"
@@ -21,41 +21,53 @@
         </div>
       </div>
     </transition>
-    <!-- 基本管理 -->
+    <!-- 默认页面 -->
     <tdLeft
-      @showRight="showRight"
+      @showNav="showNav"
       @getOid="getOid"
       @getIds="getIds"
-      v-if="show && detiles1"
+      v-if="show && !showNavs"
     />
-    <tdRight v-if="show && showRights && detiles1"/>
-    <newLieBiao v-if="show && detiles2" />
+    <!-- 停电监测 -->
+    <tdjcLeft @geshihua="geshihua" v-if="show && showNavs && detiles1" />
+    <tdjcRight v-if="show && showNavs && detiles1" />
+
+    <!-- 原因分析 -->
+    <yyfxLeft @geshihua="geshihua" v-if="show && showNavs && detiles2" />
+    <yyfxRight v-if="show && showNavs && detiles2" />
   </div>
 </template>
 
 <script>
 // 基本信息
 import tdLeft from "./components/tdLeft.vue";
-import tdRight from "./components/tdRight.vue";
-// 数据查询
-import newLieBiao from "./components/newLieBiao.vue";
+// 停电监测
+import tdjcLeft from "./components/tdjcLeft.vue";
+import tdjcRight from "./components/tdjcRight.vue";
+// 原因分析
+import yyfxLeft from "./components/yyfxLeft.vue";
+import yyfxRight from "./components/yyfxRight.vue";
 export default {
   name: "tingdianfenx",
   components: {
     tdLeft,
-    tdRight,
-    newLieBiao,
+    tdjcLeft,
+    tdjcRight,
+    yyfxLeft,
+    yyfxRight,
   },
   data() {
     return {
       show: false,
-      navList: ["停电分析", "数据查询"],
       navIndex: 0,
+      navList: ["停电监测", "原因分析", "措施跟踪"],
       showRights: false,
       ids: [],
       oids: 0,
+      showNavs: false,
       detiles1: true,
       detiles2: false,
+      detiles3: false,
     };
   },
   mounted() {
@@ -71,13 +83,16 @@ export default {
     this.show = true;
   },
   deactivated() {
-    this.showRights = false;
+    this.showNavs = false;
     this.show = false;
     this.detiles1 = true;
     this.detiles2 = false;
     this.navIndex = 0;
   },
   methods: {
+    geshihua() {
+      this.showNavs = false;
+    },
     getOid(e) {
       this.oids = e;
     },
@@ -89,15 +104,22 @@ export default {
       if (e == 0) {
         this.detiles1 = true;
         this.detiles2 = false;
-        this.isShowNav = true;
+        this.detiles3 = false;
       } else if (e == 1) {
         this.detiles1 = false;
         this.detiles2 = true;
-        this.isShowNav = false;
+        this.detiles3 = false;
+      } else if (e == 3) {
+        this.detiles1 = false;
+        this.detiles2 = false;
+        this.detiles3 = true;
       }
     },
-    showRight(e) {
-      this.showRights = e;
+    showNav() {
+      this.showNavs = true;
+      this.detiles1 = true;
+      this.navIndex = 0;
+      console.log("----------------", this.showNav, this.navIndex);
     },
   },
 };
@@ -105,7 +127,7 @@ export default {
 
 <style scoped>
 .navs {
-  width: 281px;
+  width: 470px;
   height: 40px;
   position: fixed;
   margin: auto;

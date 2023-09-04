@@ -154,6 +154,7 @@ export default {
   },
   methods: {
     qhNav() {
+      this.navIndex = -1;
       if (this.navList[0] == "区域概况") {
         this.navList = this.navList3;
         this.showNav2 = false;

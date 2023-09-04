@@ -112,6 +112,7 @@ export default {
           },
         })
         .then((res) => {
+          console.log("----------123123--------", res);
           this.dataList3 = res.data.data.data;
           this.total = res.data.data.total;
         })
