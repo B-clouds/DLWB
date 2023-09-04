@@ -81,14 +81,43 @@ export default {
   },
   name: "mxRight",
   data() {
-    return {};
+    return {
+      id:'',
+      baseData:{}
+    };
   },
   filters: {},
   watch: {
     colors(e) {},
   },
-  mounted() {},
-  methods: {},
+  mounted() {
+    this.watchId()
+  },
+  methods: {
+    watchId(){
+      let that = this
+      that.$bus.$on("leftOid", (e) => {
+        // console.log(e)
+        that.id = e;
+        that.baseData={}
+        // console.log('=========')
+        this.getBaseData()
+        // console.log(that.id)
+      })
+    },
+    async getBaseData(){
+      await this.$axios
+          .get(window.wgApiUrl + "/loadForecast/loadForecastBasicInfo", {
+            // .get("http://192.168.2.21:8025/rackAnalysis/rackAnalysisContactAnalysis", {
+            params: {
+              areaId:this.id,
+              // type:this.selectId?this.selectId:0
+            },
+          }).then(res=>{
+            this.baseData=res.data.data[0]
+          })
+    }
+  },
 };
 </script>
 
