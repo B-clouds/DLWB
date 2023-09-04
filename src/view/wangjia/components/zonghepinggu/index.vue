@@ -30,31 +30,55 @@
       v-if="show && !showNavs"
     />
     <jRight v-if="showRights && !showNavs" />
+    <!-- 区域概况 -->
+    <transition name="transitionLeft">
+      <xzfxLeft @geshihua="geshihua" v-if="show && detiles1 && showNav2" />
+    </transition>
+    <transition name="transitionRight">
+      <xzfxRight v-if="show && detiles1 && showNav2" />
+    </transition>
     <!-- 诊断分析 -->
     <transition name="transitionLeft">
-      <zdfxLeft @geshihua="geshihua" v-if="show && detiles1" />
+      <zdfxLeft @geshihua="geshihua" v-if="show && detiles1 && !showNav2" />
     </transition>
     <transition name="transitionRight">
-      <zdfxRight v-if="show && detiles1" />
+      <zdfxRight v-if="show && detiles1 && !showNav2" />
     </transition>
     <!-- 诊断查询 -->
-    <zdcx @showZDCXItem="showZDCXItem" v-show="show && detiles2 && !d2Item" />
+    <zdcx
+      @showZDCXItem="showZDCXItem"
+      v-show="show && detiles2 && !d2Item && !showNav2"
+    />
     <!-- 诊断查询 结果 -->
-    <zdcxItem @fanhuiCX="fanhuiCX" v-if="show && detiles2 && d2Item" />
+    <zdcxItem
+      @fanhuiCX="fanhuiCX"
+      v-if="show && detiles2 && d2Item && !showNav2"
+    />
     <!-- 目标管理 -->
     <transition name="transitionRight">
-      <mbgl v-if="show && detiles3" />
+      <mbgl v-if="show && detiles5 && !showNav2" />
     </transition>
     <!-- 截面分析 -->
     <transition name="transitionRight">
-      <jmfx v-if="show && detiles4" />
+      <jmfx v-if="show && detiles4 && showNav2" />
     </transition>
     <!-- 用电分析 -->
     <transition name="transitionLeft">
-      <ydfx v-if="show && detiles5" />
+      <ydfx v-if="show && detiles5 && showNav2" />
+    </transition>
+    <!-- 规划分析 -->
+    <transition name="transitionLeft">
+      <ghLeft @geshihua="geshihua" v-if="show && detiles3 && !showNav2" />
+    </transition>
+    <transition name="transitionRight">
+      <ghRight v-if="show && detiles3 && !showNav2" />
+    </transition>
+    <!-- 规划成效 -->
+    <transition name="transitionLeft">
+      <ghcxLeft @geshihua="geshihua" v-if="show && detiles4 && !showNav2" />
     </transition>
     <!-- 运行管理 -->
-    <yxgl v-if="show && detiles6" />
+    <!-- <yxgl v-if="show && detiles6" /> -->
     <!-- 3D图层 -->
     <div class="jr_threeD" v-show="show && showRights && !showNavs">
       <div
@@ -85,6 +109,14 @@ import mbgl from "./components/mbgl.vue";
 import jmfx from "./components/jmfx.vue";
 import ydfx from "./components/ydfx.vue";
 import yxgl from "./components/yxgl.vue";
+// 区域概况
+import xzfxLeft from "./components/xzfxLeft.vue";
+import xzfxRight from "./components/xzfxRight.vue";
+// 规划分析
+import ghLeft from "./components/ghLeft.vue";
+import ghRight from "./components/ghRight.vue";
+// 规划成效
+import ghcxLeft from "./components/ghcxLeft.vue";
 export default {
   name: "zonghepinggu",
   components: {
@@ -98,6 +130,11 @@ export default {
     jmfx,
     ydfx,
     yxgl,
+    xzfxLeft,
+    xzfxRight,
+    ghLeft,
+    ghRight,
+    ghcxLeft,
   },
   data() {
     return {
@@ -154,7 +191,6 @@ export default {
   },
   methods: {
     qhNav() {
-      this.navIndex = -1;
       if (this.navList[0] == "区域概况") {
         this.navList = this.navList3;
         this.showNav2 = false;
@@ -162,6 +198,7 @@ export default {
         this.navList = this.navList2;
         this.showNav2 = true;
       }
+      console.log(this.showNav2, "11111111111");
     },
     fanhuiCX() {
       this.d2Item = false;
