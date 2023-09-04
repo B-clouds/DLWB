@@ -15,6 +15,7 @@
       </div>
     </transition>
     <!-- 初始页面 -->
+
     <jLeft
       @showRight="showRight"
       @showNav="showNav"
@@ -76,6 +77,7 @@ export default {
   },
   data() {
     return {
+      baseData:{},
       show: false,
       showSC: false, //是否移入-杆塔布点-删除按钮
       showFH: false, //是否移入-杆塔布点-返回按钮
@@ -97,7 +99,15 @@ export default {
       showNavs: false,
     };
   },
-
+  mounted(){
+    let that = this
+    that.$bus.$on("areaId", (data) => {
+      that.baseData=data
+      setTimeout(()=>{
+        that.$bus.$emit("sendId", data);
+      },50)
+    });
+  },
   activated() {
     this.show = true;
   },
@@ -127,7 +137,13 @@ export default {
     getIds(e) {
       this.ids = e;
     },
+
     navClick(e) {
+      let that =this
+      // setTimeout(()=>{
+      //   that.$bus.$emit("sendId", this.baseData);
+      // },50)
+
       this.navIndex = e;
       if (e == 0) {
         this.detiles1 = true;
@@ -172,6 +188,15 @@ export default {
         this.detiles4 = false;
         this.detiles6 = true;
       }
+      setTimeout(()=>{
+        try {
+          that.$bus.$emit("sendId", this.baseData);
+          // alert('发送成功')
+          // console.log('444')
+        }catch (e){
+          console.log(e)
+        }
+      },50)
     },
     showRight(e) {
       this.showRights = e;

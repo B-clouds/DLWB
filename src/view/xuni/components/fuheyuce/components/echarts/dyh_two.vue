@@ -56,13 +56,12 @@ export default {
             })
             // this.baseData=res.data.data
           })
-      console.log('898989')
-      console.log(this.value)
+      // console.log('898989')
+      // console.log(this.value)
       this.myecharts()
     },
     WidthAdaptive(res) {
       var windth = window.screen.width;
-
       let fontSize = windth / 1920;
       return fontSize * res;
     },

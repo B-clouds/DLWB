@@ -51,6 +51,7 @@ export default {
   name: "mxLeft",
   data() {
     return {
+      checkData:{},
       // 是否显示编辑弹框
       showMB: false,
       updaValue: "",
@@ -116,7 +117,14 @@ export default {
   },
   methods: {
     btnClick() {
+      let that = this
+      setTimeout(()=>{
+        that.$bus.$emit("areaId", that.checkData);
+      },50)
       this.$emit("showNav");
+      // this.$emit("areaId", this.checkData);
+      // console.log(this.checkData)
+      // alert(this.checkData)
     },
     l_navClick(item, index) {
       this.l_index = index;
@@ -208,6 +216,8 @@ export default {
       this.$emit("getOid", node.data.oid);
       let that = this;
       setTimeout(() => {
+        that.checkData.id=node.data.oid
+        that.checkData.name=node.data.label
         that.$bus.$emit("leftOid", node.data.oid);
       }, 50);
     },

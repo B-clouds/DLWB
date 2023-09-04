@@ -96,6 +96,9 @@ export default {
   mounted() {
     this.watchId()
   },
+beforeDestroy(){
+    this.$bus.$off('sendId')
+},
   methods: {
     watchId(){
       let that = this
@@ -120,6 +123,7 @@ export default {
     returnMain() {
       this.$bus.$emit("returnMain", true);
     },
+
   },
 };
 </script>

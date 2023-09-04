@@ -26,6 +26,12 @@ export default {
       this.myecharts();
     },
   },
+  beforeDestroy() {
+    //组件销毁前需要解绑事件。否则会出现重复触发事件的问题
+    this.$bus.$off('leftOid');
+    // alert(9999)
+  },
+
   methods: {
     getAllData() {
       let that = this

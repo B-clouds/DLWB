@@ -105,6 +105,7 @@ export default {
   mounted() {
     // this.getThree();
   },
+
   methods: {
     loadNode(node, resolve) {
       // alert(111)

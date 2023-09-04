@@ -3,7 +3,7 @@
     <div class="gl_top">
       <span class="span1">当前区域：</span>
       <div class="names">
-        <span>xxxxx区域名称</span>
+        <span>{{ origData.name }}</span>
       </div>
       <div class="fanhui" @click="fanhuiClick"></div>
     </div>
@@ -141,9 +141,41 @@ export default {
   name: "zdfxLeft",
   components: {},
   data() {
-    return {};
+    return {
+      origData:{},
+      baseData:{}
+    };
+  },
+  beforeDestroy() {
+    this.$bus.$off("sendId")
+  },
+  mounted() {
+    this.watchId()
   },
   methods: {
+    watchId(){
+      // this.$bus.$off("sendId")
+      let that = this
+      that.$bus.$on("sendId", (e) => {
+        // alert('1l')
+        that.origData = e;
+        // console.log(11111+e)
+        that.baseData={}
+        that.getBaseData()
+      })
+    },
+    async getBaseData(){
+      await this.$axios
+          .get(window.wgApiUrl + "/loadForecast/loadForecastUserStatus", {
+            // .get("http://192.168.2.21:8025/rackAnalysis/rackAnalysisContactAnalysis", {
+            params: {
+              areaId:this.origData.id,
+              // type:this.selectId?this.selectId:0
+            },
+          }).then(res=>{
+            this.baseData=res.data.data[0]
+          })
+    },
     gjlxClick(e) {
       this.gjlx_show = e;
     },

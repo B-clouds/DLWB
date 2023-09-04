@@ -110,6 +110,10 @@ export default {
       that.detiles2 = false;
     });
   },
+  // beforeDestroy() {
+  //   //组件销毁前需要解绑事件。否则会出现重复触发事件的问题
+  //   this.$bus.$off('sendId');
+  // },
   activated() {
     this.show = true;
   },
