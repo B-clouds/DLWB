@@ -75,7 +75,7 @@
           check-on-click-node
           :filter-node-method="filterNode"
           @check="selectTree"
-          node-key="oid"
+          node-key="id"
           lazy
           :load="loadNode"
           :key="tree_key"
@@ -289,24 +289,26 @@ export default {
       if (node.level === 0) {
         // return this.getList(resolve)
         this.$axios
-          .get(window.wanggeUrl, {
+          .get(window.wgApiUrl + "/powerCut/tree", {
             params: {
-              oid: 0,
+              id: 0,
             },
           })
           .then((res) => {
+            console.log("res", res);
             return resolve(res.data.data);
           })
           .catch((error) => {});
       }
       if (node.level >= 1) {
         this.$axios
-          .get(window.wanggeUrl, {
+          .get(window.wgApiUrl + "/powerCut/tree", {
             params: {
-              oid: node.data.oid,
+              id: node.data.id,
             },
           })
           .then((res) => {
+            console.log("res", res);
             if (res.data.data == null || undefined || "") {
               return resolve([]);
             } else {
@@ -512,12 +514,12 @@ export default {
 
     // 复选框被选中时
     selectTree(node, list) {
-      const node2 = this.$refs.treeForm_mx.getNode(node.oid);
+      const node2 = this.$refs.treeForm_mx.getNode(node.id);
       this.setNode(node2);
       if (list.checkedKeys.length == 2) {
-        this.$refs.treeForm_mx.setCheckedKeys([node.oid]);
+        this.$refs.treeForm_mx.setCheckedKeys([node.id]);
       }
-      if (this.selectData.id != node.oid) {
+      if (this.selectData.id != node.id) {
         this.selectData = node;
         this.selectNode = node2;
       } else {
@@ -528,7 +530,7 @@ export default {
     setNode(node) {
       let ids = [];
       let showLefts = false;
-      ids.push(node.data.oid);
+      ids.push(node.data.id);
       if (node.checked) {
         // 展示右侧，并发送消息
         this.$emit("showRight", true);
@@ -543,11 +545,11 @@ export default {
         this.setChildenNode(node);
       }
       this.$emit("getIds", ids);
-      this.$emit("getOid", node.data.oid);
+      this.$emit("getOid", node.data.id);
       this.newIDs = ids;
       let that = this;
       setTimeout(() => {
-        that.$bus.$emit("leftOid", node.data.oid);
+        that.$bus.$emit("leftOid", node.data.id);
       }, 50);
       let v = {
         Type: "ShowPolygonIDS",
@@ -613,9 +615,9 @@ export default {
     },
     handleCheckChange(data, checked, indeterminate) {
       if (checked) {
-        let node2 = this.$refs.treeForm_mx.getNode(data.oid);
+        let node2 = this.$refs.treeForm_mx.getNode(data.id);
         // this.setNode(node2);
-        this.$refs.treeForm_mx.setCheckedKeys([data.oid]);
+        this.$refs.treeForm_mx.setCheckedKeys([data.id]);
       }
     },
     // 获取树状图
