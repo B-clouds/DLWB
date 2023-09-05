@@ -368,7 +368,7 @@ export default {
                   }
                 );
               });
-              // this.note_datas = newData;
+              this.note_datas = newData;
               // console.log("this.note_datas", this.note_datas);
               return resolve(newData);
             })
@@ -421,7 +421,7 @@ export default {
               }
             )
             .then((res) => {
-              console.log("res", res);
+              // console.log("res", res);
               let newData = res.data.data.map((item) => {
                 return Object.assign(
                   {},
@@ -474,68 +474,68 @@ export default {
         }
       }
       // console.log("window.wanggeUrl", window.wanggeUrl);
-      if (node.level === 0) {
-        this.$axios
-          .get(
-            window.wgApiUrl + "/powerNetworkAnalysis/panoramicPredictionTree",
-            {
-              params: {
-                id: 0,
-              },
-            }
-          )
-          .then((res) => {
-            console.log("res", res);
-            let newData = res.data.data.map((item) => {
-              return Object.assign(
-                {},
-                {
-                  oid: item.oid,
-                  label: item.name,
-                  pid: item.pid,
-                }
-              );
-            });
-            this.note_datas = newData;
-            console.log("this.note_datas", this.note_datas);
-            return resolve(newData);
-          })
-          .catch((error) => {});
-      }
-      if (node.level >= 1) {
-        console.log("nodenodenodenode", node);
-        this.$axios
-          .get(
-            window.wgApiUrl + "/powerNetworkAnalysis/panoramicPredictionTree",
-            {
-              params: {
-                id: node.data.oid,
-              },
-            }
-          )
-          .then((res) => {
-            if (res.data.data == null || undefined || "") {
-              return resolve([]);
-            } else {
-              let newData = res.data.data.map((item) => {
-                return Object.assign(
-                  {},
-                  {
-                    oid: item.oid,
-                    label: item.name,
-                    pid: item.pid,
-                  }
-                );
-              });
-              // this.note_datas = newData;
+      // if (node.level === 0) {
+      //   this.$axios
+      //     .get(
+      //       window.wgApiUrl + "/powerNetworkAnalysis/panoramicPredictionTree",
+      //       {
+      //         params: {
+      //           id: 0,
+      //         },
+      //       }
+      //     )
+      //     .then((res) => {
+      //       console.log("res", res);
+      //       let newData = res.data.data.map((item) => {
+      //         return Object.assign(
+      //           {},
+      //           {
+      //             oid: item.oid,
+      //             label: item.name,
+      //             pid: item.pid,
+      //           }
+      //         );
+      //       });
+      //       this.note_datas = newData;
+      //       console.log("this.note_datas", this.note_datas);
+      //       return resolve(newData);
+      //     })
+      //     .catch((error) => {});
+      // }
+      // if (node.level >= 1) {
+      //   console.log("nodenodenodenode", node);
+      //   this.$axios
+      //     .get(
+      //       window.wgApiUrl + "/powerNetworkAnalysis/panoramicPredictionTree",
+      //       {
+      //         params: {
+      //           id: node.data.oid,
+      //         },
+      //       }
+      //     )
+      //     .then((res) => {
+      //       if (res.data.data == null || undefined || "") {
+      //         return resolve([]);
+      //       } else {
+      //         let newData = res.data.data.map((item) => {
+      //           return Object.assign(
+      //             {},
+      //             {
+      //               oid: item.oid,
+      //               label: item.name,
+      //               pid: item.pid,
+      //             }
+      //           );
+      //         });
+      //         // this.note_datas = newData;
 
-              return resolve(newData);
-            }
-          })
-          .catch((error) => {});
-      } else {
-        return resolve([]);
-      }
+      //         return resolve(newData);
+      //       }
+      //     })
+      //     .catch((error) => {});
+      // } else {
+      //   return resolve([]);
+      // }
     },
 
     unAddClicks() {
