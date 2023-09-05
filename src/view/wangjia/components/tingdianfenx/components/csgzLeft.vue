@@ -9,35 +9,35 @@
     </div>
     <div class="jr_block">
       <div class="j_titles">
-        <span class="span1">停电情况</span>
+        <span class="span1">评估指标</span>
       </div>
-      <tdjcOne />
+      <csgzlOne />
     </div>
     <div class="jr_block">
       <div class="j_titles">
-        <span class="span1">停电次数</span>
+        <span class="span1">线路状况评估</span>
       </div>
-      <tdjcTwo />
+      <csgzlTwo />
     </div>
     <div class="jr_block">
       <div class="j_titles">
-        <span class="span1">频繁停电情况</span>
+        <span class="span1">项目类型</span>
       </div>
-      <tdjcThree />
+      <csgzlThree />
     </div>
   </div>
 </template>
 
 <script>
-import tdjcOne from "./echarts/tdjcOne.vue";
-import tdjcTwo from "./echarts/tdjcTwo.vue";
-import tdjcThree from "./echarts/tdjcThree.vue";
+import csgzlOne from "./echarts/csgzlOne.vue";
+import csgzlTwo from "./echarts/csgzlTwo.vue";
+import csgzlThree from "./echarts/csgzlThree.vue";
 export default {
   name: "zdfxLeft",
   components: {
-    tdjcOne,
-    tdjcTwo,
-    tdjcThree,
+    csgzlOne,
+    csgzlTwo,
+    csgzlThree,
   },
   data() {
     return {
@@ -61,23 +61,7 @@ export default {
       value1: "",
     };
   },
-  mounted() {
-    console.log(this.$bus.$on("leftOid"), "ididiiididididi");
-  },
   methods: {
-    //停电分析-区域基本信息
-    async getAreaInfo() {
-      this.$axios
-        .get(window.wgApiUrl + "/powerCut/tree", {
-          params: {
-            id: 10000,
-          },
-        })
-        .then((res) => {
-          console.log("res", res);
-        })
-        .catch((error) => {});
-    },
     gjlxClick(e) {
       this.gjlx_show = e;
     },

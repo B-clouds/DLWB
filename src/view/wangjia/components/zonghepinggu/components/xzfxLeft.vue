@@ -1,124 +1,202 @@
 <template>
-  <div class="zdfxLeft">
+  <div class="gLeft">
     <div class="gl_top">
       <span class="span1">当前区域：</span>
       <div class="names">
         <span>xxxxx区域名称</span>
       </div>
-      <div class="fanhui" @click="fanhuiClick"></div>
+      <div class="fanhui" @click="fanhui"></div>
     </div>
     <div class="jr_block">
       <div class="j_titles">
-        <span class="span1">停电情况</span>
+        <span class="span1">基本信息</span>
       </div>
-      <tdjcOne />
+      <div class="gundong">
+        <div class="jbBlock">
+          <div class="jbLeft">
+            <span>村庄类型</span>
+          </div>
+          <div class="jbRight">
+            <span>{{ jbData.czlx }}</span>
+          </div>
+        </div>
+
+        <div class="jbBlock">
+          <div class="jbLeft">
+            <span>供电面积</span>
+          </div>
+          <div class="jbRight">
+            <span>{{ jbData.gdmj }}</span>
+          </div>
+        </div>
+
+        <div class="jbBlock">
+          <div class="jbLeft">
+            <span>平均供电半径</span>
+          </div>
+          <div class="jbRight">
+            <span>{{ jbData.pjgdbj }}</span>
+          </div>
+        </div>
+
+        <div class="jbBlock">
+          <div class="jbLeft">
+            <span>是否贫困村</span>
+          </div>
+          <div class="jbRight">
+            <span>{{ jbData.sfpkc }}</span>
+          </div>
+        </div>
+        <div class="jbBlock">
+          <div class="jbLeft">
+            <span>低压线损率</span>
+          </div>
+          <div class="jbRight">
+            <span>{{ jbData.dyxsl }}</span>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="jr_block">
+    <div class="jr_block jr_block2">
       <div class="j_titles">
-        <span class="span1">停电次数</span>
+        <span class="span1">用户概况</span>
       </div>
-      <tdjcTwo />
+      <div class="jbBlock">
+        <div class="jbLeft jbLeft2">
+          <span>村内户数</span>
+        </div>
+        <div class="jbRight">
+          <span>{{ yh_num }}</span>
+        </div>
+      </div>
+      <div class="jr_two">
+        <xl_three :yh_xList="yh_xList" :yh_value="yh_value" />
+      </div>
     </div>
-    <div class="jr_block">
+
+    <div class="jr_block jr_block3">
       <div class="j_titles">
-        <span class="span1">频繁停电情况</span>
+        <span class="span1">年龄架构</span>
       </div>
-      <tdjcThree />
+      <div class="jr_three">
+        <xl_two :nlData="nlData" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import tdjcOne from "./echarts/tdjcOne.vue";
-import tdjcTwo from "./echarts/tdjcTwo.vue";
-import tdjcThree from "./echarts/tdjcThree.vue";
+import xl_two from "./echarts/xl_two.vue";
+import xl_three from "./echarts/xl_three.vue";
 export default {
-  name: "zdfxLeft",
+  name: "xzfxLeft",
   components: {
-    tdjcOne,
-    tdjcTwo,
-    tdjcThree,
+    xl_two,
+    xl_three,
   },
   data() {
     return {
-      gjlx: [
-        {
-          value: "",
-          label: "重过载",
-        },
-      ],
-      gjlx_value: "",
-      gjlx_show: "",
-
-      pl: [
-        {
-          value: "",
-          label: "日内",
-        },
-      ],
-      pl_value: "",
-      pl_show: "",
-      value1: "",
+      jbData: {},
+      yh_xList: [],
+      yh_value: [],
+      yh_num: 0,
+      nlData: [],
     };
   },
-  mounted() {
-    console.log(this.$bus.$on("leftOid"), "ididiiididididi");
+  created() {
+    this.getJB();
+    this.getYH();
+    this.getNL();
   },
   methods: {
-    //停电分析-区域基本信息
-    async getAreaInfo() {
+    fanhui() {
+      this.$emit("geshihua");
+    },
+    getJB() {
       this.$axios
-        .get(window.wgApiUrl + "/powerCut/tree", {
+        .get(window.wgApiUrl + "/gridding/basic", {
           params: {
-            id: 10000,
+            areaId: 10000,
           },
         })
         .then((res) => {
-          console.log("res", res);
+          this.jbData = res.data.data[0];
         })
         .catch((error) => {});
     },
-    gjlxClick(e) {
-      this.gjlx_show = e;
+    getYH() {
+      this.$axios
+        .get(window.wgApiUrl + "/gridding/userProfile", {
+          params: {
+            areaId: 10000,
+          },
+        })
+        .then((res) => {
+          let yhData = res.data.data[0];
+          this.yh_xList = [];
+          this.yh_value = [];
+
+          this.yh_xList.push("居民");
+          this.yh_xList.push("工商业");
+
+          this.yh_xList.push("单相户");
+          this.yh_xList.push("动力户");
+
+          // this.yh_xList.push("村内户数");
+          this.yh_xList.push("常住户");
+          this.yh_xList.push("低电量户");
+
+          let d = yhData.jm;
+          let g = yhData.gsy;
+
+          let e = yhData.dxh;
+          let f = yhData.cnhs;
+          let b = yhData.dlh;
+
+          let a = yhData.czh;
+          let c = yhData.ddlh;
+          this.yh_value.push(a);
+          this.yh_value.push(b);
+          this.yh_value.push(c);
+          this.yh_value.push(d);
+          this.yh_value.push(e);
+          // this.yh_value.push(f);
+          this.yh_num = f;
+          this.yh_value.push(g);
+        })
+        .catch((error) => {});
     },
-    plClick(e) {
-      this.pl_show = e;
-    },
-    fanhuiClick() {
-      this.$emit("geshihua");
+    getNL() {
+      this.$axios
+        .get(window.wgApiUrl + "/gridding/ageStructure", {
+          params: {
+            areaId: 10000,
+          },
+        })
+        .then((res) => {
+          let data = res.data.data[0];
+          this.nlData = [];
+          let obj1 = { name: "0-20", value: data.over0 };
+          let obj2 = { name: "20-40", value: data.over20 };
+          let obj3 = { name: "40-60", value: data.over40 };
+          let obj4 = { name: "60-80", value: data.over60 };
+          let obj5 = { name: "80-100", value: data.over80 };
+          let obj6 = { name: "100以上", value: data.over100 };
+          this.nlData.push(obj1);
+          this.nlData.push(obj2);
+          this.nlData.push(obj3);
+          this.nlData.push(obj4);
+          this.nlData.push(obj5);
+          this.nlData.push(obj6);
+        })
+        .catch((error) => {});
     },
   },
 };
 </script>
 
-<style>
-.el-date-table td.in-range div,
-.el-date-table td.in-range div:hover,
-.el-date-table.is-week-mode .el-date-table__row.current div,
-.el-date-table.is-week-mode .el-date-table__row:hover div {
-  background-color: transparent;
-}
-</style>
 <style scoped>
-::v-deep .el-input__icon {
-  margin-top: -6px;
-}
-::v-deep .el-input__inner {
-  background-color: transparent;
-  border: 0;
-  height: 32px;
-}
-::v-deep .el-date-editor .el-range-separator {
-  color: #ffffff;
-  margin-top: -6px;
-}
-::v-deep .el-date-editor .el-range-input {
-  color: #fff;
-}
-::v-deep .el-date-table td.in-range div {
-  background-color: transparent !important;
-}
-.zdfxLeft {
+.gLeft {
   width: 379px;
   height: 974px;
   position: absolute;
@@ -165,13 +243,21 @@ export default {
 }
 .jr_block {
   width: 100%;
-  height: 289px;
+  height: 317px;
   background: url("img/bg4.png") no-repeat !important;
   background-size: 100% 100% !important;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+}
+.gundong {
+  width: 100%;
+  height: 260px;
+  overflow: scroll;
+}
+.gundong::-webkit-scrollbar {
+  display: none;
 }
 .jr_block2 {
-  height: 300px !important;
+  height: 303px !important;
 }
 .jr_block3 {
   height: 259px !important;
@@ -287,12 +373,20 @@ export default {
   color: #e2e2e2;
 }
 .jbBlock > .jbLeft {
-  width: 76px;
+  width: 146px;
   height: 100%;
   display: flex;
   align-items: center;
+  margin-left: 14px;
+}
+.jbBlock > .jbLeft2 {
+  width: 80px;
   justify-content: flex-end;
 }
+.jbBlock > .jbLeft2 > span {
+  margin-right: 17px;
+}
+
 .jbBlock > .jbLeft > span {
   font-family: Source Han Sans SC;
   font-size: 14px;
@@ -300,10 +394,9 @@ export default {
   letter-spacing: 0em;
 
   color: rgba(255, 255, 255, 0.7);
-  margin-right: 12px;
 }
 .jbBlock > .jbRight {
-  width: 284px;
+  width: 204px;
   height: 100%;
   display: flex;
   align-items: center;
@@ -318,7 +411,7 @@ export default {
   margin-left: 11px;
 }
 .jbBlock > .jbRight2 {
-  width: 273px;
+  width: 284px;
   height: 100%;
   background: url("img/jbInput2.png") no-repeat !important;
   background-size: 100% 100% !important;
@@ -340,23 +433,5 @@ export default {
   right: 8px;
   width: 14px;
   height: 8px;
-}
-</style>
-<style scoped>
-.zst {
-  width: 274px;
-  height: 57px;
-  margin-left: 46px;
-  margin-top: 10px;
-  background: url("img/zst.png") no-repeat !important;
-  background-size: 100% 100% !important;
-}
-.zl_one {
-  width: 100%;
-  height: 222px;
-}
-.zl_two {
-  width: 100%;
-  height: 248px;
 }
 </style>

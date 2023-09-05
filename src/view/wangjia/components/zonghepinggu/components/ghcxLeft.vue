@@ -1,124 +1,55 @@
 <template>
-  <div class="zdfxLeft">
+  <div class="gLeft">
     <div class="gl_top">
       <span class="span1">当前区域：</span>
       <div class="names">
         <span>xxxxx区域名称</span>
       </div>
-      <div class="fanhui" @click="fanhuiClick"></div>
+      <div class="fanhui" @click="fanhui"></div>
     </div>
     <div class="jr_block">
       <div class="j_titles">
-        <span class="span1">停电情况</span>
+        <span class="span1">平均供电半径（m）趋势</span>
       </div>
-      <tdjcOne />
+      <ghl_one />
     </div>
     <div class="jr_block">
       <div class="j_titles">
-        <span class="span1">停电次数</span>
+        <span class="span1">户均配变容量（kVA/户）趋势</span>
       </div>
-      <tdjcTwo />
+      <ghl_two />
     </div>
+
     <div class="jr_block">
       <div class="j_titles">
-        <span class="span1">频繁停电情况</span>
+        <span class="span1">低压线损率（%）趋势</span>
       </div>
-      <tdjcThree />
+      <ghl_three />
     </div>
   </div>
 </template>
 
 <script>
-import tdjcOne from "./echarts/tdjcOne.vue";
-import tdjcTwo from "./echarts/tdjcTwo.vue";
-import tdjcThree from "./echarts/tdjcThree.vue";
+import ghl_one from "./echarts/ghl_one.vue";
+import ghl_two from "./echarts/ghl_two.vue";
+import ghl_three from "./echarts/ghl_three.vue";
 export default {
-  name: "zdfxLeft",
+  name: "dlfxLeft",
   components: {
-    tdjcOne,
-    tdjcTwo,
-    tdjcThree,
-  },
-  data() {
-    return {
-      gjlx: [
-        {
-          value: "",
-          label: "重过载",
-        },
-      ],
-      gjlx_value: "",
-      gjlx_show: "",
-
-      pl: [
-        {
-          value: "",
-          label: "日内",
-        },
-      ],
-      pl_value: "",
-      pl_show: "",
-      value1: "",
-    };
-  },
-  mounted() {
-    console.log(this.$bus.$on("leftOid"), "ididiiididididi");
+    ghl_one,
+    ghl_two,
+    ghl_three,
   },
   methods: {
-    //停电分析-区域基本信息
-    async getAreaInfo() {
-      this.$axios
-        .get(window.wgApiUrl + "/powerCut/tree", {
-          params: {
-            id: 10000,
-          },
-        })
-        .then((res) => {
-          console.log("res", res);
-        })
-        .catch((error) => {});
-    },
-    gjlxClick(e) {
-      this.gjlx_show = e;
-    },
-    plClick(e) {
-      this.pl_show = e;
-    },
-    fanhuiClick() {
+    fanhui() {
       this.$emit("geshihua");
     },
   },
 };
 </script>
 
-<style>
-.el-date-table td.in-range div,
-.el-date-table td.in-range div:hover,
-.el-date-table.is-week-mode .el-date-table__row.current div,
-.el-date-table.is-week-mode .el-date-table__row:hover div {
-  background-color: transparent;
-}
-</style>
 <style scoped>
-::v-deep .el-input__icon {
-  margin-top: -6px;
-}
-::v-deep .el-input__inner {
-  background-color: transparent;
-  border: 0;
-  height: 32px;
-}
-::v-deep .el-date-editor .el-range-separator {
-  color: #ffffff;
-  margin-top: -6px;
-}
-::v-deep .el-date-editor .el-range-input {
-  color: #fff;
-}
-::v-deep .el-date-table td.in-range div {
-  background-color: transparent !important;
-}
-.zdfxLeft {
+.gLeft {
   width: 379px;
   height: 974px;
   position: absolute;
@@ -165,13 +96,13 @@ export default {
 }
 .jr_block {
   width: 100%;
-  height: 289px;
+  height: 290px;
   background: url("img/bg4.png") no-repeat !important;
   background-size: 100% 100% !important;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 .jr_block2 {
-  height: 300px !important;
+  height: 303px !important;
 }
 .jr_block3 {
   height: 259px !important;
@@ -287,12 +218,20 @@ export default {
   color: #e2e2e2;
 }
 .jbBlock > .jbLeft {
-  width: 76px;
+  width: 146px;
   height: 100%;
   display: flex;
   align-items: center;
+  margin-left: 14px;
+}
+.jbBlock > .jbLeft2 {
+  width: 80px;
   justify-content: flex-end;
 }
+.jbBlock > .jbLeft2 > span {
+  margin-right: 17px;
+}
+
 .jbBlock > .jbLeft > span {
   font-family: Source Han Sans SC;
   font-size: 14px;
@@ -300,10 +239,9 @@ export default {
   letter-spacing: 0em;
 
   color: rgba(255, 255, 255, 0.7);
-  margin-right: 12px;
 }
 .jbBlock > .jbRight {
-  width: 284px;
+  width: 204px;
   height: 100%;
   display: flex;
   align-items: center;
@@ -318,7 +256,7 @@ export default {
   margin-left: 11px;
 }
 .jbBlock > .jbRight2 {
-  width: 273px;
+  width: 284px;
   height: 100%;
   background: url("img/jbInput2.png") no-repeat !important;
   background-size: 100% 100% !important;
@@ -340,23 +278,5 @@ export default {
   right: 8px;
   width: 14px;
   height: 8px;
-}
-</style>
-<style scoped>
-.zst {
-  width: 274px;
-  height: 57px;
-  margin-left: 46px;
-  margin-top: 10px;
-  background: url("img/zst.png") no-repeat !important;
-  background-size: 100% 100% !important;
-}
-.zl_one {
-  width: 100%;
-  height: 222px;
-}
-.zl_two {
-  width: 100%;
-  height: 248px;
 }
 </style>

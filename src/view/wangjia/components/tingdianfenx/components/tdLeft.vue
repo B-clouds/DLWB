@@ -21,7 +21,12 @@
         :class="currentIndex == 0 ? 't_block_cha' : ''"
       >
         <img v-show="currentIndex != 0" src="./img/i1.png" />
-        <input ref="inputsss" v-show="currentIndex == 0" v-model="filterText" />
+        <input
+          ref="inputsss"
+          v-show="currentIndex == 0"
+          v-model="filterText"
+          @input="inputFn"
+        />
         <img v-show="currentIndex == 0" src="./img/c1.png" />
       </div>
       <div
@@ -75,7 +80,7 @@
           check-on-click-node
           :filter-node-method="filterNode"
           @check="selectTree"
-          node-key="oid"
+          node-key="id"
           lazy
           :load="loadNode"
           :key="tree_key"
@@ -204,10 +209,13 @@
 </template>
 
 <script>
+import { debounce } from "@/utils/commonFn.js";
 export default {
   name: "mxLeft",
   data() {
     return {
+      node: null,
+      resolve: null,
       // 是否显示编辑弹框
       showMB: false,
       updaValue: "",
@@ -285,37 +293,121 @@ export default {
     }
   },
   methods: {
+    inputFn() {
+      console.log(this.filterText);
+      const _this = this;
+      _this.node.childNodes = [];
+      debounce(
+        function () {
+          _this.loadNode(_this.node, _this.resolve);
+        },
+        200,
+        true
+      );
+    },
     loadNode(node, resolve) {
-      if (node.level === 0) {
-        // return this.getList(resolve)
-        this.$axios
-          .get(window.wanggeUrl, {
-            params: {
-              oid: 0,
-            },
-          })
-          .then((res) => {
-            return resolve(res.data.data);
-          })
-          .catch((error) => {});
-      }
-      if (node.level >= 1) {
-        this.$axios
-          .get(window.wanggeUrl, {
-            params: {
-              oid: node.data.oid,
-            },
-          })
-          .then((res) => {
-            if (res.data.data == null || undefined || "") {
-              return resolve([]);
-            } else {
-              return resolve(res.data.data);
-            }
-          })
-          .catch((error) => {});
+      this.node = node;
+      this.resolve = resolve;
+
+      if (this.filterText) {
+        if (node.level === 0) {
+          this.$axios
+            .get(window.wgApiUrl + "/powerCut/tree", {
+              params: {
+                name: this.filterText,
+              },
+            })
+            .then((res) => {
+              console.log(res, "res");
+              if (res.data.data.length != 0) {
+                let newData = res.data.data.map((item) => {
+                  return Object.assign(
+                    {},
+                    {
+                      id: item.id,
+                      label: item.mc,
+                      pid: item.pid,
+                    }
+                  );
+                });
+                return resolve(newData);
+              } else {
+                return resolve([]);
+              }
+            })
+            .catch((error) => {});
+        }
+        if (node.level >= 1) {
+          this.$axios
+            .get(window.wgApiUrl + "/powerCut/tree", {
+              params: {
+                id: node.data.id,
+                name: this.filterText,
+              },
+            })
+            .then((res) => {
+              if (res.data.data == null || undefined || "") {
+                return resolve([]);
+              } else {
+                return resolve(res.data.data);
+              }
+            })
+            .catch((error) => {});
+        } else {
+          return resolve([]);
+        }
       } else {
-        return resolve([]);
+        if (node.level === 0) {
+          this.$axios
+            .get(window.wgApiUrl + "/powerCut/tree", {
+              params: {
+                id: 1,
+              },
+            })
+            .then((res) => {
+              console.log("res", res);
+              let newData = res.data.data.map((item) => {
+                return Object.assign(
+                  {},
+                  {
+                    id: item.id,
+                    label: item.mc,
+                    pid: item.pid,
+                  }
+                );
+              });
+              return resolve(newData);
+            })
+            .catch((error) => {});
+        }
+        if (node.level >= 1) {
+          this.$axios
+            .get(window.wgApiUrl + "/powerCut/tree", {
+              params: {
+                id: node.data.id,
+              },
+            })
+            .then((res) => {
+              if (res.data.data == null || undefined || "") {
+                return resolve([]);
+              } else {
+                let newData = res.data.data.map((item) => {
+                  return Object.assign(
+                    {},
+                    {
+                      id: item.id,
+                      label: item.mc,
+                      pid: item.pid,
+                    }
+                  );
+                });
+                return resolve(newData);
+              }
+            })
+            .catch((error) => {});
+        } else {
+          return resolve([]);
+        }
       }
     },
     filterNode(value, data) {
@@ -512,12 +604,12 @@ export default {
 
     // 复选框被选中时
     selectTree(node, list) {
-      const node2 = this.$refs.treeForm_mx.getNode(node.oid);
+      const node2 = this.$refs.treeForm_mx.getNode(node.id);
       this.setNode(node2);
       if (list.checkedKeys.length == 2) {
-        this.$refs.treeForm_mx.setCheckedKeys([node.oid]);
+        this.$refs.treeForm_mx.setCheckedKeys([node.id]);
       }
-      if (this.selectData.id != node.oid) {
+      if (this.selectData.id != node.id) {
         this.selectData = node;
         this.selectNode = node2;
       } else {
@@ -528,7 +620,7 @@ export default {
     setNode(node) {
       let ids = [];
       let showLefts = false;
-      ids.push(node.data.oid);
+      ids.push(node.data.id);
       if (node.checked) {
         // 展示右侧，并发送消息
         this.$emit("showRight", true);
@@ -543,11 +635,11 @@ export default {
         this.setChildenNode(node);
       }
       this.$emit("getIds", ids);
-      this.$emit("getOid", node.data.oid);
+      this.$emit("getOid", node.data.id);
       this.newIDs = ids;
       let that = this;
       setTimeout(() => {
-        that.$bus.$emit("leftOid", node.data.oid);
+        that.$bus.$emit("leftOid", node.data.id);
       }, 50);
       let v = {
         Type: "ShowPolygonIDS",
@@ -613,9 +705,9 @@ export default {
     },
     handleCheckChange(data, checked, indeterminate) {
       if (checked) {
-        let node2 = this.$refs.treeForm_mx.getNode(data.oid);
+        let node2 = this.$refs.treeForm_mx.getNode(data.id);
         // this.setNode(node2);
-        this.$refs.treeForm_mx.setCheckedKeys([data.oid]);
+        this.$refs.treeForm_mx.setCheckedKeys([data.id]);
       }
     },
     // 获取树状图

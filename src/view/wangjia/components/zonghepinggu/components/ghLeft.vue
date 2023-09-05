@@ -1,124 +1,160 @@
 <template>
-  <div class="zdfxLeft">
+  <div class="gLeft">
     <div class="gl_top">
       <span class="span1">当前区域：</span>
       <div class="names">
         <span>xxxxx区域名称</span>
       </div>
-      <div class="fanhui" @click="fanhuiClick"></div>
+      <div class="fanhui" @click="fanhui"></div>
     </div>
     <div class="jr_block">
       <div class="j_titles">
-        <span class="span1">停电情况</span>
+        <span class="span1">整改规划</span>
       </div>
-      <tdjcOne />
+      <div class="gundong">
+        <div class="jbBlock">
+          <div class="jbLeft">
+            <span>是否整改</span>
+          </div>
+          <div class="jbRight">
+            <span>{{ zgData.sfzg }}</span>
+          </div>
+        </div>
+
+        <div class="jbBlock">
+          <div class="jbLeft">
+            <span>下达整改计划</span>
+          </div>
+          <div class="jbRight">
+            <span>{{ zgData.xdzgjh }}</span>
+          </div>
+        </div>
+
+        <div class="jbBlock">
+          <div class="jbLeft">
+            <span>规划改造年份</span>
+          </div>
+          <div class="jbRight">
+            <span>{{ zgData.ghgznf }}</span>
+          </div>
+        </div>
+
+        <div class="jbBlock">
+          <div class="jbLeft">
+            <span>整改类型</span>
+          </div>
+          <div class="jbRight">
+            <span>{{ zgData.zglx }}</span>
+          </div>
+        </div>
+
+        <div class="jbBlock">
+          <div class="jbLeft">
+            <span>整改情况</span>
+          </div>
+          <div class="jbRight">
+            <span>{{ zgData.zgqk }}</span>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="jr_block">
+    <div class="jr_block jr_block2">
       <div class="j_titles">
-        <span class="span1">停电次数</span>
+        <span class="span1">户表投资</span>
       </div>
-      <tdjcTwo />
-    </div>
-    <div class="jr_block">
-      <div class="j_titles">
-        <span class="span1">频繁停电情况</span>
+      <div class="j_t_tr jt1">
+        <div class="blocks blocks2">
+          <span class="span1">类型</span>
+        </div>
+        <div class="blocks blocks2">
+          <span class="span1">型号</span>
+        </div>
+        <div class="blocks blocks2">
+          <span class="span1">数量</span>
+        </div>
+        <div class="blocks blocks2">
+          <span class="span1">规模 </span>
+        </div>
+        <div class="blocks blocks2">
+          <span class="span1">投资(万元)</span>
+        </div>
       </div>
-      <tdjcThree />
+      <div class="j_t_table">
+        <div
+          class="j_t_tr"
+          :class="index % 2 == 0 ? 'j_t_bg' : ''"
+          v-for="(item, index) in tdData"
+          :key="index"
+        >
+          <div class="blocks">
+            <span class="span2">{{ item.lx }}</span>
+          </div>
+          <div class="blocks">
+            <span class="span2">{{ item.xh }}</span>
+          </div>
+          <div class="blocks">
+            <span class="span2">{{ item.sl }}</span>
+          </div>
+          <div class="blocks">
+            <span class="span2">{{ item.gm }}</span>
+          </div>
+          <div class="blocks">
+            <span class="span2">{{ item.tz }}</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import tdjcOne from "./echarts/tdjcOne.vue";
-import tdjcTwo from "./echarts/tdjcTwo.vue";
-import tdjcThree from "./echarts/tdjcThree.vue";
 export default {
-  name: "zdfxLeft",
-  components: {
-    tdjcOne,
-    tdjcTwo,
-    tdjcThree,
-  },
+  name: "gLeft",
+  components: {},
   data() {
     return {
-      gjlx: [
-        {
-          value: "",
-          label: "重过载",
-        },
-      ],
-      gjlx_value: "",
-      gjlx_show: "",
-
-      pl: [
-        {
-          value: "",
-          label: "日内",
-        },
-      ],
-      pl_value: "",
-      pl_show: "",
-      value1: "",
+      zgData: [],
+      tdData: [],
     };
   },
-  mounted() {
-    console.log(this.$bus.$on("leftOid"), "ididiiididididi");
+  created() {
+    this.getZG();
+    this.getHB();
   },
   methods: {
-    //停电分析-区域基本信息
-    async getAreaInfo() {
+    fanhui() {
+      this.$emit("geshihua");
+    },
+    getZG() {
       this.$axios
-        .get(window.wgApiUrl + "/powerCut/tree", {
+        .get(window.wgApiUrl + "/gridding/rectificationPlan", {
           params: {
-            id: 10000,
+            areaId: 10000,
           },
         })
         .then((res) => {
-          console.log("res", res);
+          this.zgData = res.data.data[0];
         })
         .catch((error) => {});
     },
-    gjlxClick(e) {
-      this.gjlx_show = e;
-    },
-    plClick(e) {
-      this.pl_show = e;
-    },
-    fanhuiClick() {
-      this.$emit("geshihua");
+    getHB() {
+      this.$axios
+        .get(window.wgApiUrl + "/gridding/gridPlanningHouseholdInvestment", {
+          params: {
+            areaId: 10000,
+          },
+        })
+        .then((res) => {
+          this.tdData = res.data.data;
+        })
+        .catch((error) => {});
     },
   },
 };
 </script>
 
-<style>
-.el-date-table td.in-range div,
-.el-date-table td.in-range div:hover,
-.el-date-table.is-week-mode .el-date-table__row.current div,
-.el-date-table.is-week-mode .el-date-table__row:hover div {
-  background-color: transparent;
-}
-</style>
 <style scoped>
-::v-deep .el-input__icon {
-  margin-top: -6px;
-}
-::v-deep .el-input__inner {
-  background-color: transparent;
-  border: 0;
-  height: 32px;
-}
-::v-deep .el-date-editor .el-range-separator {
-  color: #ffffff;
-  margin-top: -6px;
-}
-::v-deep .el-date-editor .el-range-input {
-  color: #fff;
-}
-::v-deep .el-date-table td.in-range div {
-  background-color: transparent !important;
-}
-.zdfxLeft {
+.gLeft {
   width: 379px;
   height: 974px;
   position: absolute;
@@ -165,16 +201,16 @@ export default {
 }
 .jr_block {
   width: 100%;
-  height: 289px;
+  height: 557px;
   background: url("img/bg4.png") no-repeat !important;
   background-size: 100% 100% !important;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 .jr_block2 {
-  height: 300px !important;
+  height: 317px !important;
 }
 .jr_block3 {
-  height: 259px !important;
+  height: 245px !important;
 }
 
 .j_titles {
@@ -217,11 +253,14 @@ export default {
   margin-top: 8px;
 }
 .j_t_tr > .blocks {
-  width: 25%;
+  width: 33%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.j_t_tr > .blocks2 {
+  width: 20% !important;
 }
 .j_t_tr > .blocks > .span1 {
   font-family: Source Han Sans CN;
@@ -287,12 +326,20 @@ export default {
   color: #e2e2e2;
 }
 .jbBlock > .jbLeft {
-  width: 76px;
+  width: 146px;
   height: 100%;
   display: flex;
   align-items: center;
+  margin-left: 14px;
+}
+.jbBlock > .jbLeft2 {
+  width: 80px;
   justify-content: flex-end;
 }
+.jbBlock > .jbLeft2 > span {
+  margin-right: 17px;
+}
+
 .jbBlock > .jbLeft > span {
   font-family: Source Han Sans SC;
   font-size: 14px;
@@ -300,10 +347,9 @@ export default {
   letter-spacing: 0em;
 
   color: rgba(255, 255, 255, 0.7);
-  margin-right: 12px;
 }
 .jbBlock > .jbRight {
-  width: 284px;
+  width: 204px;
   height: 100%;
   display: flex;
   align-items: center;
@@ -318,7 +364,7 @@ export default {
   margin-left: 11px;
 }
 .jbBlock > .jbRight2 {
-  width: 273px;
+  width: 284px;
   height: 100%;
   background: url("img/jbInput2.png") no-repeat !important;
   background-size: 100% 100% !important;
@@ -341,22 +387,13 @@ export default {
   width: 14px;
   height: 8px;
 }
-</style>
-<style scoped>
-.zst {
-  width: 274px;
-  height: 57px;
-  margin-left: 46px;
-  margin-top: 10px;
-  background: url("img/zst.png") no-repeat !important;
-  background-size: 100% 100% !important;
-}
-.zl_one {
+
+.gundong {
   width: 100%;
-  height: 222px;
+  height: 460px;
+  overflow: scroll;
 }
-.zl_two {
-  width: 100%;
-  height: 248px;
+.gundong::-webkit-scrollbar {
+  display: none;
 }
 </style>
