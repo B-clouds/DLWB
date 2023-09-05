@@ -32,7 +32,6 @@
       </div>
       <div class="blockItem">
         <el-tree
-          :data="datas"
           show-checkbox
           :props="defaultProps"
           @node-click="handleNodeClick"
@@ -170,6 +169,8 @@ export default {
   data() {
     return {
       searchName: "",
+      node: null,
+      resolve: null,
       // 是否显示编辑弹框
       showMB: false,
       updaValue: "",
@@ -228,34 +229,11 @@ export default {
     //查询条件的点击查询
     searchFn() {
       console.log(this.searchName);
-      this.searchValFn(this.searchName);
+      const _this = this;
+      _this.node.childNodes = [];
+      _this.loadNode(_this.node, _this.resolve);
     },
 
-    async searchValFn(val) {
-      this.$axios
-        .get(
-          window.wgApiUrl + "/powerNetworkAnalysis/panoramicPredictionTree",
-          {
-            params: {
-              id: 0,
-              name: val,
-            },
-          }
-        )
-        .then((res) => {
-          this.datas = res.data.data.map((item) => {
-            return Object.assign(
-              {},
-              {
-                oid: item.oid,
-                label: item.name,
-                pid: item.pid,
-              }
-            );
-          });
-        })
-        .catch((error) => {});
-    },
     // 全部选中
     qxClick() {
       this.isQx = !this.isQx;
@@ -364,6 +342,137 @@ export default {
       }
     },
     loadNode(node, resolve) {
+      this.node = node;
+      this.resolve = resolve;
+      if (this.searchName) {
+        if (node.level === 0) {
+          this.$axios
+            .get(
+              window.wgApiUrl + "/powerNetworkAnalysis/panoramicPredictionTree",
+              {
+                params: {
+                  id: 0,
+                  name: this.searchName,
+                },
+              }
+            )
+            .then((res) => {
+              console.log("res", res);
+              let newData = res.data.data.map((item) => {
+                return Object.assign(
+                  {},
+                  {
+                    oid: item.oid,
+                    label: item.name,
+                    pid: item.pid,
+                  }
+                );
+              });
+              // this.note_datas = newData;
+              // console.log("this.note_datas", this.note_datas);
+              return resolve(newData);
+            })
+            .catch((error) => {});
+        }
+        if (node.level >= 1) {
+          // console.log("nodenodenodenode", node);
+          this.$axios
+            .get(
+              window.wgApiUrl + "/powerNetworkAnalysis/panoramicPredictionTree",
+              {
+                params: {
+                  id: node.data.oid,
+                },
+              }
+            )
+            .then((res) => {
+              console.log(res, "resres");
+              if (res.data.data == null || undefined || "") {
+                return resolve([]);
+              } else {
+                let newData = res.data.data.map((item) => {
+                  return Object.assign(
+                    {},
+                    {
+                      oid: item.oid,
+                      label: item.name,
+                      pid: item.pid,
+                    }
+                  );
+                });
+                // this.note_datas = newData;
+
+                return resolve(newData);
+              }
+            })
+            .catch((error) => {});
+        } else {
+          return resolve([]);
+        }
+      } else {
+        if (node.level === 0) {
+          this.$axios
+            .get(
+              window.wgApiUrl + "/powerNetworkAnalysis/panoramicPredictionTree",
+              {
+                params: {
+                  id: 0,
+                },
+              }
+            )
+            .then((res) => {
+              console.log("res", res);
+              let newData = res.data.data.map((item) => {
+                return Object.assign(
+                  {},
+                  {
+                    oid: item.oid,
+                    label: item.name,
+                    pid: item.pid,
+                  }
+                );
+              });
+              this.note_datas = newData;
+              console.log("this.note_datas", this.note_datas);
+              return resolve(newData);
+            })
+            .catch((error) => {});
+        }
+        if (node.level >= 1) {
+          console.log("nodenodenodenode", node);
+          this.$axios
+            .get(
+              window.wgApiUrl + "/powerNetworkAnalysis/panoramicPredictionTree",
+              {
+                params: {
+                  id: node.data.oid,
+                },
+              }
+            )
+            .then((res) => {
+              if (res.data.data == null || undefined || "") {
+                return resolve([]);
+              } else {
+                let newData = res.data.data.map((item) => {
+                  return Object.assign(
+                    {},
+                    {
+                      oid: item.oid,
+                      label: item.name,
+                      pid: item.pid,
+                    }
+                  );
+                });
+                // this.note_datas = newData;
+
+                return resolve(newData);
+              }
+            })
+            .catch((error) => {});
+        } else {
+          return resolve([]);
+        }
+      }
       // console.log("window.wanggeUrl", window.wanggeUrl);
       if (node.level === 0) {
         this.$axios
