@@ -53,7 +53,13 @@ export default {
       this.y4s = [20, 30, 40, 52];
       let option = {
         backgroundColor: "transparent",
-        color: ["rgba(24, 144, 255, 1)", "rgba(65, 228, 187, 1)"],
+        color: [
+          "rgba(255, 232, 86, 1)",
+          "rgba(255, 77, 77, 1)",
+
+          "rgba(24, 144, 255, 1)",
+          "rgba(65, 228, 187, 1)",
+        ],
         tooltip: {
           //鼠标悬停提示内容
           trigger: "axis", // 触发类型，默认数据触发，可选为：'axis' item
@@ -166,11 +172,11 @@ export default {
                   [
                     {
                       offset: 0,
-                      color: "rgba(24, 144, 255, 0.38)",
+                      color: "rgba(255, 232, 86, .38)",
                     },
                     {
                       offset: 1,
-                      color: "rgba(24, 144, 255, 0)",
+                      color: "rgba(255, 232, 86, 0)",
                     },
                   ],
                   false

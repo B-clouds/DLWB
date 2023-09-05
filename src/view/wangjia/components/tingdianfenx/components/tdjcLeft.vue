@@ -11,6 +11,62 @@
       <div class="j_titles">
         <span class="span1">停电情况</span>
       </div>
+      <div class="ckxq">
+        <span>查看详情</span>
+      </div>
+      <div class="tkbj">
+        <div class="tguan"></div>
+        <div class="sx_item">
+          <span class="span1">设备类型</span>
+          <!-- 设备类型 -->
+          <div class="selectss">
+            <el-select
+              v-model="dy_value"
+              @visible-change="dyClick"
+              placeholder=""
+            >
+              <el-option
+                v-for="item in dianya"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
+              </el-option>
+            </el-select>
+            <img v-show="!dy_show" src="./img/xia.png" />
+            <img v-show="dy_show" src="./img/shang.png" />
+          </div>
+          <span class="span2">统计类型</span>
+          <div class="selectss">
+            <el-select
+              v-model="cj_value"
+              @visible-change="cjClick"
+              placeholder=""
+            >
+              <el-option
+                v-for="item in chuangjian"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
+              </el-option>
+            </el-select>
+            <img v-show="!cj_show" src="./img/xia.png" />
+            <img v-show="cj_show" src="./img/shang.png" />
+          </div>
+          <span class="span2">开始时间</span>
+          <div class="selectss">
+            <el-date-picker
+              v-model="value1"
+              @change="dateClick"
+              value-format="yyyy-MM-dd"
+              type="date"
+              placeholder="选择投运运日期"
+            >
+            </el-date-picker>
+          </div>
+        </div>
+      </div>
       <tdjcOne />
     </div>
     <div class="jr_block">
@@ -59,6 +115,40 @@ export default {
       pl_value: "",
       pl_show: "",
       value1: "",
+
+      dianya: [
+        {
+          value: "全站",
+          label: "全站",
+        },
+        {
+          value: "1号主变",
+          label: "1号主变",
+        },
+        {
+          value: "2号主变",
+          label: "2号主变",
+        },
+      ],
+      dy_value: "",
+      dy_show: "",
+      // --------------------------统计类型---------------------------
+      chuangjian: [
+        {
+          value: "0",
+          label: "有功功率",
+        },
+        {
+          value: "1",
+          label: "无功功率",
+        },
+        {
+          value: "2",
+          label: "电流",
+        },
+      ],
+      cj_value: "",
+      cj_show: false,
     };
   },
   methods: {
@@ -70,6 +160,12 @@ export default {
     },
     fanhuiClick() {
       this.$emit("geshihua");
+    },
+    dyClick(e) {
+      this.dy_show = e;
+    },
+    cjClick(e) {
+      this.cj_show = e;
     },
   },
 };
@@ -153,7 +249,9 @@ export default {
   background: url("img/bg4.png") no-repeat !important;
   background-size: 100% 100% !important;
   margin-bottom: 20px;
+  position: relative;
 }
+
 .jr_block2 {
   height: 300px !important;
 }
@@ -342,5 +440,87 @@ export default {
 .zl_two {
   width: 100%;
   height: 248px;
+}
+</style>
+<style scoped>
+.ckxq {
+  width: 69px;
+  height: 31px;
+  position: absolute;
+  right: 14px;
+  top: 5px;
+  background: url("img/ckxq.png") no-repeat;
+  background-size: 100% 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.ckxq > span {
+  font-family: Source Han Sans SC;
+  font-size: 14px;
+  font-weight: normal;
+  color: #ffffff;
+}
+.tkbj {
+  width: 794px;
+  height: 342px;
+  position: absolute;
+  left: 400px;
+  top: 0px;
+  background: url("img/tkbj.png") no-repeat;
+  background-size: 100% 100%;
+}
+.tkbj > .tguan {
+  width: 33px;
+  height: 33px;
+  position: absolute;
+  right: 27px;
+  top: 22px;
+  background: url("img/tguan.png") no-repeat;
+  background-size: 100% 100%;
+  cursor: pointer;
+}
+
+.sx_item {
+  width: 100%;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+.sx_item > .span1 {
+  font-family: Source Han Sans SC;
+  font-size: 14px;
+  font-weight: normal;
+  color: rgba(255, 255, 255, 0.7);
+  margin-left: 23px;
+  margin-right: 14px;
+}
+.sx_item > .span2 {
+  font-family: Source Han Sans SC;
+  font-size: 14px;
+  font-weight: normal;
+  color: rgba(255, 255, 255, 0.7);
+  margin-left: 20px;
+  margin-right: 14px;
+}
+
+.selectss {
+  width: 135px;
+  height: 34px;
+  /* background: url("img/ip.png") no-repeat !important;
+  background-size: 100% 100% !important; */
+  position: relative;
+  background: rgba(25, 61, 112, 0.8);
+  box-sizing: border-box;
+  border: 1px solid #3876b6;
+}
+.selectss > img {
+  position: absolute;
+  top: 14px;
+  right: 8.8px;
+  width: 14px;
+  height: 8px;
 }
 </style>
