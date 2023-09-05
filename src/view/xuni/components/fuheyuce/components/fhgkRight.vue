@@ -12,6 +12,7 @@
         <div class="jbRight2">
           <div class="inputs">
             <el-select
+                @change="getBaseData"
               v-model="pl_value"
               @visible-change="plClick"
               placeholder=""
@@ -41,6 +42,8 @@
               range-separator="-"
               start-placeholder="开始日期"
               end-placeholder="结束日期"
+              @change="getBaseData"
+              value-format="yyyy-MM-dd HH:mm:ss"
             >
             </el-date-picker>
           </div>
@@ -56,6 +59,7 @@
               v-model="wd_value"
               @visible-change="wdClick"
               placeholder=""
+              @change="getBaseData"
             >
               <el-option
                 v-for="item in wd"
@@ -86,22 +90,47 @@ export default {
   name: "fhgkRight",
   data() {
     return {
+      fuhe:[],
+      zrzz:[],
+      date:[],
+      origData:{},
+      baseData:{},
       pl: [
         {
-          value: "",
+          value: 0,
+          label: "日内",
+        },
+        {
+          value: 1,
           label: "日度",
         },
+        {
+          value: 2,
+          label: "月度",
+        },
+        {
+          value: 3,
+          label: "年度",
+        },
       ],
-      pl_value: "",
+      pl_value: 1,
       pl_show: "",
       value1: "",
       wd: [
         {
-          value: "",
+          value: 0,
           label: "最小负荷",
         },
+        {
+          value: 1,
+          label: "平均负荷",
+        },
+        {
+          value: 2,
+          label: "最大负荷",
+        },
       ],
-      wd_value: "",
+      wd_value: 1,
       wd_show: "",
     };
   },
@@ -109,8 +138,55 @@ export default {
   watch: {
     colors(e) {},
   },
-  mounted() {},
+  mounted() {
+    this.watchId()
+  },
+  beforeDestroy() {
+    //组件销毁前需要解绑事件。否则会出现重复触发事件的问题
+    this.$bus.$off('sendId');
+  },
   methods: {
+    consoDate(e){
+      console.log(this.value1[0])
+    },
+    watchId(){
+      let that = this
+      that.$bus.$on("sendId", (e) => {
+        // alert(e.name)
+
+        that.origData = e;
+        that.baseData={}
+        this.getBaseData()
+      })
+    },
+    async getBaseData(){
+      const that = this
+      await this.$axios
+          .get(window.wgApiUrl + "/loadForecast/loadForecastLoadTrend", {
+            // .get("http://192.168.2.21:8025/loadForecast/loadForecastLoadTrend", {
+            params: {
+              areaId:this.origData.id,
+              pd:this.pl_value,
+              wd:this.wd_value,
+              startTime:this.value1[0],
+              endTime:this.value1[1],
+
+            },
+          }).then(res=>{
+            const charet = {fuhe:[],zrzz:[],date:[]}
+            res.data.data.map(item=>{
+              if(item.type=='0'){
+                charet.fuhe.push(item.sl)
+              }else if(item.type=='1'){
+                charet.zrzz.push(item.sl)
+                charet.date.push(item.sj)
+              }
+            })
+            setTimeout(()=>{
+              that.$bus.$emit('chartData',charet)
+            },50)
+          })
+    },
     wdClick(e) {
       this.wd_show = e;
     },

@@ -139,6 +139,7 @@ export default {
     },
 
     navClick(e) {
+      // alert('wooooooo')
       let that =this
       // setTimeout(()=>{
       //   that.$bus.$emit("sendId", this.baseData);
@@ -189,13 +190,18 @@ export default {
         this.detiles6 = true;
       }
       setTimeout(()=>{
-        try {
-          that.$bus.$emit("sendId", this.baseData);
+        // try {
+          // setTimeout(()=>{
           // alert('发送成功')
-          // console.log('444')
-        }catch (e){
-          console.log(e)
-        }
+            that.$bus.$emit("sendId", this.baseData);
+            // alert('发送成功')
+          // },3000)
+
+
+        // }catch (e){
+        //   alert('错误')
+        //   console.log(e)
+        // }
       },50)
     },
     showRight(e) {

@@ -7,6 +7,7 @@ export default {
   props: ["echartsData"],
   data() {
     return {
+      chartData:{},
       pieData: [],
       xData: ["12.01", "12.02", "12.04", "12.05", "12.06", "12.07"],
       yData: [19, 20, 28, 40, 49, 70],
@@ -14,8 +15,15 @@ export default {
     };
   },
   mounted() {
-    this.myecharts();
+
     this.WidthAdaptive();
+    const that = this
+    setTimeout(()=>{
+      that.$bus.$on('chartData',e=>{
+        that.chartData = e
+        this.myecharts();
+      })
+    },0)
   },
   watch: {
     echartsData(n, o) {
@@ -89,7 +97,7 @@ export default {
           axisTick: {
             show: false,
           },
-          data: this.xData,
+          data: this.chartData.date,
         },
         yAxis: [{
           type: "value",
@@ -211,7 +219,7 @@ export default {
             emphasis: {
               focus: "series",
             },
-            data: this.yData,
+            data: this.chartData.fuhe,
           },
           {
             name: "自然增长",
@@ -255,7 +263,7 @@ export default {
             emphasis: {
               focus: "series",
             },
-            data: this.yData1,
+            data: this.chartData.zrzz,
             yAxisIndex: 1,
           },
         ],

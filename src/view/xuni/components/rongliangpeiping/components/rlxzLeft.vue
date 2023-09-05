@@ -150,19 +150,27 @@ export default {
     this.$bus.$off("sendId")
   },
   mounted() {
+
     this.watchId()
   },
   methods: {
     watchId(){
+      // alert('函数成功')
       // this.$bus.$off("sendId")
       let that = this
-      that.$bus.$on("sendId", (e) => {
-        // alert('1l')
-        that.origData = e;
-        // console.log(11111+e)
-        that.baseData={}
-        that.getBaseData()
-      })
+
+      setTimeout(()=>{
+        that.$bus.$on("sendId", (e) => {
+          // alert('1l')
+          // alert('接受成功')
+          console.log(e)
+          that.origData = e;
+          // console.log(11111+e)
+          that.baseData={}
+          that.getBaseData()
+        })
+      },0)
+
     },
     async getBaseData(){
       await this.$axios
