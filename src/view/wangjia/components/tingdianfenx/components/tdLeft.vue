@@ -21,7 +21,12 @@
         :class="currentIndex == 0 ? 't_block_cha' : ''"
       >
         <img v-show="currentIndex != 0" src="./img/i1.png" />
-        <input ref="inputsss" v-show="currentIndex == 0" v-model="filterText" />
+        <input
+          ref="inputsss"
+          v-show="currentIndex == 0"
+          v-model="filterText"
+          @input="inputFn"
+        />
         <img v-show="currentIndex == 0" src="./img/c1.png" />
       </div>
       <div
@@ -204,10 +209,13 @@
 </template>
 
 <script>
+import { debounce } from "@/utils/commonFn.js";
 export default {
   name: "mxLeft",
   data() {
     return {
+      node: null,
+      resolve: null,
       // 是否显示编辑弹框
       showMB: false,
       updaValue: "",
@@ -285,39 +293,121 @@ export default {
     }
   },
   methods: {
+    inputFn() {
+      console.log(this.filterText);
+      const _this = this;
+      _this.node.childNodes = [];
+      debounce(
+        function () {
+          _this.loadNode(_this.node, _this.resolve);
+        },
+        200,
+        true
+      );
+    },
     loadNode(node, resolve) {
-      if (node.level === 0) {
-        // return this.getList(resolve)
-        this.$axios
-          .get(window.wgApiUrl + "/powerCut/tree", {
-            params: {
-              id: 0,
-            },
-          })
-          .then((res) => {
-            console.log("res", res);
-            return resolve(res.data.data);
-          })
-          .catch((error) => {});
-      }
-      if (node.level >= 1) {
-        this.$axios
-          .get(window.wgApiUrl + "/powerCut/tree", {
-            params: {
-              id: node.data.id,
-            },
-          })
-          .then((res) => {
-            console.log("res", res);
-            if (res.data.data == null || undefined || "") {
-              return resolve([]);
-            } else {
-              return resolve(res.data.data);
-            }
-          })
-          .catch((error) => {});
+      this.node = node;
+      this.resolve = resolve;
+
+      if (this.filterText) {
+        if (node.level === 0) {
+          this.$axios
+            .get(window.wgApiUrl + "/powerCut/tree", {
+              params: {
+                name: this.filterText,
+              },
+            })
+            .then((res) => {
+              console.log(res, "res");
+              if (res.data.data.length != 0) {
+                let newData = res.data.data.map((item) => {
+                  return Object.assign(
+                    {},
+                    {
+                      id: item.id,
+                      label: item.mc,
+                      pid: item.pid,
+                    }
+                  );
+                });
+                return resolve(newData);
+              } else {
+                return resolve([]);
+              }
+            })
+            .catch((error) => {});
+        }
+        if (node.level >= 1) {
+          this.$axios
+            .get(window.wgApiUrl + "/powerCut/tree", {
+              params: {
+                id: node.data.id,
+                name: this.filterText,
+              },
+            })
+            .then((res) => {
+              if (res.data.data == null || undefined || "") {
+                return resolve([]);
+              } else {
+                return resolve(res.data.data);
+              }
+            })
+            .catch((error) => {});
+        } else {
+          return resolve([]);
+        }
       } else {
-        return resolve([]);
+        if (node.level === 0) {
+          this.$axios
+            .get(window.wgApiUrl + "/powerCut/tree", {
+              params: {
+                id: 1,
+              },
+            })
+            .then((res) => {
+              console.log("res", res);
+              let newData = res.data.data.map((item) => {
+                return Object.assign(
+                  {},
+                  {
+                    id: item.id,
+                    label: item.mc,
+                    pid: item.pid,
+                  }
+                );
+              });
+              return resolve(newData);
+            })
+            .catch((error) => {});
+        }
+        if (node.level >= 1) {
+          this.$axios
+            .get(window.wgApiUrl + "/powerCut/tree", {
+              params: {
+                id: node.data.id,
+              },
+            })
+            .then((res) => {
+              if (res.data.data == null || undefined || "") {
+                return resolve([]);
+              } else {
+                let newData = res.data.data.map((item) => {
+                  return Object.assign(
+                    {},
+                    {
+                      id: item.id,
+                      label: item.mc,
+                      pid: item.pid,
+                    }
+                  );
+                });
+                return resolve(newData);
+              }
+            })
+            .catch((error) => {});
+        } else {
+          return resolve([]);
+        }
       }
     },
     filterNode(value, data) {

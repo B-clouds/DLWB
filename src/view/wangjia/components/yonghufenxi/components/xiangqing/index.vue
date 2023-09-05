@@ -263,10 +263,8 @@
             label="用电详情"
             min-width="20"
           >
-             <template slot-scope="scope">
-                           
-              <span class="spans" @click="toDetailFn(scope)">用户详情</span>    
-                     
+            <template slot-scope="scope">
+              <span class="spans" @click="toDetailFn(scope)">用户详情</span>
             </template>
           </el-table-column>
         </el-table>
