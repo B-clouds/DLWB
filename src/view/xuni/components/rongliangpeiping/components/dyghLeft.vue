@@ -69,12 +69,15 @@ export default {
   methods: {
     watchId(){
       let that = this
-      that.$bus.$on("sendId", (e) => {
-        that.origData = e;
-        // console.log(11111+e)
-        that.baseData={}
-        that.getBaseData()
-      })
+      setTimeout(()=>{
+        that.$bus.$on("sendId", (e) => {
+          that.origData = e;
+          // console.log(11111+e)
+          that.baseData={}
+          that.getBaseData()
+        })
+      },0)
+
     },
     async getBaseData(){
       await this.$axios

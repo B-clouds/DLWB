@@ -47,6 +47,7 @@
               range-separator="-"
               start-placeholder="开始日期"
               end-placeholder="结束日期"
+              value-format="yyyy-MM-dd HH:mm:ss"
             >
             </el-date-picker>
           </div>
@@ -100,7 +101,7 @@
           </div>
         </div>
       </div>
-      <div class="d_btn">
+      <div class="d_btn" @click="getBaseData">
         <span>预测</span>
       </div>
       <div class="qs_echarts">
@@ -111,7 +112,7 @@
           <span>算法平均误差</span>
         </div>
         <div class="jbRight">
-          <input v-model="sbdx" placeholder="xxxxxx" />
+          <input v-model="sbdx" disabled placeholder="xxxxxx" />
         </div>
       </div>
       <div class="d_btn d_btn2">
@@ -130,32 +131,65 @@ export default {
   },
   data() {
     return {
+      sbdx:'',
       origData:{},
       baseData:{},
       pl: [
         {
-          value: "",
+          value: 0,
+          label: "日内",
+        },
+        {
+          value: 1,
           label: "日度",
         },
+        {
+          value: 2,
+          label: "月度",
+        },
+        {
+          value: 3,
+          label: "年度",
+        },
       ],
-      pl_value: "",
+      pl_value: 1,
       pl_show: "",
       value1: "",
       wd: [
         {
-          value: "",
+          value: 0,
           label: "最小负荷",
         },
+        {
+          value: 1,
+          label: "平均负荷",
+        },
+        {
+          value: 2,
+          label: "最大负荷",
+        },
       ],
-      wd_value: "",
+      wd_value: 1,
       wd_show: "",
       sf: [
         {
-          value: "",
+          value: 0,
           label: "一元线性回归",
         },
+        {
+          value: 1,
+          label: "一元非线性回归",
+        },
+        {
+          value: 2,
+          label: "GM（1，1）灰色预测",
+        },
+        {
+          value: 3,
+          label: "BP神经网络",
+        },
       ],
-      sf_value: "",
+      sf_value: 1,
       sf_show: "",
     };
   },
@@ -177,12 +211,37 @@ export default {
     },
     async getBaseData(){
       await this.$axios
-          .get(window.wgApiUrl + "/loadForecast/loadForecastUserStatus", { //改路径对参数就行
+          .get(window.wgApiUrl + "/loadForecast/loadForecastLoadPrediction", { //改路径对参数就行
+
+          // .get('http://192.168.2.21:8025/loadForecast/loadForecastLoadPrediction', { //改路径对参数就行
             params: {
               areaId:this.origData.id,
+              pd:this.pl_value,
+              sf:this.sf_value,
+              wd:this.wd_value,
+              startTime:this.value1[0],
+              endTime:this.value1[1],
             },
           }).then(res=>{
-            this.baseData=res.data.data[0]
+            const baseData={date:[],tqfhz:[],tqycz:[],bqycz:[]}
+            this.baseData=res.data.data
+            console.log(this.baseData)
+            this.sbdx=this.baseData.averageError
+            this.baseData.result.map(item=>{
+              if (item.type=='0'){
+                baseData.tqfhz.push(item.sl)
+              } else if(item.type=='1'){
+                baseData.date.push(item.sj)
+                baseData.tqycz.push(item.sl)
+              }else if(item.type=='2'){
+                baseData.bqycz.push(item.sl)
+              }
+            })
+            const that = this
+            setTimeout(()=>{
+              this.$bus.$emit('sendData',baseData)
+            },50)
+
           })
     },
     returnMain() {

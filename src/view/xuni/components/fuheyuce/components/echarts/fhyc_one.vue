@@ -7,6 +7,7 @@ export default {
   props: ["echartsData"],
   data() {
     return {
+      baseData:{},
       pieData: [],
       xData: ["12.01", "12.02", "12.04", "12.05", "12.06", "12.07"],
       yData: [19, 20, 28, 40, 49, 70],
@@ -15,8 +16,14 @@ export default {
     };
   },
   mounted() {
-    this.myecharts();
+
     this.WidthAdaptive();
+    this.$bus.$on('sendData',(e)=>{
+      this.baseData=e
+      // console.log('7777777')
+      // console.log(e)
+      this.myecharts();
+    })
   },
   watch: {
     echartsData(n, o) {
@@ -90,7 +97,7 @@ export default {
           axisTick: {
             show: false,
           },
-          data: this.xData,
+          data: this.baseData.date,
         },
         yAxis: [{
           type: "value",
@@ -212,7 +219,7 @@ export default {
             emphasis: {
               focus: "series",
             },
-            data: this.yData,
+            data: this.baseData.tqfhz,
           },
           {
             name: "同期预测值",
@@ -256,7 +263,7 @@ export default {
             emphasis: {
               focus: "series",
             },
-            data: this.yData1,
+            data: this.baseData.tqycz,
             yAxisIndex: 1,
           },
           {
@@ -301,7 +308,7 @@ export default {
             emphasis: {
               focus: "series",
             },
-            data: this.yData2,
+            data: this.baseData.bqycz,
             yAxisIndex: 1,
           },
         ],

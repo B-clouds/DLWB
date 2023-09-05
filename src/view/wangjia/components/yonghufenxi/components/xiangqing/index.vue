@@ -263,8 +263,8 @@
             label="用电详情"
             min-width="20"
           >
-             <template slot-scope="scope">
-                            <span class="spans">用户详情</span>            
+            <template slot-scope="scope">
+              <span class="spans" @click="toDetailFn(scope)">用户详情</span>
             </template>
           </el-table-column>
         </el-table>
@@ -296,7 +296,6 @@ export default {
     return {
       types: 0, //0:站域  1：线域  2：变域  3：区域
       xqOid: 0, //存放聚焦时带过来的oid
-
       dataList: [
         {
           td1: "xxxx",
@@ -577,8 +576,9 @@ export default {
     };
   },
   activated() {
-    this.types = window.types;
-    this.xqOid = window.xqOid;
+    this.types = window.yhTypes;
+    this.xqOid = window.yhOid;
+    // this.getDataFn();
   },
   mounted() {
     let that = this;
@@ -586,6 +586,198 @@ export default {
   },
 
   methods: {
+    //用户详情
+    toDetailFn(data) {
+      console.log(data);
+    },
+    //请求方法
+    async getDataFn() {
+      console.log("this.types=====222", this.types);
+      console.log("this.types=====222", this.xqOid);
+      //0:站域  1：线域  2：变域  3：区域
+      if (this.types == 0) {
+        //普通用户现状概括
+        this.$axios
+          .get(
+            window.wgApiUrl +
+              "/facilityAnalysis/facilityAnalysisUserAnalysisStationNormal",
+            {
+              params: {
+                id: window.yhOid,
+              },
+            }
+          )
+          .then((res) => {
+            console.log(res, "res");
+          })
+          .catch((error) => {});
+        //大用户现状概括
+        this.$axios
+          .get(
+            window.wgApiUrl +
+              "/facilityAnalysis/facilityAnalysisUserAnalysisStationBigConsumer",
+            {
+              params: {
+                id: window.yhOid,
+              },
+            }
+          )
+          .then((res) => {
+            console.log(res, "res");
+          })
+          .catch((error) => {});
+        // 用户变化趋
+        this.$axios
+          .get(
+            window.wgApiUrl +
+              "/facilityAnalysis/facilityAnalysisUserAnalysisStationTrend",
+            {
+              params: {
+                id: window.yhOid,
+              },
+            }
+          )
+          .then((res) => {
+            console.log(res, "res");
+          })
+          .catch((error) => {});
+      } else if (this.types == 1) {
+        this.$axios
+          .get(
+            window.wgApiUrl +
+              "/facilityAnalysis/facilityAnalysisUserAnalysisStationNormal",
+            {
+              params: {
+                id: window.yhOid,
+              },
+            }
+          )
+          .then((res) => {
+            console.log(res, "res");
+          })
+          .catch((error) => {});
+        //大用户现状概括
+        this.$axios
+          .get(
+            window.wgApiUrl +
+              "/facilityAnalysis/facilityAnalysisUserAnalysisStationBigConsumer",
+            {
+              params: {
+                id: window.yhOid,
+              },
+            }
+          )
+          .then((res) => {
+            console.log(res, "res");
+          })
+          .catch((error) => {});
+        // 用户变化趋
+        this.$axios
+          .get(
+            window.wgApiUrl +
+              "/facilityAnalysis/facilityAnalysisUserAnalysisStationTrend",
+            {
+              params: {
+                id: window.yhOid,
+              },
+            }
+          )
+          .then((res) => {
+            console.log(res, "res");
+          })
+          .catch((error) => {});
+      } else if (this.types == 2) {
+        this.$axios
+          .get(
+            window.wgApiUrl +
+              "/facilityAnalysis/facilityAnalysisUserAnalysisStationNormal",
+            {
+              params: {
+                id: window.yhOid,
+              },
+            }
+          )
+          .then((res) => {
+            console.log(res, "res");
+          })
+          .catch((error) => {});
+        //大用户现状概括
+        this.$axios
+          .get(
+            window.wgApiUrl +
+              "/facilityAnalysis/facilityAnalysisUserAnalysisStationBigConsumer",
+            {
+              params: {
+                id: window.yhOid,
+              },
+            }
+          )
+          .then((res) => {
+            console.log(res, "res");
+          })
+          .catch((error) => {});
+        // 用户变化趋
+        this.$axios
+          .get(
+            window.wgApiUrl +
+              "/facilityAnalysis/facilityAnalysisUserAnalysisStationTrend",
+            {
+              params: {
+                id: window.yhOid,
+              },
+            }
+          )
+          .then((res) => {
+            console.log(res, "res");
+          })
+          .catch((error) => {});
+      } else {
+        this.$axios
+          .get(
+            window.wgApiUrl +
+              "/facilityAnalysis/facilityAnalysisUserAnalysisStationNormal",
+            {
+              params: {
+                id: window.yhOid,
+              },
+            }
+          )
+          .then((res) => {
+            console.log(res, "res");
+          })
+          .catch((error) => {});
+        //大用户现状概括
+        this.$axios
+          .get(
+            window.wgApiUrl +
+              "/facilityAnalysis/facilityAnalysisUserAnalysisStationBigConsumer",
+            {
+              params: {
+                id: window.yhOid,
+              },
+            }
+          )
+          .then((res) => {
+            console.log(res, "res");
+          })
+          .catch((error) => {});
+        // 用户变化趋
+        this.$axios
+          .get(
+            window.wgApiUrl +
+              "/facilityAnalysis/facilityAnalysisUserAnalysisStationTrend",
+            {
+              params: {
+                id: window.yhOid,
+              },
+            }
+          )
+          .then((res) => {
+            console.log(res, "res");
+          })
+          .catch((error) => {});
+      }
+    },
     fhClick() {
       this.$bus.$emit("types", window.types);
       this.$router.push({

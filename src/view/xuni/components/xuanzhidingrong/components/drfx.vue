@@ -76,7 +76,7 @@
           <input placeholder="请输入..." />
         </div>
       </div>
-      <div class="d_btn">
+      <div class="d_btn" @click="submitFn">
         <span>确定</span>
       </div>
 
@@ -141,7 +141,7 @@ export default {
       dataList: [],
       jidu: [
         {
-          value: "",
+          value: "1",
           label: "2022",
         },
       ],
@@ -150,20 +150,37 @@ export default {
 
       dydj: [
         {
-          value: "",
+          value: "1",
           label: "110kV",
         },
       ],
       dydj_value: "",
       dydj_show: "",
+      rzb_value: "",
+      dgrl_value: "",
     };
   },
   mounted() {
     console.log(this.id, "------");
     this.areaName = sessionStorage.getItem("xzdr_areaName");
-    this.CapacityInfoFn();
+    // this.CapacityInfoFn();
   },
   methods: {
+    submitFn() {
+      console.log(12);
+      console.log("年份", this.jidu_value);
+      console.log("电压等级", this.dydj_value);
+      console.log("容载比", this.rzb_value);
+      console.log("单个容量", this.dgrl_value);
+      let data = {
+        areaId: "10000",
+        dgrl: "2",
+        dydj: "1",
+        nd: "1",
+        rzb: "1",
+      };
+      this.CapacityInfoFn(data);
+    },
     gjlxClick(e) {
       this.gjlx_show = e;
     },
@@ -179,16 +196,10 @@ export default {
     dydjClick(e) {
       this.dydj_show = e;
     },
-    async CapacityInfoFn() {
+    async CapacityInfoFn(param) {
       this.$axios
         .get(window.wgApiUrl + "/siteSelection/siteSelectionCapacityInfo", {
-          params: {
-            areaId: "10000",
-            dgrl: "2",
-            dydj: "1",
-            nd: "1",
-            rzb: "1",
-          },
+          params: param,
         })
         .then((res) => {
           if (res.status == 200) {

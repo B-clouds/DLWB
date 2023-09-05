@@ -14,7 +14,7 @@
         </div>
         <div class="jbRight2">
           <div class="inputs">
-            <el-date-picker v-model="value1" type="year" placeholder="选择年份">
+            <el-date-picker @change="getBaseData" value-format="yyyy" v-model="value1"  type="year" placeholder="选择年份">
             </el-date-picker>
           </div>
         </div>
@@ -35,25 +35,47 @@
           </div>
         </div>
         <div class="j_t_table">
+<!--          <div-->
+<!--            class="j_t_tr j_t_tr1"-->
+<!--            :class="index % 2 == 0 ? 'j_t_bg' : ''"-->
+<!--            v-for="(item, index) in 6"-->
+<!--            :key="index"-->
+<!--          >-->
+<!--            <div class="blocks">-->
+<!--              <span class="span2">xxxx</span>-->
+<!--            </div>-->
+<!--            <div class="blocks">-->
+<!--              <span class="span2">xxxx</span>-->
+<!--            </div>-->
+<!--            <div class="blocks">-->
+<!--              <span class="span2">xxxx</span>-->
+<!--            </div>-->
+<!--            <div class="blocks">-->
+<!--              <span class="span2">xxxx</span>-->
+<!--            </div>-->
+<!--          </div>-->
+
           <div
-            class="j_t_tr j_t_tr1"
-            :class="index % 2 == 0 ? 'j_t_bg' : ''"
-            v-for="(item, index) in 6"
-            :key="index"
+              class="j_t_tr j_t_tr1"
+              :class="index % 2 == 0 ? 'j_t_bg' : ''"
+              v-for="(item, index) in tabelData"
+              :key="index"
           >
             <div class="blocks">
-              <span class="span2">xxxx</span>
+              <span class="span2">{{item.ghsj}}</span>
             </div>
             <div class="blocks">
-              <span class="span2">xxxx</span>
+              <span class="span2">{{item.xmmc}}</span>
             </div>
             <div class="blocks">
-              <span class="span2">xxxx</span>
+              <span class="span2">{{item.xmlx}}</span>
             </div>
             <div class="blocks">
-              <span class="span2">xxxx</span>
+              <span class="span2">{{item.rl}}</span>
             </div>
           </div>
+
+
         </div>
       </div>
     </div>
@@ -69,6 +91,7 @@ export default {
   name: "dyhRight",
   data() {
     return {
+      tabelData:[],
       value1: "",
     };
   },
@@ -76,8 +99,43 @@ export default {
   watch: {
     colors(e) {},
   },
-  mounted() {},
-  methods: {},
+  mounted() {
+    this.watchId()
+  },
+  beforeDestroy() {
+    //组件销毁前需要解绑事件。否则会出现重复触发事件的问题
+    this.$bus.$off('sendId');
+  },
+  methods: {
+    consoDate(e){
+      console.log(this.value1[0])
+    },
+    watchId(){
+      let that = this
+      that.$bus.$on("sendId", (e) => {
+        // alert(e.name)
+        that.origData = e;
+        that.baseData={}
+        this.getBaseData()
+      })
+    },
+    async getBaseData(){
+      const that = this
+      await this.$axios
+          .get(window.wgApiUrl + "/loadForecast/loadForecastPlanningProjectTb", {
+          // .get("http://192.168.2.21:8025/loadForecast/loadForecastPlanningProjectTb", {
+            params: {
+              areaId:this.origData.id,
+              sj:this.value1
+            },
+          }).then(res=>{
+            this.tabelData=res.data.data
+          })
+    },
+    changeYear(e){
+      console.log(e)
+    }
+  },
 };
 </script>
 

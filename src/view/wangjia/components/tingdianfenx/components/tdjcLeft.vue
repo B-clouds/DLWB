@@ -151,7 +151,23 @@ export default {
       cj_show: false,
     };
   },
+  mounted() {
+    console.log(this.$bus.$on("leftOid"), "ididiiididididi");
+  },
   methods: {
+    //停电分析-区域基本信息
+    async getAreaInfo() {
+      this.$axios
+        .get(window.wgApiUrl + "/powerCut/tree", {
+          params: {
+            id: 10000,
+          },
+        })
+        .then((res) => {
+          console.log("res", res);
+        })
+        .catch((error) => {});
+    },
     gjlxClick(e) {
       this.gjlx_show = e;
     },
