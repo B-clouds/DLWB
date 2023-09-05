@@ -211,9 +211,9 @@ export default {
     },
     async getBaseData(){
       await this.$axios
-          // .get(window.wgApiUrl + "/loadForecast/loadForecastUserStatus", { //改路径对参数就行
+          .get(window.wgApiUrl + "/loadForecast/loadForecastLoadPrediction", { //改路径对参数就行
 
-          .get('http://192.168.2.21:8025/loadForecast/loadForecastLoadPrediction', { //改路径对参数就行
+          // .get('http://192.168.2.21:8025/loadForecast/loadForecastLoadPrediction', { //改路径对参数就行
             params: {
               areaId:this.origData.id,
               pd:this.pl_value,

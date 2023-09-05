@@ -122,8 +122,8 @@ export default {
     async getBaseData(){
       const that = this
       await this.$axios
-          // .get(window.wgApiUrl + "/loadForecast/loadForecastLoadGeneralize", {
-          .get("http://192.168.2.21:8025/loadForecast/loadForecastPlanningProjectTb", {
+          .get(window.wgApiUrl + "/loadForecast/loadForecastPlanningProjectTb", {
+          // .get("http://192.168.2.21:8025/loadForecast/loadForecastPlanningProjectTb", {
             params: {
               areaId:this.origData.id,
               sj:this.value1
